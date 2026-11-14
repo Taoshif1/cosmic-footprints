@@ -45,8 +45,14 @@ export function ArtifactExplorer({
 }: ArtifactExplorerProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("ALL");
-  const artifacts = getArtifactsByDestination(destination);
-  const markers = getPlanetMarkers(destination);
+  const artifacts = useMemo(
+    () => getArtifactsByDestination(destination),
+    [destination],
+  );
+  const markers = useMemo(
+    () => getPlanetMarkers(destination),
+    [destination],
+  );
   const copy = destinationCopy[destination];
 
   const categories = useMemo(
