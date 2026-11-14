@@ -16,6 +16,7 @@ interface ArtifactExplorerProps {
   onSearchQueryChange: (value: string) => void;
   onActiveCategoryChange: (value: string) => void;
   visibleArtifactIds: string[];
+  onStartGuidedJourney: () => void;
 }
 
 const destinationCopy = {
@@ -52,6 +53,7 @@ export function ArtifactExplorer({
   onSearchQueryChange,
   onActiveCategoryChange,
   visibleArtifactIds,
+  onStartGuidedJourney,
 }: ArtifactExplorerProps) {
   const artifacts = useMemo(
     () => getArtifactsByDestination(destination),
@@ -133,6 +135,12 @@ export function ArtifactExplorer({
             <span aria-hidden="true">↗</span>
           </button>
         )}
+
+        <button type="button" className="guided-explorer-launch" onClick={onStartGuidedJourney}>
+          <span aria-hidden="true">✦</span>
+          <span><strong>TAKE THE 3-MINUTE JOURNEY</strong><small>Meet three explorers. Discover their legacy.</small></span>
+          <span aria-hidden="true">↗</span>
+        </button>
 
         <div className="archive-list-heading">
           <span>EXPLORER REGISTER</span>
