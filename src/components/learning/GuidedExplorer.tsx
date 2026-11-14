@@ -116,7 +116,7 @@ export function GuidedExplorer({ artifacts, onExit }: GuidedExplorerProps) {
                   type="button"
                   key={choice}
                   className={selectedAnswer === index ? (index === currentQuiz.answer ? "is-correct" : "is-wrong") : ""}
-                  onClick={() => setAnswers((current) => ({ ...current, [currentId]: index }))}
+                  onClick={() => setAnswers((current) => currentId ? ({ ...current, [currentId]: index }) : current)}
                   disabled={selectedAnswer !== undefined}
                 >
                   <span>{String.fromCharCode(65 + index)}</span>{choice}
