@@ -105,8 +105,8 @@ export const missionFates: Record<string, MissionFateRecord> = {
   "mars-polar-lander": {
     status: "location-unconfirmed",
     statusLabel: "LOST ON ARRIVAL / LOCATION UNCONFIRMED",
-    lastKnownSignalLabel: "Last contact",
-    lastKnownSignal: "December 3, 1999 — the planned Mars arrival; no successful signal was received from the lander or either Deep Space 2 probe.",
+    lastKnownSignalLabel: "Communication record",
+    lastKnownSignal: "No successful signal was received from the lander or either Deep Space 2 probe during the planned Mars arrival on December 3, 1999.",
     officialEndLabel: "Recovery attempts ended",
     officialEnd: "January 17, 2000 — NASA terminated attempts to regain communication with the lost lander. This is not a confirmed last-transmission date.",
     reason: "An investigation found that a likely false touchdown signal may have shut down the main engines too early, causing the lander to crash. The exact sequence was not directly observed.",
@@ -158,15 +158,6 @@ export const missionEndurance: Record<string, MissionEnduranceRecord> = {
     explanation: "The technology demonstration was designed for up to five test flights; Ingenuity ultimately completed 72.",
     sourceLabel: "NASA — Ingenuity mission ends",
     sourceUrl: "https://www.nasa.gov/news-release/after-three-years-on-mars-nasas-ingenuity-helicopter-mission-ends/",
-  },
-  insight: {
-    label: "InSight lander",
-    planned: 720,
-    achieved: 1446,
-    unit: "sols",
-    explanation: "The primary mission was designed for about 720 sols. InSight operated for 1,446 sols before its mission ended.",
-    sourceLabel: "NASA — InSight mission retirement",
-    sourceUrl: "https://www.nasa.gov/missions/insight/nasa-retires-insight-mars-lander-mission-after-years-of-science/",
   },
 };
 
