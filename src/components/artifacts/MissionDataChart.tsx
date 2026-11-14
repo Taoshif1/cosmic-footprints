@@ -15,7 +15,7 @@ export function MissionDataChart({ data }: MissionDataChartProps) {
       <p>{data.description}</p>
 
       <div className="mission-data-total">
-        <span>COMBINED DISTANCE TRAVELLED</span>
+        <span>COMBINED TOTAL</span>
         <strong>
           {total.toFixed(1)}
           <small>{data.unit}</small>
@@ -25,7 +25,7 @@ export function MissionDataChart({ data }: MissionDataChartProps) {
       <div
         className="mission-data-chart"
         role="group"
-        aria-label="Lunar rover distance travelled by Apollo mission"
+        aria-label={`${data.title}. ${data.description}`}
       >
         {data.records.map((record) => {
           const percentage = (record.value / maximum) * 100;
@@ -55,8 +55,8 @@ export function MissionDataChart({ data }: MissionDataChartProps) {
       </div>
 
       <p className="mission-data-method">
-        Values are transcribed from the NASA NSSDCA mission record. The
-        combined distance is the sum of the three reported mission totals.
+        Values are presented from the source record identified below. The
+        combined figure is calculated by adding the displayed records.
       </p>
 
       <a
