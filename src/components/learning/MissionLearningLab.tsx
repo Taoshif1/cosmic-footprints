@@ -50,6 +50,18 @@ const questionBank: Record<string, Question[]> = {
     { prompt: "How many flights did Ingenuity complete?", choices: ["5", "25", "72"], answer: 2, explanation: "It was planned as a five-flight technology demonstration but ultimately completed 72 flights." },
     { prompt: "Why did Ingenuity stop flying?", choices: ["Its rotor blades were damaged during its final flight", "It was deliberately launched into orbit", "It ran out of oxygen"], answer: 0, explanation: "Rotor damage during the 72nd flight in January 2024 left the helicopter unable to fly." },
   ],
+
+};
+
+const simpleSummaries: Record<string, string> = {
+  "surveyor-3": "Surveyor 3 was a robot sent to the Moon before people landed there. It tested safe landing and studied lunar soil. Later, Apollo 12 astronauts visited it and brought some parts back to Earth.",
+  "lunar-roving-vehicle": "Walking limited how far astronauts could explore. NASA built electric Moon buggies so crews could travel farther and carry more science equipment. The three Apollo rovers travelled 90.4 kilometres altogether, using the NASA NSSDCA mission totals.",
+  "alsep": "Astronauts could only stay on the Moon for a short time. ALSEP was a set of science tools they left behind. The instruments kept studying moonquakes, heat and the lunar environment until NASA switched them off in 1977.",
+  "sojourner": "Pathfinder landed on Mars in 1997 and carried a small rover called Sojourner. It rolled across the ground, studied rocks and showed that small robots could explore another planet.",
+  "spirit-opportunity": "Spirit and Opportunity were robot geologists. They studied rocks and soil for clues that water once existed on Mars. They were planned for about 90 days but worked for years.",
+  "insight": "InSight did not drive around Mars. It stayed in one place and listened for marsquakes. Those shakes helped scientists learn about the inside of the Red Planet.",
+  "mars-polar-lander": "Mars Polar Lander was sent to study the soil near the Martian south pole. It carried two tiny probes, but none sent a successful signal after arrival. Their exact resting places are still unknown.",
+  "ingenuity": "Ingenuity was a small helicopter that travelled to Mars with the Perseverance rover. It was planned for five test flights but flew 72 times. Damage to a rotor ended its flying career.",
 };
 
 export function MissionLearningLab({ artifact }: { artifact: Artifact }) {
@@ -135,6 +147,11 @@ export function MissionLearningLab({ artifact }: { artifact: Artifact }) {
                 <span key={index} className={index < answers.length ? "is-complete" : index === questionIndex ? "is-current" : ""} />
               ))}
             </div>
+
+            <section className="mission-lab-simple">
+              <span>THE STORY IN SIMPLE WORDS</span>
+              <p>{simpleSummaries[artifact.id]}</p>
+            </section>
 
             {artifact.dataVisualization && (
               <section className="mission-lab-data" aria-label="NASA mission data investigation">
