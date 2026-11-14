@@ -374,3 +374,23 @@
   font-size: 0.62rem;
   line-height: 1.5;
 }
+
+.mission-lab-simple {
+  margin: 0 0 22px;
+  padding: 15px 16px;
+  border-left: 2px solid #9ec5ff;
+  background: rgba(110, 151, 207, 0.1);
+}
+
+.mission-lab-simple > span {
+  color: #a9cbf8;
+  font: 0.55rem monospace;
+  letter-spacing: 0.13em;
+}
+
+.mission-lab-simple > p {
+  margin: 8px 0 0;
+  color: #d3e1f5;
+  font-size: 0.82rem;
+  line-height: 1.75;
+}
