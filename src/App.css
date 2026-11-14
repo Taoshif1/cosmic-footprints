@@ -2971,3 +2971,47 @@ button.destination-control:not(:disabled):hover {
     -webkit-overflow-scrolling: touch;
   }
 }
+
+ 
+/* Non-blocking feedback while the lazy-loaded 3D scenes initialize. */
+.scene-loading-fallback {
+  position: fixed;
+  inset: 86px 0 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  pointer-events: none;
+  color: #9eb8dc;
+  font-family: monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
+}
+
+.scene-loading-orbit {
+  width: 17px;
+  height: 17px;
+  border: 1px solid rgba(160, 197, 248, 0.25);
+  border-top-color: #b8d4ff;
+  border-radius: 50%;
+  animation: scene-loading-spin 0.85s linear infinite;
+}
+
+@keyframes scene-loading-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 700px) {
+  .scene-loading-fallback {
+    inset-top: 72px;
+    font-size: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene-loading-orbit {
+    animation: none;
+  }
+}
