@@ -3101,3 +3101,148 @@ button.destination-control:not(:disabled):hover {
 .archive-route-legend-item i {
   flex: 0 0 auto;
 }
+
+/* Mission fate / last signal storytelling */
+.mission-fate-panel {
+  margin: 38px 0;
+  padding: clamp(18px, 3vw, 28px);
+  border: 1px solid rgba(133, 169, 218, 0.24);
+  background: linear-gradient(145deg, rgba(13, 27, 48, 0.88), rgba(5, 12, 24, 0.9));
+}
+
+.mission-fate-heading h2 {
+  margin: 10px 0 0;
+  color: #f1f6ff;
+  font-size: clamp(1.65rem, 4vw, 2.55rem);
+  letter-spacing: -0.055em;
+}
+
+.mission-fate-subtitle {
+  margin: 2px 0 18px;
+  color: #91b8ed;
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+}
+
+.mission-fate-status {
+  display: inline-flex;
+  padding: 6px 9px;
+  border: 1px solid rgba(234, 176, 112, 0.35);
+  color: #e8c18e;
+  font: 600 0.57rem monospace;
+  letter-spacing: 0.1em;
+}
+
+.mission-fate-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(132, 166, 211, 0.16);
+  border: 1px solid rgba(132, 166, 211, 0.16);
+}
+
+.mission-fate-cell {
+  min-width: 0;
+  padding: 15px;
+  background: #081323;
+}
+
+.mission-fate-cell > span {
+  color: #8eadd7;
+  font: 600 0.57rem monospace;
+  letter-spacing: 0.12em;
+}
+
+.mission-fate-cell p {
+  margin: 8px 0 0;
+  color: #d5e0ef;
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+.mission-location-certainty {
+  display: inline-block;
+  margin-top: 9px;
+  font: 600 0.53rem monospace;
+  letter-spacing: 0.08em;
+}
+
+.mission-location-certainty.is-known { color: #8bd6b2; }
+.mission-location-certainty.is-partial { color: #e7c27e; }
+.mission-location-certainty.is-unknown { color: #f0a28f; }
+
+.mission-fate-source {
+  display: inline-flex;
+  gap: 8px;
+  margin-top: 15px;
+  color: #9fc7ff;
+  font: 600 0.61rem monospace;
+  text-decoration: none;
+}
+
+.mission-fate-source:hover { text-decoration: underline; }
+
+.mission-endurance {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(132, 166, 211, 0.2);
+}
+
+.mission-endurance h3 {
+  margin: 8px 0;
+  color: #eef5ff;
+  font-size: 1.2rem;
+}
+
+.mission-endurance > p:not(.story-section-index) {
+  color: #b8c8dc;
+  font-size: 0.79rem;
+  line-height: 1.7;
+}
+
+.mission-endurance-bars {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.mission-endurance-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 6px 12px;
+  align-items: center;
+}
+
+.mission-endurance-row > span {
+  color: #91a8c7;
+  font: 600 0.57rem monospace;
+  letter-spacing: 0.1em;
+}
+
+.mission-endurance-row > strong {
+  color: #d5e5fa;
+  font-size: 0.76rem;
+}
+
+.mission-endurance-track {
+  grid-column: 1 / -1;
+  height: 7px;
+  overflow: hidden;
+  background: rgba(145, 174, 216, 0.14);
+}
+
+.mission-endurance-track i {
+  display: block;
+  height: 100%;
+  background: #789bc9;
+}
+
+.mission-endurance-row.is-achieved .mission-endurance-track i {
+  background: linear-gradient(90deg, #6c9edb, #9dd9cf);
+}
+
+@media (max-width: 640px) {
+  .mission-fate-grid { grid-template-columns: 1fr; }
+  .mission-fate-cell { padding: 13px; }
+  .mission-endurance-row { grid-template-columns: 85px 1fr; }
+}
