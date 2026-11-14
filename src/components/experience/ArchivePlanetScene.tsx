@@ -297,6 +297,67 @@ export function ArchivePlanetScene({
     const markerHitAreas: THREE.Mesh[] = [];
     const markerForward = new THREE.Vector3(0, 0, 1);
 
+    // Route sketches are intentionally illustrative: current marker positions
+    // are not surveyed coordinates, so these lines are never presented as exact tracks.
+    const traverseSketches: Record<Destination, {
+      name: string;
+      color: number;
+      points: [number, number][];
+    }[]> = {
+      moon: [
+        { name: "Apollo 15 LRV", color: 0x7fd7ff, points: [[25,-8],[27,-5],[28,-1],[26,3],[24,6]] },
+        { name: "Apollo 16 LRV", color: 0xf4c879, points: [[-16,17],[-14,19],[-12,22],[-14,25],[-17,27]] },
+        { name: "Apollo 17 LRV", color: 0x9fe0b2, points: [[18,45],[20,47],[22,49],[20,52],[17,54]] },
+      ],
+      mars: [
+        { name: "Sojourner", color: 0x7fd7ff, points: [[19,-34],[20,-33],[20.5,-31.8],[19.8,-30.7],[20.4,-29.9]] },
+        { name: "Spirit", color: 0xf4c879, points: [[-16,-23],[-15,-22],[-14,-20.5],[-13,-19],[-12,-17.5]] },
+        { name: "Opportunity", color: 0x9fe0b2, points: [[-5,13],[-4,14.5],[-3,16],[-1.5,17.5],[0,19]] },
+      ],
+    };
+
+    const routeMaterials: THREE.Material[] = [];
+    const routeGeometries: THREE.BufferGeometry[] = [];
+    traverseSketches[destination].forEach((route) => {
+      const points = route.points.map(([latitude, longitude]) =>
+        getSurfaceDirection(latitude, longitude).multiplyScalar(globeRadius * 1.009),
+      );
+      const curve = new THREE.CatmullRomCurve3(points);
+      const routeGeometry = new THREE.TubeGeometry(curve, 72, 0.014, 7, false);
+      routeGeometries.push(routeGeometry);
+      const routeMaterial = new THREE.MeshBasicMaterial({
+        color: route.color,
+        transparent: true,
+        opacity: 0.92,
+        depthWrite: false,
+        toneMapped: false,
+      });
+      routeMaterials.push(routeMaterial);
+      planetGroup.add(new THREE.Mesh(routeGeometry, routeMaterial));
+
+      const endpointGeometry = new THREE.SphereGeometry(0.035, 12, 12);
+      routeGeometries.push(endpointGeometry);
+      const endpointMaterial = new THREE.MeshBasicMaterial({
+        color: route.color,
+        toneMapped: false,
+      });
+      routeMaterials.push(endpointMaterial);
+      const start = new THREE.Mesh(endpointGeometry, endpointMaterial);
+      start.position.copy(points[0]);
+      planetGroup.add(start);
+
+      const finishGeometry = new THREE.SphereGeometry(0.048, 12, 12);
+      routeGeometries.push(finishGeometry);
+      const finishMaterial = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        toneMapped: false,
+      });
+      routeMaterials.push(finishMaterial);
+      const finish = new THREE.Mesh(finishGeometry, finishMaterial);
+      finish.position.copy(points[points.length - 1]);
+      planetGroup.add(finish);
+    });
+
     markerDefinitions.forEach((definition) => {
       const markerGroup = new THREE.Group();
       const direction = getSurfaceDirection(
@@ -586,7 +647,10 @@ export function ArchivePlanetScene({
       const delta = Math.min(clock.getDelta(), 0.05);
 
       if (!reducedMotion) {
-        planetGroup.rotation.y += delta * 0.018 + rotationVelocityY;
+        // Accelerated but period-aware: Mars spins near Earth-day speed;
+        // the Moon's sidereal rotation is much slower (~27.3 Earth days).
+        const spinRate = destination === "mars" ? 0.0438 : 0.00165;
+        planetGroup.rotation.y += delta * spinRate + rotationVelocityY;
         planetGroup.rotation.x = THREE.MathUtils.clamp(
           planetGroup.rotation.x + rotationVelocityX,
           -0.78,
@@ -692,7 +756,9 @@ export function ArchivePlanetScene({
       renderer.domElement.removeEventListener("click", handleClick);
 
       geometries.forEach((geometry) => geometry.dispose());
+      routeGeometries.forEach((geometry) => geometry.dispose());
       materials.forEach((material) => material.dispose());
+      routeMaterials.forEach((material) => material.dispose());
       loadedTextures.forEach((loadedTexture) => loadedTexture.dispose());
 
       renderer.dispose();
@@ -701,10 +767,33 @@ export function ArchivePlanetScene({
   }, [destination, reducedMotion, artifacts]);
 
   return (
-    <div
-      ref={mountRef}
-      className={"archive-planet-scene archive-planet-" + destination}
-      aria-hidden="true"
-    />
+    <div className="archive-planet-stage">
+      <div
+        ref={mountRef}
+        className={"archive-planet-scene archive-planet-" + destination}
+        aria-hidden="true"
+      />
+      <div className="archive-route-legend" aria-label="Illustrative rover traverse routes">
+        <span className="archive-route-legend-title">SURFACE TRAVERSE SKETCHES</span>
+        {(destination === "mars"
+          ? [
+              ["#7fd7ff", "SOJOURNER"],
+              ["#f4c879", "SPIRIT"],
+              ["#9fe0b2", "OPPORTUNITY"],
+            ]
+          : [
+              ["#7fd7ff", "APOLLO 15 LRV"],
+              ["#f4c879", "APOLLO 16 LRV"],
+              ["#9fe0b2", "APOLLO 17 LRV"],
+            ]
+        ).map(([color, label]) => (
+          <span className="archive-route-legend-item" key={label}>
+            <i style={{ background: color }} />
+            {label}
+          </span>
+        ))}
+        <small>Illustrative paths · not to scale or surveyed tracks</small>
+      </div>
+    </div>
   );
 }
