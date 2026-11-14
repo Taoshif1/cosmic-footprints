@@ -11,14 +11,14 @@ interface Question {
 
 const questionBank: Record<string, Question[]> = {
   "surveyor-3": [
-    { prompt: "What was Surveyor 3 sent to investigate before astronauts landed?", choices: ["The Moon's magnetic poles only", "Lunar soil and soft-landing conditions", "Water clouds above the Moon"], answer: 1, explanation: "Surveyor 3 tested a soft landing and used a surface sampler to examine lunar soil. This helped prepare for later crewed missions." },
+    { prompt: "What was Surveyor 3 sent to investigate before astronauts landed?", choices: ["The Moon's magnetic poles only", "Lunar soil and soft-landing conditions", "Water clouds above the Moon"], answer: 1, explanation: "Surveyor 3 tested a soft landing and used a surface sampler to examine lunar soil, helping prepare for later crewed missions." },
     { prompt: "Which crew visited Surveyor 3 in 1969?", choices: ["Apollo 11", "Apollo 12", "Apollo 17"], answer: 1, explanation: "Apollo 12 astronauts Pete Conrad and Alan Bean visited the lander and recovered parts, including its television camera." },
-    { prompt: "What makes Surveyor 3 unusual among lunar robots?", choices: ["Humans later returned to examine it", "It flew back to Earth", "It became a communications satellite"], answer: 0, explanation: "Apollo 12 landed nearby and astronauts walked to Surveyor 3. Some of its hardware was brought back to Earth for examination." },
+    { prompt: "What makes Surveyor 3 unusual among lunar robots?", choices: ["Humans later returned to examine it", "It flew back to Earth", "It became a communications satellite"], answer: 0, explanation: "Apollo 12 landed nearby. Astronauts walked to Surveyor 3 and brought selected hardware back to Earth." },
   ],
   "lunar-roving-vehicle": [
     { prompt: "Which Apollo missions used Lunar Roving Vehicles?", choices: ["Apollo 11, 12 and 13", "Apollo 15, 16 and 17", "Apollo 14, 15 and 16"], answer: 1, explanation: "Three battery-powered Lunar Roving Vehicles supported Apollo 15, Apollo 16 and Apollo 17." },
     { prompt: "According to the NASA NSSDCA record, which mission's rover travelled the farthest?", choices: ["Apollo 15 — 27.8 km", "Apollo 16 — 26.7 km", "Apollo 17 — 35.9 km"], answer: 2, explanation: "Apollo 17 recorded 35.9 km, the greatest of the three mission totals shown in the NASA record." },
-    { prompt: "What is the combined distance in the three NASA NSSDCA records shown in this project?", choices: ["60.4 km", "90.4 km", "100.4 km"], answer: 1, explanation: "27.8 + 26.7 + 35.9 = 90.4 km. This is a calculation from the three published mission totals, not live telemetry." },
+    { prompt: "What is the combined distance in the three NASA NSSDCA records shown in this project?", choices: ["60.4 km", "90.4 km", "100.4 km"], answer: 1, explanation: "27.8 + 26.7 + 35.9 = 90.4 km. This is calculated from the historical mission totals, not live telemetry." },
   ],
   "alsep": [
     { prompt: "Why did astronauts deploy ALSEP instruments on the Moon?", choices: ["To keep collecting science after crews returned to Earth", "To provide television for astronauts", "To launch satellites into lunar orbit"], answer: 0, explanation: "ALSEP stations let NASA study the lunar environment for months and years, long after astronauts had left." },
@@ -35,7 +35,7 @@ const questionBank: Record<string, Question[]> = {
     { prompt: "What happened to Spirit?", choices: ["It was carried back to Earth", "It became stuck in soft soil and later fell silent", "It flew into orbit"], answer: 1, explanation: "Spirit became trapped in soft soil. Its final communication was received in March 2010." },
     { prompt: "What ended Opportunity's mission?", choices: ["A planet-wide dust storm blocked sunlight and communication", "It ran out of wheels on its first day", "It landed in a lake"], answer: 0, explanation: "A major dust storm blocked sunlight from Opportunity's solar panels. Its final communication came on June 10, 2018." },
   ],
-  insight: [
+  "insight": [
     { prompt: "Unlike a rover, what did NASA's InSight lander do?", choices: ["Stayed in one place to study Mars' interior", "Drove across the polar ice cap", "Collected samples from Earth's Moon"], answer: 0, explanation: "InSight was a stationary lander. It used instruments, including a seismometer, to investigate Mars' interior." },
     { prompt: "What did InSight's seismometer detect?", choices: ["Ocean waves", "Marsquakes and other seismic events", "Solar eclipses"], answer: 1, explanation: "InSight detected 1,319 marsquakes, helping scientists learn about the crust, mantle and core." },
     { prompt: "Why did InSight gradually lose power?", choices: ["Dust accumulated on its solar panels", "Its batteries were removed by astronauts", "Mars moved farther from the Sun"], answer: 0, explanation: "Dust built up on the solar panels, reducing the energy available to operate and communicate." },
@@ -45,19 +45,31 @@ const questionBank: Record<string, Question[]> = {
     { prompt: "What was the lander meant to investigate near the Martian south pole?", choices: ["Water ice and the local soil", "The rings of Mars", "Volcanic activity on the Moon"], answer: 0, explanation: "Its robotic arm was intended to dig into the soil and investigate water ice and the Martian environment." },
     { prompt: "What is known about the spacecraft's final resting places?", choices: ["All were recovered", "Their exact locations remain unconfirmed", "They are orbiting Earth"], answer: 1, explanation: "NASA never received a successful signal. The lander and probes' exact final locations remain unknown." },
   ],
-  ingenuity: [
+  "ingenuity": [
     { prompt: "What record did Ingenuity achieve?", choices: ["First powered, controlled flight on another planet", "First human flight on Mars", "First balloon flight around Jupiter"], answer: 0, explanation: "Ingenuity demonstrated powered, controlled flight in the thin Martian atmosphere." },
     { prompt: "How many flights did Ingenuity complete?", choices: ["5", "25", "72"], answer: 2, explanation: "It was planned as a five-flight technology demonstration but ultimately completed 72 flights." },
     { prompt: "Why did Ingenuity stop flying?", choices: ["Its rotor blades were damaged during its final flight", "It was deliberately launched into orbit", "It ran out of oxygen"], answer: 0, explanation: "Rotor damage during the 72nd flight in January 2024 left the helicopter unable to fly." },
   ],
 };
 
+const simpleSummaries: Record<string, string> = {
+  "surveyor-3": "Surveyor 3 was a robot sent to the Moon before people landed there. It tested safe landing and studied lunar soil. Later, Apollo 12 astronauts visited it and brought some parts back to Earth.",
+  "lunar-roving-vehicle": "Walking limited how far astronauts could explore. NASA built electric Moon buggies so crews could travel farther and carry more science equipment. The three Apollo rovers travelled 90.4 kilometres altogether, using the NASA NSSDCA mission totals.",
+  "alsep": "Astronauts could only stay on the Moon for a short time. ALSEP was a set of science tools they left behind. The instruments kept studying moonquakes, heat and the lunar environment until NASA switched them off in 1977.",
+  "sojourner": "Pathfinder landed on Mars in 1997 and carried a small rover called Sojourner. It rolled across the ground, studied rocks and showed that small robots could explore another planet.",
+  "spirit-opportunity": "Spirit and Opportunity were robot geologists. They studied rocks and soil for clues that water once existed on Mars. They were planned for about 90 days but worked for years.",
+  "insight": "InSight did not drive around Mars. It stayed in one place and listened for marsquakes. Those shakes helped scientists learn about the inside of the Red Planet.",
+  "mars-polar-lander": "Mars Polar Lander was sent to study the soil near the Martian south pole. It carried two tiny probes, but none sent a successful signal after arrival. Their exact resting places are still unknown.",
+  "ingenuity": "Ingenuity was a small helicopter that travelled to Mars with the Perseverance rover. It was planned for five test flights but flew 72 times. Damage to a rotor ended its flying career.",
+};
+
 export function MissionLearningLab({ artifact }: { artifact: Artifact }) {
   const [isOpen, setIsOpen] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
+  const [completed, setCompleted] = useState(false);
   const questions = useMemo(() => questionBank[artifact.id] ?? [], [artifact.id]);
-  const finished = answers.length === questions.length;
+  const finished = completed;
   const question = questions[questionIndex];
   const selectedAnswer = answers[questionIndex];
   const score = answers.reduce((sum, answer, index) => sum + (answer === questions[index]?.answer ? 1 : 0), 0);
@@ -67,6 +79,7 @@ export function MissionLearningLab({ artifact }: { artifact: Artifact }) {
   useEffect(() => {
     setQuestionIndex(0);
     setAnswers([]);
+    setCompleted(false);
     setIsOpen(false);
   }, [artifact.id]);
 
@@ -85,12 +98,17 @@ export function MissionLearningLab({ artifact }: { artifact: Artifact }) {
   };
 
   const nextQuestion = () => {
-    if (questionIndex < questions.length - 1) setQuestionIndex((current) => current + 1);
+    if (questionIndex < questions.length - 1) {
+      setQuestionIndex((current) => current + 1);
+    } else {
+      setCompleted(true);
+    }
   };
 
   const restart = () => {
     setQuestionIndex(0);
     setAnswers([]);
+    setCompleted(false);
   };
 
   if (!questions.length) return null;
@@ -128,6 +146,11 @@ export function MissionLearningLab({ artifact }: { artifact: Artifact }) {
                 <span key={index} className={index < answers.length ? "is-complete" : index === questionIndex ? "is-current" : ""} />
               ))}
             </div>
+
+            <section className="mission-lab-simple">
+              <span>THE STORY IN SIMPLE WORDS</span>
+              <p>{simpleSummaries[artifact.id]}</p>
+            </section>
 
             {artifact.dataVisualization && (
               <section className="mission-lab-data" aria-label="NASA mission data investigation">

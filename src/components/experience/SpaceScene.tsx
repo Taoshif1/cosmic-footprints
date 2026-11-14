@@ -421,6 +421,125 @@ export function SpaceScene({
         scene.add(marsHalo);
 
         // ========================================
+        // LOCKED SOLAR SYSTEM PLANETS
+        // The Moon, Earth and Mars remain the only destinations.
+        // Other planets are visual, non-interactive context only.
+        // ========================================
+
+        const createLockedPlanetLabel = (name: string) => {
+            const canvas = document.createElement("canvas");
+            canvas.width = 320;
+            canvas.height = 80;
+            const context = canvas.getContext("2d");
+
+            if (!context) return null;
+
+            context.fillStyle = "rgba(5, 12, 24, 0.82)";
+            context.strokeStyle = "rgba(164, 190, 229, 0.45)";
+            context.lineWidth = 2;
+            context.beginPath();
+            context.roundRect(4, 4, 312, 72, 12);
+            context.fill();
+            context.stroke();
+
+            context.textAlign = "center";
+            context.textBaseline = "middle";
+            context.fillStyle = "#dce8fa";
+            context.font = "700 25px Arial, sans-serif";
+            context.fillText(name.toUpperCase(), 160, 29);
+            context.fillStyle = "#8fa4c5";
+            context.font = "600 15px Arial, sans-serif";
+            context.fillText("LOCKED  /  COMING SOON", 160, 54);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.colorSpace = THREE.SRGBColorSpace;
+            texture.needsUpdate = true;
+            loadedTextures.push(texture);
+
+            const material = new THREE.SpriteMaterial({
+                map: texture,
+                transparent: true,
+                opacity: 0,
+                depthWrite: false,
+                toneMapped: false,
+            });
+            const sprite = new THREE.Sprite(material);
+            sprite.scale.set(1.7, 0.43, 1);
+            return sprite;
+        };
+
+        const lockedPlanetConfigs = [
+            { name: "Mercury", color: 0x9a8f83, radius: 0.22, x: -8.0, y: 0.05, mobileX: -2.45, mobileY: 2.65, mobileRadius: 0.20 },
+            { name: "Venus", color: 0xd6ad78, radius: 0.34, x: -6.2, y: -0.12, mobileX: -2.45, mobileY: 0.45, mobileRadius: 0.28 },
+            { name: "Jupiter", color: 0xc99d76, radius: 0.57, x: 5.8, y: 0.1, mobileX: 2.45, mobileY: 2.65, mobileRadius: 0.40 },
+            { name: "Saturn", color: 0xd7c49b, radius: 0.49, x: 7.2, y: -0.1, mobileX: 2.45, mobileY: 0.45, mobileRadius: 0.36 },
+            { name: "Uranus", color: 0x8dcbd0, radius: 0.36, x: 8.2, y: 0.15, mobileX: -2.45, mobileY: -2.45, mobileRadius: 0.29 },
+            { name: "Neptune", color: 0x527fc9, radius: 0.35, x: 9.2, y: -0.12, mobileX: 2.45, mobileY: -2.45, mobileRadius: 0.29 },
+        ];
+
+        const lockedPlanets = lockedPlanetConfigs.map((config) => {
+            const group = new THREE.Group();
+            const geometry = new THREE.SphereGeometry(config.radius, 48, 48);
+            const material = new THREE.MeshStandardMaterial({
+                color: config.color,
+                roughness: config.name === "Jupiter" || config.name === "Saturn" ? 0.88 : 0.96,
+                metalness: 0.02,
+                transparent: true,
+                opacity: 0,
+            });
+            const sphere = new THREE.Mesh(geometry, material);
+            group.add(sphere);
+
+            const materials: THREE.Material[] = [material];
+
+            if (config.name === "Saturn") {
+                const ringGeometry = new THREE.RingGeometry(config.radius * 1.25, config.radius * 1.9, 72);
+                const ringMaterial = new THREE.MeshBasicMaterial({
+                    color: 0xc9b58f,
+                    transparent: true,
+                    opacity: 0,
+                    side: THREE.DoubleSide,
+                    depthWrite: false,
+                });
+                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                ring.rotation.x = Math.PI * 0.36;
+                ring.rotation.y = -0.18;
+                group.add(ring);
+                materials.push(ringMaterial);
+            }
+
+            if (config.name === "Jupiter") {
+                const bandMaterial = new THREE.MeshBasicMaterial({
+                    color: 0x8e6046,
+                    transparent: true,
+                    opacity: 0,
+                    depthWrite: false,
+                });
+                const band = new THREE.Mesh(
+                    new THREE.TorusGeometry(config.radius * 0.82, config.radius * 0.055, 6, 64),
+                    bandMaterial,
+                );
+                band.rotation.x = Math.PI * 0.42;
+                group.add(band);
+                materials.push(bandMaterial);
+            }
+
+            const label = createLockedPlanetLabel(config.name);
+            if (label) {
+                label.position.set(0, -(config.radius + 0.5), 0.05);
+                group.add(label);
+                materials.push(label.material);
+            }
+
+            group.position.set(config.x, config.y, -1.5);
+            group.scale.setScalar(0.001);
+            group.userData.locked = true;
+            scene.add(group);
+
+            return { ...config, group, materials };
+        });
+
+        // ========================================
         // DISTANT STARFIELD
         // ========================================
 
@@ -776,6 +895,13 @@ export function SpaceScene({
 
                 orbitMaterial.opacity = 0;
 
+                lockedPlanets.forEach((planet) => {
+                    planet.group.scale.setScalar(0.001);
+                    planet.materials.forEach((material) => {
+                        if ("opacity" in material) material.opacity = 0;
+                    });
+                });
+
                 renderScene();
                 return;
             }
@@ -834,6 +960,15 @@ export function SpaceScene({
                     z: 0.01,
                     duration: 0.8,
                 }, 0);
+
+            lockedPlanets.forEach((planet) => {
+                planet.group.scale.setScalar(0.001);
+                planet.materials.forEach((material) => {
+                    if ("opacity" in material) {
+                        activeTimeline?.to(material, { opacity: 0, duration: 0.5 }, 0);
+                    }
+                });
+            });
         };
 
 
@@ -845,17 +980,19 @@ export function SpaceScene({
 
             const layout = isMobile
                 ? {
-                    cameraZ: 10.1,
-                    earth: { x: -1.0, y: 1.0, scale: 0.40 },
-                    moon: { x: 1.0, y: 1.0, scale: 0.62 },
-                    mars: { x: 0, y: -1.25, scale: 0.75 },
+                    cameraZ: 16.2,
+                    earth: { x: -0.82, y: 0.88, scale: 0.34 },
+                    moon: { x: 0.82, y: 0.88, scale: 0.53 },
+                    mars: { x: 0, y: -1.28, scale: 0.64 },
                 }
                 : {
-                    cameraZ: 11,
+                    cameraZ: 17.5,
                     earth: { x: -3.45, y: 0.25, scale: 0.53 },
                     moon: { x: 0, y: -0.30, scale: 0.90 },
                     mars: { x: 3.45, y: 0.25, scale: 0.96 },
                 };
+
+            const lockedOpacity = isMobile ? 0.66 : 0.78;
 
             const targetOrbitOpacity = isMobile ? 0 : 0.20;
 
@@ -889,6 +1026,21 @@ export function SpaceScene({
                 cameraTarget.set(0, 0, 0);
 
                 orbitMaterial.opacity = targetOrbitOpacity;
+
+                lockedPlanets.forEach((planet) => {
+                    planet.group.position.set(
+                        isMobile ? planet.mobileX : planet.x,
+                        isMobile ? planet.mobileY : planet.y,
+                        -1.5,
+                    );
+                    planet.group.scale.setScalar(isMobile ? 0.78 : 1);
+                    planet.materials.forEach((material) => {
+                        if ("opacity" in material) material.opacity = lockedOpacity;
+                    });
+                    if (planet.name === "Saturn") {
+                        planet.group.children[1]?.rotation.set(Math.PI * 0.36, -0.18, 0.12);
+                    }
+                });
 
                 renderScene();
                 return;
@@ -979,6 +1131,37 @@ export function SpaceScene({
                     opacity: targetOrbitOpacity,
                     duration: 1.2,
                 }, 1.1);
+
+            lockedPlanets.forEach((planet, index) => {
+                const targetX = isMobile ? planet.mobileX : planet.x;
+                const targetY = isMobile ? planet.mobileY : planet.y;
+                const targetScale = isMobile ? 0.78 : 1;
+
+                activeTimeline
+                    ?.to(planet.group.position, {
+                        x: targetX,
+                        y: targetY,
+                        z: -1.5,
+                        duration: 1.7,
+                        ease: "power3.out",
+                    }, 0.35 + index * 0.06)
+                    .to(planet.group.scale, {
+                        x: targetScale,
+                        y: targetScale,
+                        z: targetScale,
+                        duration: 1.55,
+                        ease: "back.out(1.25)",
+                    }, 0.35 + index * 0.06);
+
+                planet.materials.forEach((material) => {
+                    if ("opacity" in material) {
+                        activeTimeline?.to(material, {
+                            opacity: lockedOpacity,
+                            duration: 1.1,
+                        }, 0.65 + index * 0.06);
+                    }
+                });
+            });
         };
 
 
@@ -1016,6 +1199,12 @@ export function SpaceScene({
 
                 other.material.opacity = 0;
                 orbitMaterial.opacity = 0;
+                lockedPlanets.forEach((planet) => {
+                    planet.group.scale.setScalar(0.001);
+                    planet.materials.forEach((material) => {
+                        if ("opacity" in material) material.opacity = 0;
+                    });
+                });
 
                 renderScene();
 
@@ -1086,6 +1275,15 @@ export function SpaceScene({
                     z: 1,
                     duration: 1,
                 }, 2.5);
+
+            lockedPlanets.forEach((planet) => {
+                planet.group.scale.setScalar(0.001);
+                planet.materials.forEach((material) => {
+                    if ("opacity" in material) {
+                        activeTimeline?.to(material, { opacity: 0, duration: 0.65 }, 0);
+                    }
+                });
+            });
         };
 
         let animationFrame = 0;
@@ -1143,6 +1341,10 @@ export function SpaceScene({
                 moon.rotation.y += delta * 0.014;
 
                 mars.rotation.y += delta * 0.012;
+
+                lockedPlanets.forEach((planet, index) => {
+                    planet.group.rotation.y += delta * (0.008 + index * 0.001);
+                });
 
                 starField.rotation.y += delta * 0.0008;
             }
@@ -1237,6 +1439,22 @@ export function SpaceScene({
                 "click",
                 handleClick,
             );
+
+            lockedPlanets.forEach((planet) => {
+                planet.group.traverse((object) => {
+                    if (object instanceof THREE.Mesh) {
+                        object.geometry.dispose();
+                    }
+                    if (object instanceof THREE.Mesh || object instanceof THREE.Sprite) {
+                        const objectMaterial = object.material;
+                        if (Array.isArray(objectMaterial)) {
+                            objectMaterial.forEach((material) => material.dispose());
+                        } else {
+                            objectMaterial.dispose();
+                        }
+                    }
+                });
+            });
 
             const geometries = [
                 earthGeometry,
