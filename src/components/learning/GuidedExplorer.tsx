@@ -1,10 +1,9 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Artifact } from "../../data/artifacts";
 import { getMissionFate } from "../../data/missionDetails";
 
 interface GuidedExplorerProps {
   artifacts: Artifact[];
-  reducedMotion: boolean;
   onExit: () => void;
 }
 
@@ -32,7 +31,7 @@ const quiz: Record<string, { question: string; choices: string[]; answer: number
 
 type Phase = "mission" | "discovery" | "ending" | "question" | "legacy";
 
-export function GuidedExplorer({ artifacts, reducedMotion, onExit }: GuidedExplorerProps) {
+export function GuidedExplorer({ artifacts, onExit }: GuidedExplorerProps) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const totalSteps = missionOrder.length * 4 + 1;
@@ -46,6 +45,14 @@ export function GuidedExplorer({ artifacts, reducedMotion, onExit }: GuidedExplo
   const fate = artifact ? getMissionFate(artifact) : undefined;
   const currentQuiz = currentId ? quiz[currentId] : undefined;
   const selectedAnswer = currentId ? answers[currentId] : undefined;
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onExit();
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [onExit]);
 
   const previous = () => setStep((value) => Math.max(0, value - 1));
   const next = () => setStep((value) => Math.min(totalSteps - 1, value + 1));
