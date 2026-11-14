@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -90,6 +90,19 @@ function App() {
     },
     [selectedDestination],
   );
+
+  useEffect(() => {
+    if (!selectedArtifact) return;
+
+    const handleStoryEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedArtifact(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleStoryEscape);
+    return () => window.removeEventListener("keydown", handleStoryEscape);
+  }, [selectedArtifact]);
 
   const beginExploration = () => {
     setMode("destinations");
