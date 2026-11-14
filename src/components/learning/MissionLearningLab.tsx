@@ -129,6 +129,32 @@ export function MissionLearningLab({ artifact }: { artifact: Artifact }) {
               ))}
             </div>
 
+            {artifact.dataVisualization && (
+              <section className="mission-lab-data" aria-label="NASA mission data investigation">
+                <div className="mission-lab-data-heading">
+                  <div>
+                    <span>NASA DATA / MISSION INVESTIGATION</span>
+                    <h3>{artifact.dataVisualization.title}</h3>
+                  </div>
+                  <strong>{artifact.dataVisualization.records.reduce((sum, record) => sum + record.value, 0).toFixed(1)}<small> {artifact.dataVisualization.unit}</small></strong>
+                </div>
+                <p>{artifact.dataVisualization.description}</p>
+                <div className="mission-lab-data-rows">
+                  {artifact.dataVisualization.records.map((record) => {
+                    const maximum = Math.max(...artifact.dataVisualization!.records.map((item) => item.value), 1);
+                    return (
+                      <div className="mission-lab-data-row" key={record.label}>
+                        <div><span>{record.label}</span><strong>{record.value.toFixed(1)} {artifact.dataVisualization!.unit}</strong></div>
+                        <span className="mission-lab-data-track"><i style={{ width: (record.value / maximum * 100) + "%" }} /></span>
+                      </div>
+                    );
+                  })}
+                </div>
+                <a href={artifact.dataVisualization.sourceUrl} target="_blank" rel="noreferrer">OPEN ORIGINAL NASA DATA RECORD ↗</a>
+                <small>Combined total is calculated from the three historical mission values shown above; this is not live telemetry.</small>
+              </section>
+            )}
+
             {finished ? (
               <div className="mission-lab-result">
                 <span className="mission-lab-result-kicker">CASE FILE CLOSED</span>
