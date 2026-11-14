@@ -1,4 +1,3 @@
-
 import { useCallback, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -8,6 +7,11 @@ import {
   type Destination,
   type SceneMode,
 } from "./components/experience/SpaceScene";
+
+import { ArtifactExplorer } from "./components/artifacts/ArtifactExplorer";
+import { ArtifactStory } from "./components/artifacts/ArtifactStory";
+
+import type { Artifact } from "./data/artifacts";
 
 import { useReducedMotion } from "./hooks/useReducedMotion";
 
@@ -24,6 +28,9 @@ function App() {
 
   const [selectedDestination, setSelectedDestination] =
     useState<Destination | null>(null);
+
+  const [selectedArtifact, setSelectedArtifact] =
+    useState<Artifact | null>(null);
 
   const handleDestinationSelect = useCallback(
     (destination: Destination) => {
@@ -47,11 +54,13 @@ function App() {
   };
 
   const returnToDestinations = () => {
+    setSelectedArtifact(null);
     setSelectedDestination(null);
     setMode("destinations");
   };
 
   const returnToEarth = () => {
+    setSelectedArtifact(null);
     setSelectedDestination(null);
     setMode("intro");
   };
@@ -143,20 +152,81 @@ function App() {
         );
       }
 
+
       if (mode === "archive") {
-        timeline
-          .fromTo(
-            ".archive-copy",
-            { opacity: 0, x: -30 },
-            { opacity: 1, x: 0, duration: 0.9 },
-          );
+        if (selectedArtifact) {
+          timeline
+            .fromTo(
+              ".story-hero-image",
+              { scale: 1.08 },
+              {
+                scale: 1,
+                duration: 1.2,
+                ease: "power2.out",
+              },
+            )
+            .fromTo(
+              ".story-hero-content",
+              { opacity: 0, y: 25 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.9,
+              },
+              "-=0.7",
+            )
+            .fromTo(
+              ".story-section",
+              { opacity: 0, y: 22 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.7,
+                stagger: 0.12,
+              },
+              "-=0.3",
+            );
+        } else {
+          timeline
+            .fromTo(
+              ".archive-heading",
+              { opacity: 0, y: 25 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.85,
+              },
+            )
+            .fromTo(
+              ".archive-summary",
+              { opacity: 0 },
+              {
+                opacity: 1,
+                duration: 0.7,
+              },
+              "-=0.4",
+            )
+            .fromTo(
+              ".artifact-card",
+              { opacity: 0, y: 35 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.75,
+                stagger: 0.13,
+                ease: "power3.out",
+              },
+              "-=0.3",
+            );
+        }
       }
+
 
       return () => timeline.kill();
     },
     {
       scope: rootRef,
-      dependencies: [mode, reducedMotion],
+      dependencies: [mode, reducedMotion, selectedArtifact],
       revertOnUpdate: true,
     },
   );
@@ -344,38 +414,19 @@ function App() {
           </section>
         )}
 
-        {mode === "archive" && (
-          <section className="archive-copy">
-            <p className="intro-kicker">
-              <span className="kicker-line" />
-              DESTINATION REACHED / MISSION ARCHIVE
-            </p>
-
-            <h1 className="archive-title">
-              {destinationName}
-            </h1>
-
-            <p>
-              Every machine left behind has a story.
-              Explore the explorers, their discoveries,
-              and the legacy they left beyond Earth.
-            </p>
-
-            <div className="archive-actions">
-              <button
-                type="button"
-                className="launch-button"
-                onClick={returnToDestinations}
-              >
-                CHOOSE ANOTHER DESTINATION
-                <span aria-hidden="true">↗</span>
-              </button>
-            </div>
-
-            <p className="archive-coming-soon">
-              ARTIFACT EXPLORER / UNDER DEVELOPMENT
-            </p>
-          </section>
+        {mode === "archive" && selectedDestination && (
+          selectedArtifact ? (
+            <ArtifactStory
+              artifact={selectedArtifact}
+              onBack={() => setSelectedArtifact(null)}
+            />
+          ) : (
+            <ArtifactExplorer
+              destination={selectedDestination}
+              onSelect={setSelectedArtifact}
+              onChangeDestination={returnToDestinations}
+            />
+          )
         )}
       </main>
 
