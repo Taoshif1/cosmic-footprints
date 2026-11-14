@@ -23,6 +23,15 @@ import "./App.css";
 
 gsap.registerPlugin(useGSAP);
 
+function SceneLoadingFallback({ label }: { label: string }) {
+  return (
+    <div className="scene-loading-fallback" role="status" aria-live="polite">
+      <span className="scene-loading-orbit" aria-hidden="true" />
+      <span>{label}</span>
+    </div>
+  );
+}
+
 const SpaceScene = lazy(async () => {
   const module = await import("./components/experience/SpaceScene");
   return { default: module.SpaceScene };
