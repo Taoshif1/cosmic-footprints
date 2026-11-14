@@ -469,12 +469,12 @@ export function SpaceScene({
         };
 
         const lockedPlanetConfigs = [
-            { name: "Mercury", color: 0x9a8f83, radius: 0.22, x: -8.1, y: 0.05, mobileX: -2.45, mobileY: 2.65, mobileRadius: 0.20 },
-            { name: "Venus", color: 0xd6ad78, radius: 0.34, x: -6.25, y: -0.12, mobileX: -2.45, mobileY: 0.45, mobileRadius: 0.28 },
-            { name: "Jupiter", color: 0xc99d76, radius: 0.57, x: 5.95, y: 0.1, mobileX: 2.45, mobileY: 2.65, mobileRadius: 0.40 },
-            { name: "Saturn", color: 0xd7c49b, radius: 0.49, x: 7.55, y: -0.1, mobileX: 2.45, mobileY: 0.45, mobileRadius: 0.36 },
-            { name: "Uranus", color: 0x8dcbd0, radius: 0.36, x: 9.0, y: 0.15, mobileX: -2.45, mobileY: -2.45, mobileRadius: 0.29 },
-            { name: "Neptune", color: 0x527fc9, radius: 0.35, x: 10.25, y: -0.12, mobileX: 2.45, mobileY: -2.45, mobileRadius: 0.29 },
+            { name: "Mercury", color: 0x9a8f83, radius: 0.22, x: -8.0, y: 0.05, mobileX: -2.45, mobileY: 2.65, mobileRadius: 0.20 },
+            { name: "Venus", color: 0xd6ad78, radius: 0.34, x: -6.2, y: -0.12, mobileX: -2.45, mobileY: 0.45, mobileRadius: 0.28 },
+            { name: "Jupiter", color: 0xc99d76, radius: 0.57, x: 5.8, y: 0.1, mobileX: 2.45, mobileY: 2.65, mobileRadius: 0.40 },
+            { name: "Saturn", color: 0xd7c49b, radius: 0.49, x: 7.2, y: -0.1, mobileX: 2.45, mobileY: 0.45, mobileRadius: 0.36 },
+            { name: "Uranus", color: 0x8dcbd0, radius: 0.36, x: 8.2, y: 0.15, mobileX: -2.45, mobileY: -2.45, mobileRadius: 0.29 },
+            { name: "Neptune", color: 0x527fc9, radius: 0.35, x: 9.2, y: -0.12, mobileX: 2.45, mobileY: -2.45, mobileRadius: 0.29 },
         ];
 
         const lockedPlanets = lockedPlanetConfigs.map((config) => {
@@ -1342,6 +1342,10 @@ export function SpaceScene({
 
                 mars.rotation.y += delta * 0.012;
 
+                lockedPlanets.forEach((planet, index) => {
+                    planet.group.rotation.y += delta * (0.008 + index * 0.001);
+                });
+
                 starField.rotation.y += delta * 0.0008;
             }
 
@@ -1435,6 +1439,22 @@ export function SpaceScene({
                 "click",
                 handleClick,
             );
+
+            lockedPlanets.forEach((planet) => {
+                planet.group.traverse((object) => {
+                    if (object instanceof THREE.Mesh) {
+                        object.geometry.dispose();
+                    }
+                    if (object instanceof THREE.Mesh || object instanceof THREE.Sprite) {
+                        const objectMaterial = object.material;
+                        if (Array.isArray(objectMaterial)) {
+                            objectMaterial.forEach((material) => material.dispose());
+                        } else {
+                            objectMaterial.dispose();
+                        }
+                    }
+                });
+            });
 
             const geometries = [
                 earthGeometry,
