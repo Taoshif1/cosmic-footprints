@@ -3302,3 +3302,97 @@ button.destination-control:not(:disabled):hover {
 .archive-lost-signal > span:last-child {
   color: #e5aa91;
 }
+
+.ingenuity-replay {
+  margin: 34px 0;
+  padding: clamp(18px, 3vw, 26px);
+  border: 1px solid rgba(135, 174, 222, 0.25);
+  background: rgba(7, 18, 33, 0.82);
+}
+
+.ingenuity-replay h2 {
+  margin: 8px 0;
+  color: #eff6ff;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  letter-spacing: -0.04em;
+}
+
+.ingenuity-replay-intro {
+  color: #b7c8dd;
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+.ingenuity-flight-visual {
+  margin: 18px 0;
+  padding: 16px;
+  background: radial-gradient(ellipse at 50% 100%, rgba(154, 102, 70, 0.18), rgba(6, 14, 26, 0.4));
+  border: 1px solid rgba(148, 177, 216, 0.13);
+}
+
+.ingenuity-flight-visual svg {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  overflow: visible;
+}
+
+.ingenuity-ground { stroke: rgba(205, 177, 147, 0.5); stroke-width: 0.8; }
+.ingenuity-flight-path {
+  fill: none;
+  stroke: #79b8e8;
+  stroke-width: 1.25;
+  stroke-dasharray: 2.5 2;
+}
+.ingenuity-flight-point { fill: #a8d8ff; }
+.ingenuity-flight-point.is-landing { fill: #a5e0bd; }
+.ingenuity-helicopter-marker { fill: #f5d18c; stroke: #f5d18c; stroke-width: 0.9; filter: drop-shadow(0 0 3px rgba(245, 209, 140, 0.8)); }
+.ingenuity-flight-labels,
+.ingenuity-flight-range {
+  display: flex;
+  justify-content: space-between;
+  color: #90a8c7;
+  font: 600 0.52rem monospace;
+  letter-spacing: 0.1em;
+}
+.ingenuity-flight-visual > small {
+  display: block;
+  margin-top: 9px;
+  color: #7e91aa;
+  font-size: 0.61rem;
+}
+.ingenuity-flight-selector { margin: 20px 0; }
+.ingenuity-flight-number {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.ingenuity-flight-number > span {
+  color: #9bb4d4;
+  font: 600 0.58rem monospace;
+  letter-spacing: 0.12em;
+}
+.ingenuity-flight-number strong {
+  color: #eff6ff;
+  font-size: 1.4rem;
+  font-variant-numeric: tabular-nums;
+}
+.ingenuity-flight-number small { color: #8ea5c2; font-size: 0.7rem; }
+.ingenuity-flight-selector input {
+  width: 100%;
+  accent-color: #83b7ed;
+  cursor: pointer;
+}
+.ingenuity-flight-range { margin-top: 5px; }
+.ingenuity-flight-detail {
+  padding: 15px;
+  border-left: 2px solid #80b7e9;
+  background: rgba(107, 151, 205, 0.09);
+}
+.ingenuity-flight-detail > span {
+  color: #9fc4ec;
+  font: 600 0.58rem monospace;
+}
+.ingenuity-flight-detail h3 { margin: 7px 0; color: #eff6ff; font-size: 1rem; }
+.ingenuity-flight-detail p { margin: 0; color: #c3d1e3; font-size: 0.78rem; line-height: 1.7; }
