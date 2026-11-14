@@ -1,5 +1,6 @@
 import type { Artifact } from "../../data/artifacts";
 import { MissionDataChart } from "./MissionDataChart";
+import { MissionFatePanel } from "./MissionFatePanel";
 
 interface ArtifactStoryProps {
   artifact: Artifact;
@@ -90,16 +91,7 @@ export function ArtifactStory({
         <MissionDataChart data={artifact.dataVisualization} />
       )}
 
-      <section className="story-panel-section story-final-chapter">
-        <p className="story-section-index">04 / THE FINAL CHAPTER</p>
-        <h2>What happened next?</h2>
-        <p>{artifact.finalChapter}</p>
-
-        <div className="story-location-note">
-          <span>WHERE IT IS NOW</span>
-          <strong>{artifact.currentLocation}</strong>
-        </div>
-      </section>
+      <MissionFatePanel artifact={artifact} />
 
       <section className="story-panel-section">
         <p className="story-section-index">05 / MISSION TIMELINE</p>
