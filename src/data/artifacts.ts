@@ -11,6 +11,18 @@ export interface MissionMilestone {
     description: string;
 }
 
+export interface MissionDataVisualization {
+    title: string;
+    description: string;
+    unit: string;
+    sourceLabel: string;
+    sourceUrl: string;
+    records: {
+        label: string;
+        value: number;
+    }[];
+}
+
 export interface Artifact {
     id: string;
     destination: Destination;
@@ -32,6 +44,7 @@ export interface Artifact {
     discoveries: string[];
     finalChapter: string;
     currentLocation: string;
+    dataVisualization?: MissionDataVisualization;
     highlights: string[];
     timeline: MissionMilestone[];
     sources: ArtifactSource[];
@@ -132,6 +145,21 @@ export const artifacts: Artifact[] = [
         status: "Parked on the Moon",
         statusDetail:
             "Three battery-powered rovers remain at their respective Apollo landing sites.",
+        dataVisualization: {
+            title: "Three missions. 90.4 kilometres of lunar travel.",
+            description:
+                "NASA's NSSDCA record reports the total distance driven by each Lunar Roving Vehicle during Apollo 15, 16 and 17. Together, the three rovers travelled 90.4 kilometres across the lunar surface.",
+            unit: "km",
+            sourceLabel:
+                "NASA Space Science Data Coordinated Archive — The Apollo Lunar Roving Vehicle",
+            sourceUrl:
+                "https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html",
+            records: [
+                { label: "Apollo 15", value: 27.8 },
+                { label: "Apollo 16", value: 26.7 },
+                { label: "Apollo 17", value: 35.9 },
+            ],
+        },
         purpose:
             "Walking limited how far astronauts could explore. NASA developed the Lunar Roving Vehicle to transport astronauts and scientific equipment across larger areas of the lunar surface.",
         story:
