@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import {
   getArtifactsByDestination,
@@ -11,6 +11,12 @@ interface ArtifactExplorerProps {
   destination: Destination;
   onSelect: (artifact: Artifact) => void;
   onChangeDestination: () => void;
+  searchQuery: string;
+  activeCategory: string;
+  onSearchQueryChange: (value: string) => void;
+  onActiveCategoryChange: (value: string) => void;
+  visibleArtifactIds: string[];
+  onStartGuidedJourney: () => void;
 }
 
 const destinationCopy = {
@@ -42,9 +48,13 @@ export function ArtifactExplorer({
   destination,
   onSelect,
   onChangeDestination,
+  searchQuery,
+  activeCategory,
+  onSearchQueryChange,
+  onActiveCategoryChange,
+  visibleArtifactIds,
+  onStartGuidedJourney,
 }: ArtifactExplorerProps) {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [activeCategory, setActiveCategory] = useState("ALL");
   const artifacts = useMemo(
     () => getArtifactsByDestination(destination),
     [destination],
@@ -60,31 +70,14 @@ export function ArtifactExplorer({
     [artifacts],
   );
 
-  const filteredArtifacts = useMemo(() => {
-    const query = searchQuery.trim().toLocaleLowerCase();
-
-    return artifacts.filter((artifact) => {
-      const matchesCategory =
-        activeCategory === "ALL" || artifact.category === activeCategory;
-      const searchableText = [
-        artifact.name,
-        artifact.mission,
-        artifact.year,
-        artifact.category,
-        artifact.tagline,
-        artifact.description,
-        ...artifact.highlights,
-      ]
-        .join(" ")
-        .toLocaleLowerCase();
-
-      return matchesCategory && (!query || searchableText.includes(query));
-    });
-  }, [activeCategory, artifacts, searchQuery]);
+  const filteredArtifacts = useMemo(
+    () => artifacts.filter((artifact) => visibleArtifactIds.includes(artifact.id)),
+    [artifacts, visibleArtifactIds],
+  );
 
   const clearFilters = () => {
-    setSearchQuery("");
-    setActiveCategory("ALL");
+    onSearchQueryChange("");
+    onActiveCategoryChange("ALL");
   };
 
   return (
@@ -124,6 +117,31 @@ export function ArtifactExplorer({
           </div>
         </div>
 
+        {destination === "mars" && (
+          <button
+            type="button"
+            className="archive-lost-signal"
+            onClick={() => {
+              const record = artifacts.find((artifact) => artifact.id === "mars-polar-lander");
+              if (record) onSelect(record);
+            }}
+            aria-label="Open Mars Polar Lander record: lost signal, exact location unknown"
+          >
+            <span className="archive-lost-signal-icon" aria-hidden="true">⌁</span>
+            <span>
+              <strong>LOST SIGNAL / LOCATION UNKNOWN</strong>
+              <small>Mars Polar Lander &amp; Deep Space 2 · no confirmed surface coordinates</small>
+            </span>
+            <span aria-hidden="true">↗</span>
+          </button>
+        )}
+
+        <button type="button" className="guided-explorer-launch" onClick={onStartGuidedJourney}>
+          <span aria-hidden="true">✦</span>
+          <span><strong>TAKE THE 3-MINUTE JOURNEY</strong><small>Meet three explorers. Discover their legacy.</small></span>
+          <span aria-hidden="true">↗</span>
+        </button>
+
         <div className="archive-list-heading">
           <span>EXPLORER REGISTER</span>
           <span>{String(filteredArtifacts.length).padStart(2, "0")} MATCHING RECORDS</span>
@@ -136,7 +154,7 @@ export function ArtifactExplorer({
               id="archive-search"
               type="search"
               value={searchQuery}
-              onChange={(event) => setSearchQuery(event.target.value)}
+              onChange={(event) => onSearchQueryChange(event.target.value)}
               placeholder={copy.searchHint}
               autoComplete="off"
             />
@@ -144,7 +162,7 @@ export function ArtifactExplorer({
               <button
                 type="button"
                 className="archive-search-clear"
-                onClick={() => setSearchQuery("")}
+                onClick={() => onSearchQueryChange("")}
                 aria-label="Clear search"
               >
                 ×
@@ -159,7 +177,7 @@ export function ArtifactExplorer({
                 key={category}
                 className={`archive-filter-chip${activeCategory === category ? " is-active" : ""}`}
                 aria-pressed={activeCategory === category}
-                onClick={() => setActiveCategory(category)}
+                onClick={() => onActiveCategoryChange(category)}
               >
                 {category === "ALL" ? "ALL RECORDS" : category}
               </button>

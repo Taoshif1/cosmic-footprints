@@ -8,6 +8,7 @@ interface ArchivePlanetSceneProps {
   destination: Destination;
   artifacts: Artifact[];
   selectedArtifactId: string | null;
+  visibleArtifactIds: string[];
   reducedMotion: boolean;
   onSelectArtifact: (artifactId: string) => void;
 }
@@ -89,17 +90,22 @@ export function ArchivePlanetScene({
   destination,
   artifacts,
   selectedArtifactId,
+  visibleArtifactIds,
   reducedMotion,
   onSelectArtifact,
 }: ArchivePlanetSceneProps) {
   const mountRef = useRef<HTMLDivElement>(null);
   const selectedArtifactRef = useRef(selectedArtifactId);
+  const visibleArtifactIdsRef = useRef(new Set(visibleArtifactIds));
   const onSelectRef = useRef(onSelectArtifact);
+  const renderSceneRef = useRef<() => void>(() => undefined);
 
   useEffect(() => {
     selectedArtifactRef.current = selectedArtifactId;
+    visibleArtifactIdsRef.current = new Set(visibleArtifactIds);
     onSelectRef.current = onSelectArtifact;
-  }, [selectedArtifactId, onSelectArtifact]);
+    renderSceneRef.current();
+  }, [selectedArtifactId, visibleArtifactIds, onSelectArtifact]);
 
   useEffect(() => {
     const mount = mountRef.current;
@@ -294,7 +300,6 @@ export function ArchivePlanetScene({
     );
 
     const markerEntries: MarkerEntry[] = [];
-    const markerHitAreas: THREE.Mesh[] = [];
     const markerForward = new THREE.Vector3(0, 0, 1);
 
     // Route sketches are intentionally illustrative: current marker positions
@@ -548,7 +553,6 @@ export function ArchivePlanetScene({
       markerGroup.add(hitArea);
 
       planetGroup.add(markerGroup);
-      markerHitAreas.push(hitArea);
 
       markerEntries.push({
         artifactId: definition.artifactId,
@@ -582,8 +586,11 @@ export function ArchivePlanetScene({
     const findMarkerAtPointer = () => {
       raycaster.setFromCamera(pointer, camera);
 
+      const activeHitAreas = markerEntries
+        .filter((entry) => visibleArtifactIdsRef.current.has(entry.artifactId))
+        .map((entry) => entry.hitArea);
       const intersections = raycaster.intersectObjects(
-        [planet, ...markerHitAreas],
+        [planet, ...activeHitAreas],
         false,
       );
 
@@ -722,6 +729,9 @@ export function ArchivePlanetScene({
       });
 
       markerEntries.forEach((entry) => {
+        const matchesFilter = visibleArtifactIdsRef.current.has(entry.artifactId);
+        entry.group.visible = matchesFilter;
+        if (!matchesFilter) return;
         const selected =
           selectedArtifactRef.current === entry.artifactId;
 
@@ -744,6 +754,8 @@ export function ArchivePlanetScene({
       camera.lookAt(0, 0, 0);
       renderer.render(scene, camera);
     };
+
+    renderSceneRef.current = renderScene;
 
     const animate = () => {
       if (disposed || document.hidden) return;
@@ -835,6 +847,7 @@ export function ArchivePlanetScene({
 
     return () => {
       disposed = true;
+      renderSceneRef.current = () => undefined;
 
       if (animationFrame) {
         window.cancelAnimationFrame(animationFrame);

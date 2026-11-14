@@ -77,13 +77,6 @@ export function MissionLearningLab({ artifact }: { artifact: Artifact }) {
   const evidenceLabel = artifact.dataVisualization?.sourceLabel ?? artifact.sources[0]?.label ?? "NASA mission references";
 
   useEffect(() => {
-    setQuestionIndex(0);
-    setAnswers([]);
-    setCompleted(false);
-    setIsOpen(false);
-  }, [artifact.id]);
-
-  useEffect(() => {
     if (!isOpen) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setIsOpen(false);

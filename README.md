@@ -58,6 +58,23 @@ Other NASA mission pages and historical references support the narrative content
 
 This project is an independent educational experience and is not affiliated with or endorsed by NASA.
 
+
+## Mission endings and educational experiences
+
+Every mission story includes a **The Last Signal** chapter that separates the last known communication or operational event from the date NASA ended recovery attempts or formally retired a mission. The interface describes the reason for the ending and the certainty of the known resting place, with a direct mission-owner source link. For crew-operated Lunar Roving Vehicles, the interface labels the final operational use rather than implying that the rover sent an independent radio signal.
+
+Mars Polar Lander / Deep Space 2 has no surface marker because NASA did not confirm its resting place. It remains accessible through a clearly labelled **Lost Signal / Location Unknown** entry in the Mars archive. The globe's remaining markers are illustrative educational placements, not surveyed coordinates.
+
+The archive's search and category filters are shared between the mission register and the 3D globe. Matching markers remain visible; unrelated markers are hidden. Clearing the filters restores the complete marker set.
+
+Selected mission stories include planned-versus-achieved endurance comparisons:
+- Sojourner: 7 planned sols versus 83 operating sols.
+- Ingenuity: up to 5 planned demonstration flights versus 72 completed flights.
+
+Ingenuity also has a 1–72 flight selector. The visual arc is explicitly illustrative and is not presented as a measured flight path or flight telemetry.
+
+The **Take the 3-Minute Journey** guided mode introduces Surveyor 3, Spirit & Opportunity, and Ingenuity through short mission, discovery, ending and knowledge-check steps.
+
 ## Technology
 
 - React 19 and TypeScript

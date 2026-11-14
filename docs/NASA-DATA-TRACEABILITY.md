@@ -54,3 +54,32 @@ The educational quiz in `src/components/learning/MissionLearningLab.tsx` is base
 AI assistance was used for code generation, debugging support, research organization and editing explanatory text. The team must review all factual statements and final submissions. No AI-generated NASA logo, mission insignia, flag or NASA-branded artwork is used. The project does not contain AI-generated images or video.
 
 Before submission, list all data, resources, tools, code and image assets actually used in the NASA project form, with their source links and required credits.
+
+## Mission fate and final-signal references
+
+The **The Last Signal** panels distinguish a last confirmed communication or final operational event from a later formal mission-end or recovery-termination date. The data is curated in `src/data/missionDetails.ts`; no missing transmission date is invented.
+
+| Artifact | NASA / mission-owner reference |
+| --- | --- |
+| Surveyor 3 | https://science.nasa.gov/mission/surveyor-3/ |
+| Lunar Roving Vehicle / Apollo 17 final surface EVA | https://www.nasa.gov/missions/apollo/apollo-17-mission-details/ |
+| ALSEP shutdown | https://ntrs.nasa.gov/api/citations/19790014808/downloads/19790014808.pdf |
+| Mars Pathfinder / Sojourner last data transmission and mission conclusion | https://science.nasa.gov/resource/pathfinder-on-mars-2/ |
+| Spirit and Opportunity | https://science.nasa.gov/mission/mars-exploration-rovers-spirit-and-opportunity/ |
+| Spirit final communication and recovery report | https://ntrs.nasa.gov/archive/nasa/casi.ntrs.nasa.gov/20160001767.pdf |
+| InSight last communication and retirement | https://www.nasa.gov/missions/insight/nasa-retires-insight-mars-lander-mission-after-years-of-science/ |
+| Mars Polar Lander / Deep Space 2 | https://science.nasa.gov/mission/mars-polar-lander-deep-space-2/ |
+| Ingenuity final flight and mission announcement | https://www.nasa.gov/news-release/after-three-years-on-mars-nasas-ingenuity-helicopter-mission-ends/ |
+
+## Endurance comparisons and interactive replay
+
+- Sojourner: NASA states 83 sols of a planned seven-sol mission. https://science.nasa.gov/resource/pathfinder-on-mars-2/
+- Ingenuity: NASA states the original demonstration was up to five flights and that the helicopter completed 72 flights. https://www.nasa.gov/news-release/after-three-years-on-mars-nasas-ingenuity-helicopter-mission-ends/
+
+The Ingenuity flight selector uses verified total flight count and verified first/final flight milestone dates. The plotted arc is explicitly illustrative and must not be interpreted as flight telemetry.
+
+## Archive location integrity
+
+Mars Polar Lander / Deep Space 2 is intentionally excluded from `src/data/planetMarkers.ts`: NASA never confirmed the spacecrafts' final resting places. A separate lost-signal record in the Mars archive provides access to its story without implying an invented coordinate.
+
+The archive search/category state is lifted to `src/App.tsx` and passed to both `ArtifactExplorer` and `ArchivePlanetScene`. The globe hides markers outside the active filtered result set; the non-canvas mission register remains available for every record.
