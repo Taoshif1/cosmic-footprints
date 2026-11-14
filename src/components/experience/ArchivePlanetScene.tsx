@@ -358,6 +358,93 @@ export function ArchivePlanetScene({
       planetGroup.add(finish);
     });
 
+    // Small, procedural six-wheel exploration vehicles replay each route.
+    // The route sketches remain explicitly illustrative, not surveyed tracks.
+    const roverEntries: {
+      group: THREE.Group;
+      curve: THREE.CatmullRomCurve3;
+      wheels: THREE.Mesh[];
+      offset: number;
+    }[] = [];
+
+    const roverBodyGeometry = new THREE.BoxGeometry(0.13, 0.055, 0.18);
+    const roverDeckGeometry = new THREE.BoxGeometry(0.09, 0.025, 0.11);
+    const roverWheelGeometry = new THREE.CylinderGeometry(0.034, 0.034, 0.025, 14);
+    const roverMastGeometry = new THREE.CylinderGeometry(0.008, 0.008, 0.09, 8);
+    const roverCameraGeometry = new THREE.BoxGeometry(0.055, 0.035, 0.045);
+    routeGeometries.push(
+      roverBodyGeometry,
+      roverDeckGeometry,
+      roverWheelGeometry,
+      roverMastGeometry,
+      roverCameraGeometry,
+    );
+
+    traverseSketches[destination].forEach((route, routeIndex) => {
+      const curve = new THREE.CatmullRomCurve3(
+        route.points.map(([latitude, longitude]) =>
+          getSurfaceDirection(latitude, longitude).multiplyScalar(globeRadius * 1.009),
+        ),
+      );
+      const rover = new THREE.Group();
+      const chassisMaterial = new THREE.MeshStandardMaterial({
+        color: destination === "mars" ? 0xd8d4c7 : 0xc5d5e5,
+        roughness: 0.72,
+        metalness: 0.32,
+      });
+      const darkMaterial = new THREE.MeshStandardMaterial({
+        color: 0x202a36,
+        roughness: 0.88,
+        metalness: 0.12,
+      });
+      const accentMaterial = new THREE.MeshBasicMaterial({
+        color: route.color,
+        toneMapped: false,
+      });
+      routeMaterials.push(chassisMaterial, darkMaterial, accentMaterial);
+
+      const chassis = new THREE.Mesh(roverBodyGeometry, chassisMaterial);
+      chassis.position.y = 0.055;
+      rover.add(chassis);
+
+      const deck = new THREE.Mesh(roverDeckGeometry, accentMaterial);
+      deck.position.set(0, 0.092, -0.005);
+      rover.add(deck);
+
+      const wheels: THREE.Mesh[] = [];
+      [-1, 1].forEach((side) => {
+        [-1, 0, 1].forEach((axle) => {
+          const wheel = new THREE.Mesh(roverWheelGeometry, darkMaterial);
+          wheel.rotation.z = Math.PI / 2;
+          wheel.position.set(side * 0.083, 0.025, axle * 0.062);
+          rover.add(wheel);
+          wheels.push(wheel);
+        });
+      });
+
+      const mast = new THREE.Mesh(roverMastGeometry, chassisMaterial);
+      mast.position.set(0, 0.145, -0.045);
+      rover.add(mast);
+
+      const cameraHead = new THREE.Mesh(roverCameraGeometry, accentMaterial);
+      cameraHead.position.set(0, 0.195, -0.045);
+      rover.add(cameraHead);
+
+      const beaconGeometry = new THREE.SphereGeometry(0.018, 10, 8);
+      routeGeometries.push(beaconGeometry);
+      const beacon = new THREE.Mesh(beaconGeometry, accentMaterial);
+      beacon.position.set(0, 0.19, 0.065);
+      rover.add(beacon);
+
+      planetGroup.add(rover);
+      roverEntries.push({
+        group: rover,
+        curve,
+        wheels,
+        offset: routeIndex / Math.max(traverseSketches[destination].length, 1),
+      });
+    });
+
     markerDefinitions.forEach((definition) => {
       const markerGroup = new THREE.Group();
       const direction = getSurfaceDirection(
@@ -615,6 +702,25 @@ export function ArchivePlanetScene({
     const renderScene = () => {
       const elapsed = clock.elapsedTime;
 
+      roverEntries.forEach((entry) => {
+        // A slow, continuous replay lets visitors follow each rover along its route.
+        const progress = reducedMotion
+          ? 0.5
+          : (elapsed * 0.022 + entry.offset) % 1;
+        const point = entry.curve.getPointAt(progress);
+        const normal = point.clone().normalize();
+        const tangent = entry.curve.getTangentAt(progress).normalize();
+        const right = new THREE.Vector3().crossVectors(normal, tangent).normalize();
+        const forward = new THREE.Vector3().crossVectors(right, normal).normalize();
+        const orientation = new THREE.Matrix4().makeBasis(right, normal, forward);
+
+        entry.group.position.copy(normal.multiplyScalar(globeRadius * 1.016));
+        entry.group.quaternion.setFromRotationMatrix(orientation);
+        entry.wheels.forEach((wheel, index) => {
+          wheel.rotation.x = reducedMotion ? 0 : elapsed * 2.8 * (index % 2 ? -1 : 1);
+        });
+      });
+
       markerEntries.forEach((entry) => {
         const selected =
           selectedArtifactRef.current === entry.artifactId;
@@ -793,6 +899,7 @@ export function ArchivePlanetScene({
           </span>
         ))}
         <small>Illustrative paths · not to scale or surveyed tracks</small>
+        <small className="archive-rover-replay-note">Animated rover replay · drag the globe to follow the route</small>
       </div>
     </div>
   );
