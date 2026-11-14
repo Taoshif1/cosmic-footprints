@@ -571,6 +571,7 @@ export function SpaceScene({
         };
 
         const handlePointerDown = (event: PointerEvent) => {
+            if (event.button !== 0 && event.pointerType !== "touch") return;
             if (
                 modeRef.current !== "destinations" &&
                 modeRef.current !== "intro"
