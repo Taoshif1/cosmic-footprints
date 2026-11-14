@@ -3092,3 +3092,12 @@ button.destination-control:not(:disabled):hover {
     font-size: 0.48rem;
   }
 }
+
+.archive-rover-replay-note {
+  color: #b8d3f4 !important;
+  letter-spacing: 0.025em;
+}
+
+.archive-route-legend-item i {
+  flex: 0 0 auto;
+}
