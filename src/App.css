@@ -898,6 +898,7 @@ button.destination-control:not(:disabled):hover {
   pointer-events: auto;
 }
 
+.experience-intro .experience-main,
 .experience-intro .hero-copy {
   pointer-events: none;
 }
