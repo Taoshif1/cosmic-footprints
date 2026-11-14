@@ -893,6 +893,30 @@ button.destination-control:not(:disabled):hover {
   }
 }
 
+/* Drag-to-rotate support for the intro Earth */
+.experience-intro .space-scene {
+  pointer-events: auto;
+}
+
+.experience-intro .hero-copy {
+  pointer-events: none;
+}
+
+.experience-intro .launch-button {
+  pointer-events: auto;
+}
+
+.space-scene canvas,
+.archive-planet-scene canvas {
+  touch-action: none;
+  cursor: grab;
+}
+
+.space-scene canvas:active,
+.archive-planet-scene canvas:active {
+  cursor: grabbing;
+}
+
 /* Enable direct interaction with 3D planets */
 .experience-destinations .space-scene {
   pointer-events: auto;
