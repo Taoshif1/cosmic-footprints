@@ -14,6 +14,7 @@ import { MissionLearningLab } from "./components/learning/MissionLearningLab";
 import {
   getArtifactById,
   getArtifactsByDestination,
+  filterArtifacts,
 } from "./data/artifacts";
 
 import type { Artifact } from "./data/artifacts";
@@ -54,6 +55,8 @@ function App() {
 
   const [selectedArtifact, setSelectedArtifact] =
     useState<Artifact | null>(null);
+  const [archiveSearchQuery, setArchiveSearchQuery] = useState("");
+  const [archiveCategory, setArchiveCategory] = useState("ALL");
 
   const destinationArtifacts = useMemo(
     () => (
@@ -64,12 +67,19 @@ function App() {
     [selectedDestination],
   );
 
+  const visibleArtifactIds = useMemo(
+    () => filterArtifacts(destinationArtifacts, archiveSearchQuery, archiveCategory).map((artifact) => artifact.id),
+    [destinationArtifacts, archiveSearchQuery, archiveCategory],
+  );
+
   const handleDestinationSelect = useCallback(
     (destination: Destination) => {
       if (mode !== "destinations") return;
 
       setSelectedDestination(destination);
       setSelectedArtifact(null);
+      setArchiveSearchQuery("");
+      setArchiveCategory("ALL");
       setMode("traveling");
     },
     [mode],
@@ -111,6 +121,8 @@ function App() {
 
   const returnToDestinations = () => {
     setSelectedArtifact(null);
+    setArchiveSearchQuery("");
+    setArchiveCategory("ALL");
     setSelectedDestination(null);
     setMode("destinations");
   };
@@ -263,6 +275,7 @@ function App() {
             destination={selectedDestination}
             artifacts={destinationArtifacts}
             selectedArtifactId={selectedArtifact?.id ?? null}
+            visibleArtifactIds={visibleArtifactIds}
             reducedMotion={reducedMotion}
             onSelectArtifact={handleArtifactSelect}
           />
@@ -437,6 +450,11 @@ function App() {
               destination={selectedDestination}
               onSelect={setSelectedArtifact}
               onChangeDestination={returnToDestinations}
+              searchQuery={archiveSearchQuery}
+              activeCategory={archiveCategory}
+              onSearchQueryChange={setArchiveSearchQuery}
+              onActiveCategoryChange={setArchiveCategory}
+              visibleArtifactIds={visibleArtifactIds}
             />
           )
         )}
