@@ -56,8 +56,9 @@ export function MissionLearningLab({ artifact }: { artifact: Artifact }) {
   const [isOpen, setIsOpen] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
+  const [completed, setCompleted] = useState(false);
   const questions = useMemo(() => questionBank[artifact.id] ?? [], [artifact.id]);
-  const finished = answers.length === questions.length;
+  const finished = completed;
   const question = questions[questionIndex];
   const selectedAnswer = answers[questionIndex];
   const score = answers.reduce((sum, answer, index) => sum + (answer === questions[index]?.answer ? 1 : 0), 0);
@@ -67,6 +68,7 @@ export function MissionLearningLab({ artifact }: { artifact: Artifact }) {
   useEffect(() => {
     setQuestionIndex(0);
     setAnswers([]);
+    setCompleted(false);
     setIsOpen(false);
   }, [artifact.id]);
 
@@ -85,12 +87,17 @@ export function MissionLearningLab({ artifact }: { artifact: Artifact }) {
   };
 
   const nextQuestion = () => {
-    if (questionIndex < questions.length - 1) setQuestionIndex((current) => current + 1);
+    if (questionIndex < questions.length - 1) {
+      setQuestionIndex((current) => current + 1);
+    } else {
+      setCompleted(true);
+    }
   };
 
   const restart = () => {
     setQuestionIndex(0);
     setAnswers([]);
+    setCompleted(false);
   };
 
   if (!questions.length) return null;
