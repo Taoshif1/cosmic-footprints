@@ -895,6 +895,13 @@ export function SpaceScene({
 
                 orbitMaterial.opacity = 0;
 
+                lockedPlanets.forEach((planet) => {
+                    planet.group.scale.setScalar(0.001);
+                    planet.materials.forEach((material) => {
+                        if ("opacity" in material) material.opacity = 0;
+                    });
+                });
+
                 renderScene();
                 return;
             }
@@ -953,6 +960,15 @@ export function SpaceScene({
                     z: 0.01,
                     duration: 0.8,
                 }, 0);
+
+            lockedPlanets.forEach((planet) => {
+                planet.group.scale.setScalar(0.001);
+                planet.materials.forEach((material) => {
+                    if ("opacity" in material) {
+                        activeTimeline?.to(material, { opacity: 0, duration: 0.5 }, 0);
+                    }
+                });
+            });
         };
 
 
@@ -964,17 +980,19 @@ export function SpaceScene({
 
             const layout = isMobile
                 ? {
-                    cameraZ: 10.1,
-                    earth: { x: -1.0, y: 1.0, scale: 0.40 },
-                    moon: { x: 1.0, y: 1.0, scale: 0.62 },
-                    mars: { x: 0, y: -1.25, scale: 0.75 },
+                    cameraZ: 16.2,
+                    earth: { x: -0.82, y: 0.88, scale: 0.34 },
+                    moon: { x: 0.82, y: 0.88, scale: 0.53 },
+                    mars: { x: 0, y: -1.28, scale: 0.64 },
                 }
                 : {
-                    cameraZ: 11,
+                    cameraZ: 17.5,
                     earth: { x: -3.45, y: 0.25, scale: 0.53 },
                     moon: { x: 0, y: -0.30, scale: 0.90 },
                     mars: { x: 3.45, y: 0.25, scale: 0.96 },
                 };
+
+            const lockedOpacity = isMobile ? 0.66 : 0.78;
 
             const targetOrbitOpacity = isMobile ? 0 : 0.20;
 
@@ -1008,6 +1026,21 @@ export function SpaceScene({
                 cameraTarget.set(0, 0, 0);
 
                 orbitMaterial.opacity = targetOrbitOpacity;
+
+                lockedPlanets.forEach((planet) => {
+                    planet.group.position.set(
+                        isMobile ? planet.mobileX : planet.x,
+                        isMobile ? planet.mobileY : planet.y,
+                        -1.5,
+                    );
+                    planet.group.scale.setScalar(isMobile ? 0.78 : 1);
+                    planet.materials.forEach((material) => {
+                        if ("opacity" in material) material.opacity = lockedOpacity;
+                    });
+                    if (planet.name === "Saturn") {
+                        planet.group.children[1]?.rotation.set(Math.PI * 0.36, -0.18, 0.12);
+                    }
+                });
 
                 renderScene();
                 return;
@@ -1098,6 +1131,37 @@ export function SpaceScene({
                     opacity: targetOrbitOpacity,
                     duration: 1.2,
                 }, 1.1);
+
+            lockedPlanets.forEach((planet, index) => {
+                const targetX = isMobile ? planet.mobileX : planet.x;
+                const targetY = isMobile ? planet.mobileY : planet.y;
+                const targetScale = isMobile ? 0.78 : 1;
+
+                activeTimeline
+                    ?.to(planet.group.position, {
+                        x: targetX,
+                        y: targetY,
+                        z: -1.5,
+                        duration: 1.7,
+                        ease: "power3.out",
+                    }, 0.35 + index * 0.06)
+                    .to(planet.group.scale, {
+                        x: targetScale,
+                        y: targetScale,
+                        z: targetScale,
+                        duration: 1.55,
+                        ease: "back.out(1.25)",
+                    }, 0.35 + index * 0.06);
+
+                planet.materials.forEach((material) => {
+                    if ("opacity" in material) {
+                        activeTimeline?.to(material, {
+                            opacity: lockedOpacity,
+                            duration: 1.1,
+                        }, 0.65 + index * 0.06);
+                    }
+                });
+            });
         };
 
 
@@ -1135,6 +1199,12 @@ export function SpaceScene({
 
                 other.material.opacity = 0;
                 orbitMaterial.opacity = 0;
+                lockedPlanets.forEach((planet) => {
+                    planet.group.scale.setScalar(0.001);
+                    planet.materials.forEach((material) => {
+                        if ("opacity" in material) material.opacity = 0;
+                    });
+                });
 
                 renderScene();
 
@@ -1205,6 +1275,15 @@ export function SpaceScene({
                     z: 1,
                     duration: 1,
                 }, 2.5);
+
+            lockedPlanets.forEach((planet) => {
+                planet.group.scale.setScalar(0.001);
+                planet.materials.forEach((material) => {
+                    if ("opacity" in material) {
+                        activeTimeline?.to(material, { opacity: 0, duration: 0.65 }, 0);
+                    }
+                });
+            });
         };
 
         let animationFrame = 0;
