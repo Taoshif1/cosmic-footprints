@@ -739,3 +739,25 @@ export const getArtifactById = (id: string) => {
         (artifact) => artifact.id === id,
     );
 };
+
+export const filterArtifacts = (
+    source: Artifact[],
+    searchQuery: string,
+    activeCategory: string,
+) => {
+    const query = searchQuery.trim().toLocaleLowerCase();
+    return source.filter((artifact) => {
+        const matchesCategory =
+            activeCategory === "ALL" || artifact.category === activeCategory;
+        const searchableText = [
+            artifact.name,
+            artifact.mission,
+            artifact.year,
+            artifact.category,
+            artifact.tagline,
+            artifact.description,
+            ...artifact.highlights,
+        ].join(" ").toLocaleLowerCase();
+        return matchesCategory && (!query || searchableText.includes(query));
+    });
+};
