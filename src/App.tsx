@@ -452,7 +452,7 @@ function App() {
                 artifact={selectedArtifact}
                 onBack={() => setSelectedArtifact(null)}
               />
-              <MissionLearningLab artifact={selectedArtifact} />
+              <MissionLearningLab key={selectedArtifact.id} artifact={selectedArtifact} />
             </>
           ) : (
             <ArtifactExplorer
