@@ -264,79 +264,105 @@ export const artifacts: Artifact[] = [
     // ========================================
 
     {
-        id: "sojourner",
-        destination: "mars",
-        name: "Sojourner",
-        mission: "Mars Pathfinder",
-        year: "1997",
-        category: "Microrover",
-        tagline: "A tiny rover with a much bigger mission.",
-        description: "NASA's Sojourner was a tiny microrover and the first wheeled vehicle to operate on another planet, exploring the Martian surface during the 1997 Mars Pathfinder mission.",
-        image: "/artifacts/sojourner.jpg",
-        imageAlt:
-            "NASA Mars Pathfinder mission image showing the Sojourner rover on Mars.",
-        imageCaption:
-            "Sojourner explored the Martian surface after deployment from Pathfinder.",
-        imageCredit: "NASA/JPL-Caltech",
-        imageType: "photograph",
-        status: "Silent on Mars",
-        statusDetail:
-            "Sojourner remains at its Mars Pathfinder landing location.",
-        purpose:
-            "NASA wanted to demonstrate that a smaller, lower-cost robotic rover could successfully explore another planet and investigate rocks and soil at close range.",
-        story:
-            "Sojourner arrived on Mars with the Pathfinder lander on July 4, 1997. It was the first wheeled rover to operate on another planet.\n\nThe mission was designed around a short seven-day rover operation. But Sojourner kept exploring for 83 Martian days, moving around rocks and examining the surrounding terrain. It demonstrated technologies and operations that helped shape future Mars rover missions.",
-        discoveries: [
-            "Investigated Martian rocks and soil up close.",
-            "Returned images of the Martian surface.",
-            "Performed chemical and other measurements.",
-            "Demonstrated practical rover mobility and remote operations on Mars.",
-        ],
-        finalChapter:
-            "The final Pathfinder data transmission was received on September 27, 1997. After months of recovery attempts, NASA terminated the successful mission in March 1998.",
-        currentLocation:
-            "Ares Vallis, at the Mars Pathfinder landing site, later named Carl Sagan Memorial Station.",
-        highlights: [
-            "First wheeled rover on another planet",
-            "Planned: 7 days",
-            "Actual rover operations: 83 sols",
-            "Pathfinder landed July 4, 1997",
-        ],
-        timeline: [
-            {
-                date: "July 4, 1997",
-                title: "Arrival on Mars",
-                description:
-                    "Pathfinder lands and begins its surface exploration mission.",
-            },
-            {
-                date: "July 1997",
-                title: "Sojourner rolls onto Mars",
-                description:
-                    "The tiny rover leaves its lander and begins exploring nearby terrain.",
-            },
-            {
-                date: "September 27, 1997",
-                title: "Last data transmission",
-                description:
-                    "The final Pathfinder transmission reaches Earth.",
-            },
-        ],
-        sources: [
-            {
-                label: "NASA — Mars Pathfinder",
-                url: "https://science.nasa.gov/mission/mars-pathfinder/",
-            },
-            {
-                label: "NASA — Sojourner Rover",
-                url: "https://science.nasa.gov/resource/sojourner-rover/",
-            },
-            {
-                label: "NASA — Sojourner's First Images",
-                url: "https://science.nasa.gov/resource/sojourners-first-images-from-mars/",
-            },
-        ],
-    },
+    id: "mars-pathfinder",
+    destination: "mars",
+    name: "Mars Pathfinder",
+    mission: "Mars Pathfinder Mission",
+    year: "1996–1997",
+    category: "Lander & Microrover",
+    tagline: "One mission. One daring landing. A new way to explore Mars.",
+    description:
+        "NASA's Mars Pathfinder mission delivered a robotic lander and the Sojourner rover to Ares Vallis in 1997. Its innovative airbag landing system and first-of-its-kind rover operations changed how engineers approached robotic exploration of the Red Planet.",
+    image: "/artifacts/sojourner.jpg",
+    imageAlt:
+        "NASA Mars Pathfinder mission showing the Sojourner rover on the Martian surface.",
+    imageCaption:
+        "Sojourner explored the Martian surface after rolling down a ramp from the Pathfinder lander.",
+    imageCredit: "NASA/JPL-Caltech",
+    imageType: "photograph",
+    status: "Silent on Mars",
+    statusDetail:
+        "The Pathfinder lander and Sojourner rover remain at the Ares Vallis landing site.",
+    purpose:
+    "NASA wanted to test a lower-cost way to reach Mars, demonstrate a new airbag-assisted landing system, and investigate Martian rocks and soil using a small mobile rover. Pathfinder carried Sojourner, allowing scientists to explore beyond the lander's immediate surroundings.",
+    story:
+    "On December 4, 1996, NASA launched Mars Pathfinder toward the Red Planet. On July 4, 1997, the spacecraft landed at Ares Vallis using an innovative system of parachutes, retrorockets and airbags. It bounced across the Martian surface before coming to rest.\n\nPathfinder carried a stationary lander and a small rover named Sojourner. The lander studied the surrounding environment and served as a communication link with Earth. Sojourner rolled down a ramp and became the first wheeled vehicle to operate on another planet. Designed for seven Martian days, it continued exploring for 83 sols.\n\nThe mission demonstrated new landing technology and proved that small robotic rovers could explore another planet. The final Pathfinder transmission reached Earth on September 27, 1997. After unsuccessful recovery attempts, NASA officially ended the mission in March 1998. Both spacecraft remain on Mars.",
+    discoveries: [
+        "Investigated Martian rocks and soil using the Sojourner rover.",
+        "Returned images of the Martian surface and surrounding terrain.",
+        "Used scientific instruments to study the atmosphere and local geology.",
+        "Demonstrated airbag-assisted landing technology on Mars.",
+        "Proved that a small robotic rover could conduct mobile surface exploration.",
+        "Provided engineering experience that informed later Mars rover missions.",
+    ],
+    finalChapter:
+        "The final Pathfinder data transmission was received on September 27, 1997. NASA made repeated attempts to re-establish contact before formally ending the mission in March 1998. The lander and rover remain at the Ares Vallis landing site.",
+    currentLocation:
+        "Ares Vallis, Mars. The Pathfinder lander site was later named Carl Sagan Memorial Station. Sojourner remains nearby.",
+    highlights: [
+        "Launched: December 4, 1996",
+        "Landed: July 4, 1997",
+        "First wheeled rover on another planet",
+        "Sojourner operated for 83 sols",
+        "Final transmission: September 27, 1997",
+    ],
+    timeline: [
+        {
+            date: "December 4, 1996",
+            title: "Journey begins",
+            description:
+                "Mars Pathfinder launches from Earth carrying the lander and Sojourner rover.",
+        },
+        {
+            date: "July 4, 1997",
+            title: "Landing on Mars",
+            description:
+                "Pathfinder lands at Ares Vallis using parachutes, retrorockets and airbags.",
+        },
+        {
+            date: "July 1997",
+            title: "Sojourner begins exploring",
+            description:
+                "The rover rolls down a ramp and starts examining rocks and nearby terrain.",
+        },
+        {
+            date: "July–September 1997",
+            title: "Science and exploration",
+            description:
+                "Sojourner operates for 83 sols, while Pathfinder returns images and scientific data.",
+        },
+        {
+            date: "September 27, 1997",
+            title: "Last transmission",
+            description:
+                "Earth receives the final data transmission from the Pathfinder lander.",
+        },
+        {
+            date: "March 1998",
+            title: "Mission officially ends",
+            description:
+                "NASA terminates the mission after unsuccessful attempts to restore communication.",
+        },
+    ],
+    sources: [
+        {
+            label: "NASA — Mars Pathfinder Mission",
+            url: "https://science.nasa.gov/mission/mars-pathfinder/",
+        },
+        {
+            label: "NASA — Sojourner Rover",
+            url: "https://science.nasa.gov/resource/sojourner-rover/",
+        },
+        {
+            label: "NASA — Sojourner's First Images",
+            url: "https://science.nasa.gov/resource/sojourners-first-images-from-mars/",
+        },
+        {
+            label: "NASA — Pathfinder Airbags on Martian Terrain",
+            url: "https://science.nasa.gov/resource/lander-airbags-martian-terrain/",
+        },
+    ],
+},
 
     {
         id: "spirit-opportunity",
