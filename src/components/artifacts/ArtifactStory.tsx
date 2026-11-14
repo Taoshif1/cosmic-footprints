@@ -1,4 +1,5 @@
 import type { Artifact } from "../../data/artifacts";
+import { MissionDataChart } from "./MissionDataChart";
 
 interface ArtifactStoryProps {
   artifact: Artifact;
@@ -84,6 +85,10 @@ export function ArtifactStory({
           ))}
         </ul>
       </section>
+
+      {artifact.dataVisualization && (
+        <MissionDataChart data={artifact.dataVisualization} />
+      )}
 
       <section className="story-panel-section story-final-chapter">
         <p className="story-section-index">04 / THE FINAL CHAPTER</p>
