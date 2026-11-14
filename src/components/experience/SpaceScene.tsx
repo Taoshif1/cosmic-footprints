@@ -33,6 +33,7 @@ export function SpaceScene({
 }: SpaceSceneProps) {
     const mountRef = useRef<HTMLDivElement>(null);
     const controllerRef = useRef<SceneController | null>(null);
+    const webglUnavailableRef = useRef(false);
 
     const modeRef = useRef(mode);
     const onSelectRef = useRef(onDestinationSelect);
@@ -54,10 +55,12 @@ export function SpaceScene({
         } catch (error) {
             console.error("Unable to initialize WebGL:", error);
             mount.dataset.webglUnavailable = "true";
+            webglUnavailableRef.current = true;
             return;
         }
 
         mount.dataset.webglUnavailable = "false";
+        webglUnavailableRef.current = false;
 
         // ========================================
         // SCENE AND CAMERA
@@ -1189,8 +1192,14 @@ export function SpaceScene({
     useEffect(() => {
         if (mode !== "traveling" || !selectedDestination) return;
 
+        // Keep navigation usable when a browser cannot create a WebGL context.
+        if (webglUnavailableRef.current) {
+            onArrival(selectedDestination);
+            return;
+        }
+
         controllerRef.current?.travelTo(selectedDestination);
-    }, [mode, selectedDestination]);
+    }, [mode, selectedDestination, onArrival]);
 
     return (
         <div
