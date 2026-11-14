@@ -1,4 +1,4 @@
-import { lazy, Suspense, useCallback, useMemo, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -9,6 +9,7 @@ import type {
 
 import { ArtifactExplorer } from "./components/artifacts/ArtifactExplorer";
 import { ArtifactStory } from "./components/artifacts/ArtifactStory";
+import { MissionLearningLab } from "./components/learning/MissionLearningLab";
 
 import {
   getArtifactById,
@@ -22,6 +23,15 @@ import { useReducedMotion } from "./hooks/useReducedMotion";
 import "./App.css";
 
 gsap.registerPlugin(useGSAP);
+
+function SceneLoadingFallback({ label }: { label: string }) {
+  return (
+    <div className="scene-loading-fallback" role="status" aria-live="polite">
+      <span className="scene-loading-orbit" aria-hidden="true" />
+      <span>{label}</span>
+    </div>
+  );
+}
 
 const SpaceScene = lazy(async () => {
   const module = await import("./components/experience/SpaceScene");
@@ -81,6 +91,19 @@ function App() {
     },
     [selectedDestination],
   );
+
+  useEffect(() => {
+    if (!selectedArtifact) return;
+
+    const handleStoryEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedArtifact(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleStoryEscape);
+    return () => window.removeEventListener("keydown", handleStoryEscape);
+  }, [selectedArtifact]);
 
   const beginExploration = () => {
     setMode("destinations");
@@ -224,7 +247,7 @@ function App() {
       ref={rootRef}
       className={"experience-shell experience-" + mode}
     >
-      <Suspense fallback={null}>
+      <Suspense fallback={<SceneLoadingFallback label="PREPARING PLANETARY VIEW" />}>
         <SpaceScene
           mode={mode}
           selectedDestination={selectedDestination}
@@ -235,7 +258,7 @@ function App() {
       </Suspense>
 
       {mode === "archive" && selectedDestination && (
-        <Suspense fallback={null}>
+        <Suspense fallback={<SceneLoadingFallback label="LOADING SURFACE ARCHIVE" />}>
           <ArchivePlanetScene
             destination={selectedDestination}
             artifacts={destinationArtifacts}
@@ -311,7 +334,7 @@ function App() {
               </button>
 
               <span className="action-caption">
-                YOUR JOURNEY STARTS HERE
+                DRAG THE EARTH TO ROTATE
               </span>
             </div>
           </section>
@@ -377,7 +400,7 @@ function App() {
             </div>
 
             <p className="destination-footnote">
-              CLICK ON A PLANET OR SELECT A DESTINATION ABOVE
+              DRAG TO ROTATE  /  CLICK A PLANET OR SELECT A DESTINATION
             </p>
           </section>
         )}
@@ -402,10 +425,13 @@ function App() {
 
         {mode === "archive" && selectedDestination && (
           selectedArtifact ? (
-            <ArtifactStory
-              artifact={selectedArtifact}
-              onBack={() => setSelectedArtifact(null)}
-            />
+            <>
+              <ArtifactStory
+                artifact={selectedArtifact}
+                onBack={() => setSelectedArtifact(null)}
+              />
+              <MissionLearningLab artifact={selectedArtifact} />
+            </>
           ) : (
             <ArtifactExplorer
               destination={selectedDestination}

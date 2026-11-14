@@ -292,9 +292,9 @@ export const artifacts: Artifact[] = [
     // ========================================
 
     {
-    id: "mars-pathfinder",
+    id: "sojourner",
     destination: "mars",
-    name: "Mars Pathfinder",
+    name: "Mars Pathfinder & Sojourner",
     mission: "Mars Pathfinder Mission",
     year: "1996–1997",
     category: "Lander & Microrover",

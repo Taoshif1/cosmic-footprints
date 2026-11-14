@@ -522,8 +522,17 @@ export function SpaceScene({
         const pointer = new THREE.Vector2();
 
         const interactivePlanets = [moon, mars];
+        const draggablePlanets = [earth, moon, mars];
 
         let hoveredPlanet: THREE.Mesh | null = null;
+        let activeDragTarget: THREE.Object3D | null = null;
+        let activePointerId: number | null = null;
+        let pointerStartX = 0;
+        let pointerStartY = 0;
+        let lastPointerX = 0;
+        let lastPointerY = 0;
+        let dragDistance = 0;
+        let suppressNextClick = false;
 
         const updatePointer = (event: PointerEvent) => {
             const rect = renderer.domElement.getBoundingClientRect();
@@ -548,6 +557,57 @@ export function SpaceScene({
                 : null;
         };
 
+        const raycastDraggablePlanet = () => {
+            raycaster.setFromCamera(pointer, camera);
+
+            const intersections = raycaster.intersectObjects(
+                draggablePlanets,
+                false,
+            );
+
+            return intersections.length
+                ? (intersections[0].object as THREE.Mesh)
+                : null;
+        };
+
+        const handlePointerDown = (event: PointerEvent) => {
+            if (event.button !== 0 && event.pointerType !== "touch") return;
+            if (
+                modeRef.current !== "destinations" &&
+                modeRef.current !== "intro"
+            ) return;
+
+            updatePointer(event);
+            const hit = raycastDraggablePlanet();
+            if (!hit) return;
+
+            activeDragTarget = hit === earth ? earthGroup : hit;
+            activePointerId = event.pointerId;
+            pointerStartX = event.clientX;
+            pointerStartY = event.clientY;
+            lastPointerX = event.clientX;
+            lastPointerY = event.clientY;
+            dragDistance = 0;
+            suppressNextClick = false;
+
+            renderer.domElement.setPointerCapture(event.pointerId);
+            renderer.domElement.style.cursor = "grabbing";
+            clearHover();
+        };
+
+        const handlePointerUp = (event: PointerEvent) => {
+            if (activePointerId !== event.pointerId) return;
+
+            suppressNextClick = dragDistance > 5;
+            activeDragTarget = null;
+            activePointerId = null;
+            renderer.domElement.style.cursor = "default";
+
+            if (renderer.domElement.hasPointerCapture(event.pointerId)) {
+                renderer.domElement.releasePointerCapture(event.pointerId);
+            }
+        };
+
         const clearHover = () => {
             if (!hoveredPlanet) return;
 
@@ -563,12 +623,37 @@ export function SpaceScene({
         };
 
         const handlePointerMove = (event: PointerEvent) => {
+            updatePointer(event);
+
+            if (
+                activePointerId === event.pointerId &&
+                activeDragTarget
+            ) {
+                const deltaX = event.clientX - lastPointerX;
+                const deltaY = event.clientY - lastPointerY;
+                lastPointerX = event.clientX;
+                lastPointerY = event.clientY;
+                dragDistance = Math.hypot(
+                    event.clientX - pointerStartX,
+                    event.clientY - pointerStartY,
+                );
+
+                if (dragDistance > 5) {
+                    activeDragTarget.rotation.y += deltaX * 0.008;
+                    activeDragTarget.rotation.x = THREE.MathUtils.clamp(
+                        activeDragTarget.rotation.x + deltaY * 0.006,
+                        -0.85,
+                        0.85,
+                    );
+                    renderScene();
+                }
+                return;
+            }
+
             if (modeRef.current !== "destinations") {
                 clearHover();
                 return;
             }
-
-            updatePointer(event);
 
             const nextPlanet = raycastPlanet();
 
@@ -595,6 +680,10 @@ export function SpaceScene({
         };
 
         const handleClick = (event: MouseEvent) => {
+            if (suppressNextClick) {
+                suppressNextClick = false;
+                return;
+            }
             if (modeRef.current !== "destinations") return;
 
             updatePointer(event as unknown as PointerEvent);
@@ -613,6 +702,10 @@ export function SpaceScene({
             clearHover();
         };
 
+        renderer.domElement.style.touchAction = "none";
+        renderer.domElement.addEventListener("pointerdown", handlePointerDown);
+        renderer.domElement.addEventListener("pointerup", handlePointerUp);
+        renderer.domElement.addEventListener("pointercancel", handlePointerUp);
         renderer.domElement.addEventListener(
             "pointermove",
             handlePointerMove,
@@ -1127,6 +1220,9 @@ export function SpaceScene({
                 handleVisibilityChange,
             );
 
+            renderer.domElement.removeEventListener("pointerdown", handlePointerDown);
+            renderer.domElement.removeEventListener("pointerup", handlePointerUp);
+            renderer.domElement.removeEventListener("pointercancel", handlePointerUp);
             renderer.domElement.removeEventListener(
                 "pointermove",
                 handlePointerMove,

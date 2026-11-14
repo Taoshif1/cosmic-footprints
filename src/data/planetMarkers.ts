@@ -109,6 +109,13 @@ export const planetMarkers: Record<Destination, PlanetMarker[]> = {
       longitude: 43,
     },
     {
+      artifactId: "mars-polar-lander",
+      code: "MPL",
+      label: "Mars Polar Lander",
+      latitude: -72,
+      longitude: 45,
+    },
+    {
       artifactId: "ingenuity",
       code: "ING",
       label: "Ingenuity",

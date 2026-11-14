@@ -23,10 +23,11 @@ The travel sequence is a visual metaphor, not a scale model of interplanetary di
 | Moon | Surveyor 3 | Robotic lunar landing, soil investigation, and the Apollo 12 visit |
 | Moon | Lunar Roving Vehicle | Human-operated electric mobility and the three Apollo rover traverses |
 | Moon | ALSEP | Long-running lunar science experiments and their 1977 shutdown |
-| Mars | Sojourner | The first wheeled rover on another planet |
+| Mars | Mars Pathfinder & Sojourner | The first wheeled rover on another planet and the lander that delivered it |
 | Mars | Spirit & Opportunity | Twin rover discoveries and their different mission endings |
 | Mars | InSight | Marsquakes and the planet's interior |
 | Mars | Ingenuity | The first powered, controlled flight on another planet |
+| Mars | Mars Polar Lander / Deep Space 2 | A lost polar landing attempt and its unknown final resting place |
 
 ## NASA data used in the experience
 

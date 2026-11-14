@@ -129,7 +129,8 @@ export function ArchivePlanetScene({
     renderer.toneMappingExposure = 1.12;
 
     renderer.domElement.setAttribute("aria-hidden", "true");
-    renderer.domElement.style.touchAction = "pan-y";
+    renderer.domElement.style.touchAction = "none";
+    renderer.domElement.style.cursor = "grab";
     mount.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
@@ -413,6 +414,15 @@ export function ArchivePlanetScene({
     const pointer = new THREE.Vector2();
 
     let hoveredMarker: MarkerEntry | null = null;
+    let activePointerId: number | null = null;
+    let pointerStartX = 0;
+    let pointerStartY = 0;
+    let lastPointerX = 0;
+    let lastPointerY = 0;
+    let dragDistance = 0;
+    let suppressNextClick = false;
+    let rotationVelocityX = 0;
+    let rotationVelocityY = 0;
 
     const updatePointer = (event: PointerEvent) => {
       const rect = renderer.domElement.getBoundingClientRect();
@@ -445,22 +455,81 @@ export function ArchivePlanetScene({
       renderer.domElement.style.cursor = "default";
     };
 
+    const handlePointerDown = (event: PointerEvent) => {
+      if (event.button !== 0 && event.pointerType !== "touch") return;
+
+      activePointerId = event.pointerId;
+      pointerStartX = event.clientX;
+      pointerStartY = event.clientY;
+      lastPointerX = event.clientX;
+      lastPointerY = event.clientY;
+      dragDistance = 0;
+      suppressNextClick = false;
+      rotationVelocityX = 0;
+      rotationVelocityY = 0;
+
+      renderer.domElement.setPointerCapture(event.pointerId);
+      renderer.domElement.style.cursor = "grabbing";
+      clearHoveredMarker();
+    };
+
     const handlePointerMove = (event: PointerEvent) => {
       updatePointer(event);
+
+      if (activePointerId === event.pointerId) {
+        const deltaX = event.clientX - lastPointerX;
+        const deltaY = event.clientY - lastPointerY;
+        lastPointerX = event.clientX;
+        lastPointerY = event.clientY;
+        dragDistance = Math.hypot(
+          event.clientX - pointerStartX,
+          event.clientY - pointerStartY,
+        );
+
+        if (dragDistance > 4) {
+          planetGroup.rotation.y += deltaX * 0.008;
+          planetGroup.rotation.x = THREE.MathUtils.clamp(
+            planetGroup.rotation.x + deltaY * 0.006,
+            -0.78,
+            0.78,
+          );
+          rotationVelocityY = deltaX * 0.0009;
+          rotationVelocityX = deltaY * 0.00065;
+          renderScene();
+        }
+        return;
+      }
 
       const nextMarker = findMarkerAtPointer();
 
       if (nextMarker === hoveredMarker) return;
 
       hoveredMarker = nextMarker;
-      renderer.domElement.style.cursor = nextMarker ? "pointer" : "default";
+      renderer.domElement.style.cursor = nextMarker ? "pointer" : "grab";
+    };
+
+    const handlePointerUp = (event: PointerEvent) => {
+      if (activePointerId !== event.pointerId) return;
+
+      suppressNextClick = dragDistance > 5;
+      activePointerId = null;
+      renderer.domElement.style.cursor = "grab";
+
+      if (renderer.domElement.hasPointerCapture(event.pointerId)) {
+        renderer.domElement.releasePointerCapture(event.pointerId);
+      }
     };
 
     const handlePointerLeave = () => {
-      clearHoveredMarker();
+      if (activePointerId === null) clearHoveredMarker();
     };
 
     const handleClick = (event: MouseEvent) => {
+      if (suppressNextClick) {
+        suppressNextClick = false;
+        return;
+      }
+
       updatePointer(event as unknown as PointerEvent);
 
       const marker = findMarkerAtPointer();
@@ -470,7 +539,10 @@ export function ArchivePlanetScene({
       onSelectRef.current(marker.artifactId);
     };
 
+    renderer.domElement.addEventListener("pointerdown", handlePointerDown);
     renderer.domElement.addEventListener("pointermove", handlePointerMove);
+    renderer.domElement.addEventListener("pointerup", handlePointerUp);
+    renderer.domElement.addEventListener("pointercancel", handlePointerUp);
     renderer.domElement.addEventListener("pointerleave", handlePointerLeave);
     renderer.domElement.addEventListener("click", handleClick);
 
@@ -514,7 +586,16 @@ export function ArchivePlanetScene({
       const delta = Math.min(clock.getDelta(), 0.05);
 
       if (!reducedMotion) {
-        planetGroup.rotation.y += delta * 0.018;
+        planetGroup.rotation.y += delta * 0.018 + rotationVelocityY;
+        planetGroup.rotation.x = THREE.MathUtils.clamp(
+          planetGroup.rotation.x + rotationVelocityX,
+          -0.78,
+          0.78,
+        );
+        rotationVelocityY *= 0.92;
+        rotationVelocityX *= 0.92;
+        if (Math.abs(rotationVelocityY) < 0.00002) rotationVelocityY = 0;
+        if (Math.abs(rotationVelocityX) < 0.00002) rotationVelocityX = 0;
         stars.rotation.y += delta * 0.00045;
       }
 
@@ -597,10 +678,13 @@ export function ArchivePlanetScene({
         handleVisibilityChange,
       );
 
+      renderer.domElement.removeEventListener("pointerdown", handlePointerDown);
       renderer.domElement.removeEventListener(
         "pointermove",
         handlePointerMove,
       );
+      renderer.domElement.removeEventListener("pointerup", handlePointerUp);
+      renderer.domElement.removeEventListener("pointercancel", handlePointerUp);
       renderer.domElement.removeEventListener(
         "pointerleave",
         handlePointerLeave,
