@@ -98,11 +98,13 @@ export function ArchivePlanetScene({
   const selectedArtifactRef = useRef(selectedArtifactId);
   const visibleArtifactIdsRef = useRef(new Set(visibleArtifactIds));
   const onSelectRef = useRef(onSelectArtifact);
+  const renderSceneRef = useRef<() => void>(() => undefined);
 
   useEffect(() => {
     selectedArtifactRef.current = selectedArtifactId;
     visibleArtifactIdsRef.current = new Set(visibleArtifactIds);
     onSelectRef.current = onSelectArtifact;
+    renderSceneRef.current();
   }, [selectedArtifactId, visibleArtifactIds, onSelectArtifact]);
 
   useEffect(() => {
@@ -755,6 +757,8 @@ export function ArchivePlanetScene({
       renderer.render(scene, camera);
     };
 
+    renderSceneRef.current = renderScene;
+
     const animate = () => {
       if (disposed || document.hidden) return;
 
@@ -845,6 +849,7 @@ export function ArchivePlanetScene({
 
     return () => {
       disposed = true;
+      renderSceneRef.current = () => undefined;
 
       if (animationFrame) {
         window.cancelAnimationFrame(animationFrame);
