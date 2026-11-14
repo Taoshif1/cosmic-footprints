@@ -1,6 +1,7 @@
 import type { Artifact } from "../../data/artifacts";
 import { MissionDataChart } from "./MissionDataChart";
 import { MissionFatePanel } from "./MissionFatePanel";
+import { IngenuityFlightReplay } from "./IngenuityFlightReplay";
 
 interface ArtifactStoryProps {
   artifact: Artifact;
@@ -86,6 +87,8 @@ export function ArtifactStory({
           ))}
         </ul>
       </section>
+
+      {artifact.id === "ingenuity" && <IngenuityFlightReplay />}
 
       {artifact.dataVisualization && (
         <MissionDataChart data={artifact.dataVisualization} />
