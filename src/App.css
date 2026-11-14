@@ -3246,3 +3246,59 @@ button.destination-control:not(:disabled):hover {
   .mission-fate-cell { padding: 13px; }
   .mission-endurance-row { grid-template-columns: 85px 1fr; }
 }
+
+.archive-lost-signal {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0;
+  padding: 13px 14px;
+  border: 1px solid rgba(224, 151, 122, 0.35);
+  background: linear-gradient(110deg, rgba(90, 40, 34, 0.24), rgba(12, 19, 31, 0.82));
+  color: #e9d8d1;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
+}
+
+.archive-lost-signal:hover {
+  border-color: rgba(244, 170, 135, 0.72);
+  background: rgba(104, 49, 39, 0.32);
+  transform: translateY(-1px);
+}
+
+.archive-lost-signal-icon {
+  flex: 0 0 34px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(231, 154, 127, 0.45);
+  border-radius: 50%;
+  color: #f0a58b;
+  font-size: 1.25rem;
+}
+
+.archive-lost-signal > span:nth-child(2) {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+  flex: 1;
+}
+
+.archive-lost-signal strong {
+  color: #f0b39c;
+  font: 700 0.61rem monospace;
+  letter-spacing: 0.1em;
+}
+
+.archive-lost-signal small {
+  color: #b7c1d0;
+  font-size: 0.68rem;
+  line-height: 1.45;
+}
+
+.archive-lost-signal > span:last-child {
+  color: #e5aa91;
+}
