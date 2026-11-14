@@ -2944,3 +2944,30 @@ button.destination-control:not(:disabled):hover {
     transition: none;
   }
 }
+
+ 
+/* Keep long archive content reachable on short mobile viewports.
+   The shell is intentionally a fixed cinematic viewport, so the panels
+   themselves must own the scroll area on phones and small tablets. */
+@media (max-width: 760px) {
+  .experience-shell.experience-archive {
+    min-height: 100svh;
+    overflow: hidden;
+  }
+
+  .experience-archive .archive-panel {
+    max-height: calc(100svh - 72px - 32svh - 24px);
+    margin: 32vh 12px 24px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .experience-archive .story-panel {
+    max-height: calc(100svh - 72px - 35svh - 24px);
+    margin: 35vh 10px 24px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
