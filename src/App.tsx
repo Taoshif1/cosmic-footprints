@@ -10,6 +10,7 @@ import type {
 import { ArtifactExplorer } from "./components/artifacts/ArtifactExplorer";
 import { ArtifactStory } from "./components/artifacts/ArtifactStory";
 import { MissionLearningLab } from "./components/learning/MissionLearningLab";
+import { GuidedExplorer } from "./components/learning/GuidedExplorer";
 
 import {
   getArtifactById,
@@ -57,6 +58,7 @@ function App() {
     useState<Artifact | null>(null);
   const [archiveSearchQuery, setArchiveSearchQuery] = useState("");
   const [archiveCategory, setArchiveCategory] = useState("ALL");
+  const [guidedJourneyOpen, setGuidedJourneyOpen] = useState(false);
 
   const destinationArtifacts = useMemo(
     () => (
@@ -70,6 +72,13 @@ function App() {
   const visibleArtifactIds = useMemo(
     () => filterArtifacts(destinationArtifacts, archiveSearchQuery, archiveCategory).map((artifact) => artifact.id),
     [destinationArtifacts, archiveSearchQuery, archiveCategory],
+  );
+
+  const guidedArtifacts = useMemo(
+    () => ["surveyor-3", "spirit-opportunity", "ingenuity"]
+      .map((id) => getArtifactById(id))
+      .filter((artifact): artifact is Artifact => Boolean(artifact)),
+    [],
   );
 
   const handleDestinationSelect = useCallback(
@@ -455,10 +464,18 @@ function App() {
               onSearchQueryChange={setArchiveSearchQuery}
               onActiveCategoryChange={setArchiveCategory}
               visibleArtifactIds={visibleArtifactIds}
+              onStartGuidedJourney={() => setGuidedJourneyOpen(true)}
             />
           )
         )}
       </main>
+
+      {mode === "archive" && guidedJourneyOpen && (
+        <GuidedExplorer
+          artifacts={guidedArtifacts}
+          onExit={() => setGuidedJourneyOpen(false)}
+        />
+      )}
 
       {mode === "intro" && (
         <footer className="hero-meta">
