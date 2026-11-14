@@ -300,7 +300,6 @@ export function ArchivePlanetScene({
     );
 
     const markerEntries: MarkerEntry[] = [];
-    const markerHitAreas: THREE.Mesh[] = [];
     const markerForward = new THREE.Vector3(0, 0, 1);
 
     // Route sketches are intentionally illustrative: current marker positions
@@ -554,7 +553,6 @@ export function ArchivePlanetScene({
       markerGroup.add(hitArea);
 
       planetGroup.add(markerGroup);
-      markerHitAreas.push(hitArea);
 
       markerEntries.push({
         artifactId: definition.artifactId,
