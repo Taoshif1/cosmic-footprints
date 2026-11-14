@@ -29,7 +29,6 @@ const quiz: Record<string, { question: string; choices: string[]; answer: number
   },
 };
 
-type Phase = "mission" | "discovery" | "ending" | "question" | "legacy";
 
 export function GuidedExplorer({ artifacts, onExit }: GuidedExplorerProps) {
   const [step, setStep] = useState(0);
