@@ -233,7 +233,7 @@ function App() {
       ref={rootRef}
       className={"experience-shell experience-" + mode}
     >
-      <Suspense fallback={null}>
+      <Suspense fallback={<SceneLoadingFallback label="PREPARING PLANETARY VIEW" />}>
         <SpaceScene
           mode={mode}
           selectedDestination={selectedDestination}
@@ -244,7 +244,7 @@ function App() {
       </Suspense>
 
       {mode === "archive" && selectedDestination && (
-        <Suspense fallback={null}>
+        <Suspense fallback={<SceneLoadingFallback label="LOADING SURFACE ARCHIVE" />}>
           <ArchivePlanetScene
             destination={selectedDestination}
             artifacts={destinationArtifacts}
