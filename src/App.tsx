@@ -377,7 +377,7 @@ function App() {
             </div>
 
             <p className="destination-footnote">
-              CLICK ON A PLANET OR SELECT A DESTINATION ABOVE
+              DRAG TO ROTATE  /  CLICK A PLANET OR SELECT A DESTINATION
             </p>
           </section>
         )}
