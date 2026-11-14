@@ -311,7 +311,7 @@ function App() {
               </button>
 
               <span className="action-caption">
-                YOUR JOURNEY STARTS HERE
+                DRAG THE EARTH TO ROTATE
               </span>
             </div>
           </section>
