@@ -464,17 +464,95 @@ export function SpaceScene({
                 toneMapped: false,
             });
             const sprite = new THREE.Sprite(material);
-            sprite.scale.set(1.7, 0.43, 1);
+            sprite.scale.set(1.38, 0.36, 1);
             return sprite;
         };
 
         const lockedPlanetConfigs = [
-            { name: "Mercury", color: 0x9a8f83, radius: 0.22, x: -8.0, y: 0.05, mobileX: -2.45, mobileY: 2.65, mobileRadius: 0.20 },
-            { name: "Venus", color: 0xd6ad78, radius: 0.34, x: -6.2, y: -0.12, mobileX: -2.45, mobileY: 0.45, mobileRadius: 0.28 },
-            { name: "Jupiter", color: 0xc99d76, radius: 0.57, x: 5.8, y: 0.1, mobileX: 2.45, mobileY: 2.65, mobileRadius: 0.40 },
-            { name: "Saturn", color: 0xd7c49b, radius: 0.49, x: 7.2, y: -0.1, mobileX: 2.45, mobileY: 0.45, mobileRadius: 0.36 },
-            { name: "Uranus", color: 0x8dcbd0, radius: 0.36, x: 8.2, y: 0.15, mobileX: -2.45, mobileY: -2.45, mobileRadius: 0.29 },
-            { name: "Neptune", color: 0x527fc9, radius: 0.35, x: 9.2, y: -0.12, mobileX: 2.45, mobileY: -2.45, mobileRadius: 0.29 },
+            {
+                name: "Mercury",
+                color: 0x9a8f83,
+                radius: 0.22,
+                x: -8.1,
+                y: 0.08,
+                mobileX: -1.55,
+                mobileY: 2.75,
+                mobileRadius: 0.17,
+                spinSpeed: 0.19,
+                floatSpeed: 0.58,
+                floatAmplitude: 0.025,
+                phase: 0.2,
+            },
+            {
+                name: "Venus",
+                color: 0xd6ad78,
+                radius: 0.32,
+                x: -6.15,
+                y: -0.16,
+                mobileX: -1.55,
+                mobileY: -0.05,
+                mobileRadius: 0.23,
+                spinSpeed: -0.075,
+                floatSpeed: 0.43,
+                floatAmplitude: 0.035,
+                phase: 1.1,
+            },
+            {
+                name: "Jupiter",
+                color: 0xc99d76,
+                radius: 0.62,
+                x: 5.85,
+                y: -0.16,
+                mobileX: 1.55,
+                mobileY: 2.75,
+                mobileRadius: 0.32,
+                spinSpeed: 0.31,
+                floatSpeed: 0.34,
+                floatAmplitude: 0.025,
+                phase: 2.2,
+            },
+            {
+                name: "Saturn",
+                color: 0xd7c49b,
+                radius: 0.50,
+                x: 7.75,
+                y: 0.24,
+                mobileX: 1.55,
+                mobileY: -0.05,
+                mobileRadius: 0.30,
+                spinSpeed: 0.26,
+                floatSpeed: 0.31,
+                floatAmplitude: 0.03,
+                phase: 2.9,
+            },
+            {
+                name: "Uranus",
+                color: 0x8dcbd0,
+                radius: 0.36,
+                x: 9.55,
+                y: -0.14,
+                mobileX: -1.55,
+                mobileY: -2.55,
+                mobileRadius: 0.23,
+                spinSpeed: 0.17,
+                floatSpeed: 0.27,
+                floatAmplitude: 0.035,
+                phase: 4.0,
+            },
+            {
+                name: "Neptune",
+                color: 0x527fc9,
+                radius: 0.35,
+                x: 11.25,
+                y: 0.18,
+                mobileX: 1.55,
+                mobileY: -2.55,
+                mobileRadius: 0.23,
+                spinSpeed: 0.15,
+                floatSpeed: 0.23,
+                floatAmplitude: 0.03,
+                phase: 5.1,
+            },
         ];
 
         const createPlanetSurfaceTexture = (name: string) => {
@@ -496,24 +574,81 @@ export function SpaceScene({
             context.fillRect(0, 0, canvas.width, canvas.height);
 
             if (["Jupiter", "Saturn", "Uranus", "Neptune"].includes(name)) {
-                const count = name === "Jupiter" ? 34 : name === "Saturn" ? 27 : 18;
+                const count = name === "Jupiter" ? 28 : name === "Saturn" ? 24 : 16;
+
                 for (let i = 0; i < count; i++) {
                     const y = (i / count) * canvas.height;
-                    const h = canvas.height / count;
-                    context.globalAlpha = 0.22 + (i % 3) * 0.08;
+                    const bandHeight = canvas.height / count;
+                    const wave = Math.sin(i * 0.72) * (name === "Jupiter" ? 18 : 9);
+
+                    context.globalAlpha = name === "Jupiter"
+                        ? 0.24 + (i % 3) * 0.09
+                        : 0.18 + (i % 3) * 0.07;
                     context.fillStyle = i % 2 ? shadow : highlight;
-                    context.fillRect(0, y, canvas.width, h * (0.42 + (i % 4) * 0.12));
+                    context.beginPath();
+                    context.moveTo(0, y);
+                    context.bezierCurveTo(
+                        canvas.width * 0.28,
+                        y + wave,
+                        canvas.width * 0.68,
+                        y - wave * 0.65,
+                        canvas.width,
+                        y + Math.sin(i * 0.46) * 10,
+                    );
+                    context.lineTo(canvas.width, y + bandHeight * (0.48 + (i % 4) * 0.12));
+                    context.bezierCurveTo(
+                        canvas.width * 0.68,
+                        y + bandHeight * 0.55 - wave * 0.35,
+                        canvas.width * 0.28,
+                        y + bandHeight * 0.55 + wave * 0.35,
+                        0,
+                        y + bandHeight * (0.48 + (i % 4) * 0.12),
+                    );
+                    context.closePath();
+                    context.fill();
                 }
+
                 context.globalAlpha = 1;
+
                 if (name === "Jupiter") {
-                    const spot = context.createRadialGradient(690, 315, 8, 690, 315, 58);
-                    spot.addColorStop(0, "#b85b43");
-                    spot.addColorStop(0.55, "#a94d3b");
+                    for (let i = 0; i < 90; i++) {
+                        const y = (i * 47) % canvas.height;
+                        const x = (i * 113) % canvas.width;
+                        context.globalAlpha = 0.08 + (i % 4) * 0.025;
+                        context.strokeStyle = i % 2 ? highlight : shadow;
+                        context.lineWidth = 1 + (i % 3) * 0.8;
+                        context.beginPath();
+                        context.moveTo(x, y);
+                        context.bezierCurveTo(
+                            x + 28,
+                            y - 5,
+                            x + 56,
+                            y + 5,
+                            x + 92,
+                            y - 1,
+                        );
+                        context.stroke();
+                    }
+
+                    context.save();
+                    context.translate(700, 300);
+                    context.rotate(-0.1);
+                    const spot = context.createRadialGradient(0, 0, 7, 0, 0, 72);
+                    spot.addColorStop(0, "#c8755b");
+                    spot.addColorStop(0.48, "#b85b43");
+                    spot.addColorStop(0.82, "#9f4b3b");
                     spot.addColorStop(1, "rgba(137,66,49,0)");
                     context.fillStyle = spot;
                     context.beginPath();
-                    context.ellipse(690, 315, 76, 34, -0.08, 0, Math.PI * 2);
+                    context.ellipse(0, 0, 82, 38, 0, 0, Math.PI * 2);
                     context.fill();
+                    context.strokeStyle = "rgba(244, 194, 160, 0.26)";
+                    context.lineWidth = 5;
+                    context.beginPath();
+                    context.ellipse(0, 0, 66, 27, 0, 0, Math.PI * 2);
+                    context.stroke();
+                    context.restore();
+                    context.globalAlpha = 1;
                 }
             } else if (name === "Venus") {
                 for (let i = 0; i < 24; i++) {
@@ -584,24 +719,28 @@ export function SpaceScene({
 
         const lockedPlanets = lockedPlanetConfigs.map((config) => {
             const group = new THREE.Group();
-            const geometry = new THREE.SphereGeometry(config.radius, 48, 48);
+            const spinGroup = new THREE.Group();
+            group.add(spinGroup);
+
+            const geometry = new THREE.SphereGeometry(config.radius, 64, 64);
             const surfaceTexture = createPlanetSurfaceTexture(config.name);
             const material = new THREE.MeshStandardMaterial({
                 color: 0xffffff,
                 map: surfaceTexture ?? undefined,
-                roughness: config.name === "Jupiter" || config.name === "Saturn" ? 0.88 : 0.96,
+                roughness: config.name === "Jupiter" || config.name === "Saturn" ? 0.92 : 0.96,
                 metalness: 0.01,
                 transparent: true,
                 opacity: 0,
                 depthWrite: false,
             });
             const sphere = new THREE.Mesh(geometry, material);
-            group.add(sphere);
+            spinGroup.add(sphere);
 
             const materials: THREE.Material[] = [material];
+            let ring: THREE.Mesh | null = null;
 
             if (config.name === "Saturn") {
-                const ringGeometry = new THREE.RingGeometry(config.radius * 1.25, config.radius * 1.9, 72);
+                const ringGeometry = new THREE.RingGeometry(config.radius * 1.25, config.radius * 1.9, 96);
                 const ringTexture = createSaturnRingTexture();
                 const ringMaterial = new THREE.MeshBasicMaterial({
                     color: 0xffffff,
@@ -611,32 +750,16 @@ export function SpaceScene({
                     side: THREE.DoubleSide,
                     depthWrite: false,
                 });
-                const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+                ring = new THREE.Mesh(ringGeometry, ringMaterial);
                 ring.rotation.x = Math.PI * 0.36;
                 ring.rotation.y = -0.18;
-                group.add(ring);
+                spinGroup.add(ring);
                 materials.push(ringMaterial);
-            }
-
-            if (config.name === "Jupiter") {
-                const bandMaterial = new THREE.MeshBasicMaterial({
-                    color: 0x8e6046,
-                    transparent: true,
-                    opacity: 0,
-                    depthWrite: false,
-                });
-                const band = new THREE.Mesh(
-                    new THREE.TorusGeometry(config.radius * 0.82, config.radius * 0.055, 6, 64),
-                    bandMaterial,
-                );
-                band.rotation.x = Math.PI * 0.42;
-                group.add(band);
-                materials.push(bandMaterial);
             }
 
             const label = createLockedPlanetLabel(config.name);
             if (label) {
-                label.position.set(0, -(config.radius + 0.5), 0.05);
+                label.position.set(0, -(config.radius + 0.46), 0.05);
                 group.add(label);
                 materials.push(label.material);
             }
@@ -646,7 +769,7 @@ export function SpaceScene({
             group.userData.locked = true;
             scene.add(group);
 
-            return { ...config, group, materials };
+            return { ...config, group, spinGroup, ring, materials };
         });
 
         // ========================================
@@ -1086,7 +1209,16 @@ export function SpaceScene({
             activeTimeline?.kill();
             clearHover();
 
-            const isMobile = mount.clientWidth < 700;
+            const viewportWidth = mount.clientWidth || window.innerWidth;
+            const viewportHeight = mount.clientHeight || window.innerHeight;
+            const viewportAspect = viewportWidth / Math.max(viewportHeight, 1);
+            const isMobile = viewportWidth < 820 || viewportAspect < 1.48;
+
+            const desktopCameraZ = THREE.MathUtils.clamp(
+                12.5 / (Math.tan(THREE.MathUtils.degToRad(19)) * viewportAspect),
+                17.5,
+                25.5,
+            );
 
             const layout = isMobile
                 ? {
@@ -1096,7 +1228,7 @@ export function SpaceScene({
                     mars: { x: 0, y: -1.28, scale: 0.64 },
                 }
                 : {
-                    cameraZ: 17.5,
+                    cameraZ: desktopCameraZ,
                     earth: { x: -3.45, y: 0.25, scale: 0.53 },
                     moon: { x: 0, y: -0.30, scale: 0.90 },
                     mars: { x: 3.45, y: 0.25, scale: 0.96 },
@@ -1147,8 +1279,8 @@ export function SpaceScene({
                     planet.materials.forEach((material) => {
                         if ("opacity" in material) material.opacity = lockedOpacity;
                     });
-                    if (planet.name === "Saturn") {
-                        planet.group.children[1]?.rotation.set(Math.PI * 0.36, -0.18, 0.12);
+                    if (planet.ring) {
+                        planet.ring.rotation.set(Math.PI * 0.36, -0.18, 0.12);
                     }
                 });
 
@@ -1442,17 +1574,21 @@ export function SpaceScene({
             animationFrame = window.requestAnimationFrame(animate);
 
             const delta = Math.min(clock.getDelta(), 0.05);
+            const elapsed = clock.elapsedTime;
 
             if (!reducedMotion) {
-                // Time-compressed spin rates preserve the real relative periods:
-                // Earth ~23.9 h, Mars ~24.6 h, Moon ~27.3 days.
-                earthGroup.rotation.y += delta * 0.045;
-                clouds.rotation.y += delta * 0.052;
-                moon.rotation.y += delta * 0.00165;
-                mars.rotation.y += delta * 0.0438;
+                // Deliberately accelerated display spins make every world's surface motion
+                // visible during a short visit; these are illustrative, not real-time rates.
+                earthGroup.rotation.y += delta * 0.14;
+                clouds.rotation.y += delta * 0.18;
+                moon.rotation.y += delta * 0.035;
+                mars.rotation.y += delta * 0.135;
 
-                lockedPlanets.forEach((planet, index) => {
-                    planet.group.rotation.y += delta * (0.008 + index * 0.001);
+                lockedPlanets.forEach((planet) => {
+                    planet.spinGroup.rotation.y += delta * planet.spinSpeed;
+                    planet.spinGroup.position.y =
+                        Math.sin(elapsed * planet.floatSpeed + planet.phase) *
+                        planet.floatAmplitude;
                 });
 
                 starField.rotation.y += delta * 0.0008;
