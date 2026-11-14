@@ -219,7 +219,7 @@ export function ArtifactExplorer({
 
       <div className="archive-globe-instruction" aria-hidden="true">
         <span className="globe-instruction-dot" />
-        SELECT A GLOWING SURFACE MARKER
+        DRAG TO ROTATE  /  SELECT A GLOWING SURFACE MARKER
       </div>
 
       <div className="archive-globe-caption" aria-hidden="true">
