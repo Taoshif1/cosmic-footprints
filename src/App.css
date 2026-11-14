@@ -2615,3 +2615,130 @@ button.destination-control:not(:disabled):hover {
 .experience-archive .story-panel {
   pointer-events: auto;
 }
+
+
+/* ========================================
+   NASA DATA VISUALIZATION
+======================================== */
+
+.mission-data-section {
+  padding: 20px;
+  border: 1px solid rgba(147, 190, 250, 0.24);
+  background:
+    linear-gradient(145deg, rgba(25, 48, 78, 0.64), rgba(8, 19, 35, 0.7));
+}
+
+.mission-data-total {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 20px 0 18px;
+  padding-bottom: 17px;
+  border-bottom: 1px solid rgba(180, 205, 245, 0.16);
+}
+
+.mission-data-total > span {
+  color: #91a9c9;
+  font-size: 0.53rem;
+  letter-spacing: 0.13em;
+  line-height: 1.6;
+}
+
+.mission-data-total > strong {
+  color: #edf5ff;
+  font-family: monospace;
+  font-size: 2.1rem;
+  letter-spacing: -0.07em;
+  white-space: nowrap;
+}
+
+.mission-data-total small {
+  margin-left: 5px;
+  color: #a8c8f5;
+  font-size: 0.8rem;
+  letter-spacing: 0;
+}
+
+.mission-data-chart {
+  display: grid;
+  gap: 17px;
+}
+
+.mission-data-row {
+  display: grid;
+  gap: 8px;
+}
+
+.mission-data-row-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #cbd9ed;
+  font-size: 0.72rem;
+}
+
+.mission-data-row-heading strong {
+  color: #f0f6ff;
+  font-family: monospace;
+  font-size: 0.72rem;
+}
+
+.mission-data-track {
+  height: 9px;
+  overflow: hidden;
+  border: 1px solid rgba(158, 191, 237, 0.15);
+  border-radius: 99px;
+  background: rgba(2, 9, 19, 0.76);
+}
+
+.mission-data-track > span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #6d9ed8, #c1d9ff);
+  box-shadow: 0 0 17px rgba(139, 184, 244, 0.4);
+}
+
+.mission-data-method {
+  margin: 18px 0 14px !important;
+  color: #8398b5 !important;
+  font-size: 0.62rem !important;
+  line-height: 1.7 !important;
+}
+
+.mission-data-source {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(180, 205, 245, 0.15);
+  color: #a9cafa;
+  text-decoration: none;
+}
+
+.mission-data-source > span:first-child {
+  display: grid;
+  gap: 5px;
+  color: #8098ba;
+  font-size: 0.48rem;
+  letter-spacing: 0.13em;
+}
+
+.mission-data-source strong {
+  color: #c8dcf8;
+  font-size: 0.68rem;
+  font-weight: 550;
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+
+.mission-data-source > span:last-child {
+  font-size: 1.15rem;
+}
+
+.mission-data-source:hover strong {
+  color: #fff;
+}
