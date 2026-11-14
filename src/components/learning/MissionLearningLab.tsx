@@ -124,7 +124,7 @@ export function MissionLearningLab({ artifact }: { artifact: Artifact }) {
             </header>
 
             <div className="mission-lab-progress" aria-label={finished ? "Quiz complete" : `Question ${questionIndex + 1} of ${questions.length}`}>
-              {questions.map((item, index) => (
+              {questions.map((_, index) => (
                 <span key={index} className={index < answers.length ? "is-complete" : index === questionIndex ? "is-current" : ""} />
               ))}
             </div>
