@@ -555,6 +555,88 @@ export const artifacts: Artifact[] = [
             },
         ],
     },
+    {
+    id: "mars-polar-lander",
+    destination: "mars",
+    name: "Mars Polar Lander / Deep Space 2",
+    mission: "Mars Surveyor '98 Program",
+    year: "1999",
+    category: "Lander & Microprobes",
+    tagline: "Three spacecraft. One journey. No signal home.",
+    description:
+        "NASA's Mars Polar Lander carried two experimental Deep Space 2 probes on a mission to investigate the planet's southern polar region. All three spacecraft were lost during their arrival at Mars in December 1999.",
+    image: "/artifacts/mars-polar-lander.jpg",
+    imageAlt:
+        "Artist's concept of the Mars Polar Lander spacecraft on the Martian surface.",
+    imageCaption:
+        "Artist's concept of Mars Polar Lander on the surface of Mars.",
+    imageCredit: "NASA/JPL-Caltech",
+    imageType: "artist-concept",
+    status: "Lost on arrival",
+    statusDetail:
+        "No successful communication was received from the lander or either Deep Space 2 probe.",
+    purpose:
+        "NASA planned to land Mars Polar Lander near the edge of the south polar cap. Its robotic arm would dig into the soil to investigate water ice and the Martian environment. Two smaller Deep Space 2 probes were designed to penetrate the surface and test new technologies.",
+    story:
+        "NASA launched Mars Polar Lander on January 3, 1999, carrying an ambitious mission to the southern region of Mars. The lander was designed to touch down near the edge of the south polar cap, where its robotic arm would dig into the ground and investigate the presence of water ice.\n\nTwo experimental probes, named Deep Space 2, travelled alongside it. Unlike the lander, these small probes were designed to strike the Martian surface and penetrate the soil, testing new ways to explore beneath the surface.\n\nOn December 3, 1999, all three spacecraft were lost during their arrival at Mars. An investigation identified a likely software and touchdown-sensor problem that may have shut down the lander's engines too early. NASA never received a signal from the spacecraft, and their final resting places remain unconfirmed.",
+    discoveries: [
+        "The mission was designed to investigate near-surface water ice in the Martian polar region.",
+        "The lander's robotic arm would have collected and examined soil samples.",
+        "Deep Space 2 tested technologies for penetrating the Martian surface.",
+        "The investigation exposed a critical vulnerability in the lander's touchdown-sensing software.",
+    ],
+    finalChapter:
+        "NASA searched for the missing lander using Mars Global Surveyor on December 16, 1999, but found no sign of it. On January 17, 2000, NASA ended attempts to establish contact. The lander's exact resting place and the final fate of the two Deep Space 2 probes remain unknown.",
+    currentLocation:
+        "Unknown. The lander was likely destroyed during its attempted descent or impact near the Martian south polar region. The locations and condition of the Deep Space 2 probes have not been confirmed.",
+    highlights: [
+        "Launched: January 3, 1999",
+        "Target: Martian south polar region",
+        "One lander and two microprobes",
+        "Lost: December 3, 1999",
+        "Contact attempts ended: January 17, 2000",
+    ],
+    timeline: [
+        {
+            date: "January 3, 1999",
+            title: "Journey begins",
+            description:
+                "Mars Polar Lander and its two Deep Space 2 probes launch aboard a Delta II rocket.",
+        },
+        {
+            date: "December 3, 1999",
+            title: "Lost during arrival",
+            description:
+                "The lander and both probes are lost during their planned arrival at Mars.",
+        },
+        {
+            date: "December 16, 1999",
+            title: "Search for the lander",
+            description:
+                "NASA uses Mars Global Surveyor to search for the missing spacecraft but finds no confirmed signal.",
+        },
+        {
+            date: "January 17, 2000",
+            title: "Contact attempts end",
+            description:
+                "NASA terminates attempts to communicate with the lost lander.",
+        },
+    ],
+    sources: [
+        {
+            label: "NASA — Mars Polar Lander / Deep Space 2",
+            url: "https://science.nasa.gov/mission/mars-polar-lander-deep-space-2/",
+        },
+        {
+            label: "NASA — JPL Special Review Board Report",
+            url: "https://ntrs.nasa.gov/api/citations/20000061966/downloads/20000061966.pdf",
+        },
+        {
+            label: "NASA — Mars Polar Lander Mission Timeline",
+            url: "https://nssdc.gsfc.nasa.gov/planetary/mars/polar_lander/mpl_timetable.html",
+        },
+    ],
+},
 
     {
         id: "ingenuity",
