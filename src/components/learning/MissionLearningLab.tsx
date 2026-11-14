@@ -50,7 +50,18 @@ const questionBank: Record<string, Question[]> = {
     { prompt: "How many flights did Ingenuity complete?", choices: ["5", "25", "72"], answer: 2, explanation: "It was planned as a five-flight technology demonstration but ultimately completed 72 flights." },
     { prompt: "Why did Ingenuity stop flying?", choices: ["Its rotor blades were damaged during its final flight", "It was deliberately launched into orbit", "It ran out of oxygen"], answer: 0, explanation: "Rotor damage during the 72nd flight in January 2024 left the helicopter unable to fly." },
   ],
+,
 
+  "insight": [
+    { prompt: "Unlike a rover, what did NASA's InSight lander do?", choices: ["Stayed in one place to study Mars' interior", "Drove across the polar ice cap", "Collected samples from Earth's Moon"], answer: 0, explanation: "InSight was a stationary lander. It used instruments, including a seismometer, to investigate Mars' interior." },
+    { prompt: "What did InSight's seismometer detect?", choices: ["Ocean waves", "Marsquakes and other seismic events", "Solar eclipses"], answer: 1, explanation: "InSight detected 1,319 marsquakes, helping scientists learn about the crust, mantle and core." },
+    { prompt: "Why did InSight gradually lose power?", choices: ["Dust accumulated on its solar panels", "Its batteries were removed by astronauts", "Mars moved farther from the Sun"], answer: 0, explanation: "Dust built up on the solar panels, reducing the energy available to operate and communicate." },
+  ],
+  "ingenuity": [
+    { prompt: "What record did Ingenuity achieve?", choices: ["First powered, controlled flight on another planet", "First human flight on Mars", "First balloon flight around Jupiter"], answer: 0, explanation: "Ingenuity demonstrated powered, controlled flight in the thin Martian atmosphere." },
+    { prompt: "How many flights did Ingenuity complete?", choices: ["5", "25", "72"], answer: 2, explanation: "It was planned as a five-flight technology demonstration but ultimately completed 72 flights." },
+    { prompt: "Why did Ingenuity stop flying?", choices: ["Its rotor blades were damaged during its final flight", "It was deliberately launched into orbit", "It ran out of oxygen"], answer: 0, explanation: "Rotor damage during the 72nd flight in January 2024 left the helicopter unable to fly." },
+  ],
 };
 
 const simpleSummaries: Record<string, string> = {
