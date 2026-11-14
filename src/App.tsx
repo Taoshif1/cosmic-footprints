@@ -9,6 +9,7 @@ import type {
 
 import { ArtifactExplorer } from "./components/artifacts/ArtifactExplorer";
 import { ArtifactStory } from "./components/artifacts/ArtifactStory";
+import { MissionLearningLab } from "./components/learning/MissionLearningLab";
 
 import {
   getArtifactById,
@@ -424,10 +425,13 @@ function App() {
 
         {mode === "archive" && selectedDestination && (
           selectedArtifact ? (
-            <ArtifactStory
-              artifact={selectedArtifact}
-              onBack={() => setSelectedArtifact(null)}
-            />
+            <>
+              <ArtifactStory
+                artifact={selectedArtifact}
+                onBack={() => setSelectedArtifact(null)}
+              />
+              <MissionLearningLab artifact={selectedArtifact} />
+            </>
           ) : (
             <ArtifactExplorer
               destination={selectedDestination}
