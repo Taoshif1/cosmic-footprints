@@ -1,15 +1,19 @@
-import { useCallback, useRef, useState } from "react";
+import { lazy, Suspense, useCallback, useMemo, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 
-import {
-  SpaceScene,
-  type Destination,
-  type SceneMode,
+import type {
+  Destination,
+  SceneMode,
 } from "./components/experience/SpaceScene";
 
 import { ArtifactExplorer } from "./components/artifacts/ArtifactExplorer";
 import { ArtifactStory } from "./components/artifacts/ArtifactStory";
+
+import {
+  getArtifactById,
+  getArtifactsByDestination,
+} from "./data/artifacts";
 
 import type { Artifact } from "./data/artifacts";
 
@@ -19,9 +23,18 @@ import "./App.css";
 
 gsap.registerPlugin(useGSAP);
 
+const SpaceScene = lazy(async () => {
+  const module = await import("./components/experience/SpaceScene");
+  return { default: module.SpaceScene };
+});
+
+const ArchivePlanetScene = lazy(async () => {
+  const module = await import("./components/experience/ArchivePlanetScene");
+  return { default: module.ArchivePlanetScene };
+});
+
 function App() {
   const rootRef = useRef<HTMLDivElement>(null);
-
   const reducedMotion = useReducedMotion();
 
   const [mode, setMode] = useState<SceneMode>("intro");
@@ -32,21 +45,41 @@ function App() {
   const [selectedArtifact, setSelectedArtifact] =
     useState<Artifact | null>(null);
 
+  const destinationArtifacts = useMemo(
+    () => (
+      selectedDestination
+        ? getArtifactsByDestination(selectedDestination)
+        : []
+    ),
+    [selectedDestination],
+  );
+
   const handleDestinationSelect = useCallback(
     (destination: Destination) => {
       if (mode !== "destinations") return;
 
       setSelectedDestination(destination);
+      setSelectedArtifact(null);
       setMode("traveling");
     },
     [mode],
   );
 
-  const handleArrival = useCallback(
-    (_destination: Destination) => {
-      setMode("archive");
+  const handleArrival = useCallback(() => {
+    setMode("archive");
+  }, []);
+
+  const handleArtifactSelect = useCallback(
+    (artifactId: string) => {
+      if (!selectedDestination) return;
+
+      const artifact = getArtifactById(artifactId);
+
+      if (artifact && artifact.destination === selectedDestination) {
+        setSelectedArtifact(artifact);
+      }
     },
-    [],
+    [selectedDestination],
   );
 
   const beginExploration = () => {
@@ -70,9 +103,7 @@ function App() {
       if (reducedMotion) return;
 
       const timeline = gsap.timeline({
-        defaults: {
-          ease: "power3.out",
-        },
+        defaults: { ease: "power3.out" },
       });
 
       if (mode === "intro") {
@@ -90,11 +121,7 @@ function App() {
           )
           .fromTo(
             ".intro-title-line",
-            {
-              opacity: 0,
-              y: 55,
-              rotateX: -15,
-            },
+            { opacity: 0, y: 55, rotateX: -15 },
             {
               opacity: 1,
               y: 0,
@@ -133,7 +160,7 @@ function App() {
           .fromTo(
             ".destination-controls",
             { opacity: 0, y: 30 },
-            { opacity: 1, y: 0, duration: 0.85 },
+            { opacity: 1, y: 0, duration: 0.85, stagger: 0.12 },
             "-=0.35",
           )
           .fromTo(
@@ -152,75 +179,33 @@ function App() {
         );
       }
 
-
       if (mode === "archive") {
         if (selectedArtifact) {
-          timeline
-            .fromTo(
-              ".story-hero-image",
-              { scale: 1.08 },
-              {
-                scale: 1,
-                duration: 1.2,
-                ease: "power2.out",
-              },
-            )
-            .fromTo(
-              ".story-hero-content",
-              { opacity: 0, y: 25 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.9,
-              },
-              "-=0.7",
-            )
-            .fromTo(
-              ".story-section",
-              { opacity: 0, y: 22 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.7,
-                stagger: 0.12,
-              },
-              "-=0.3",
-            );
+          timeline.fromTo(
+            ".story-panel",
+            { opacity: 0, x: -26 },
+            { opacity: 1, x: 0, duration: 0.8 },
+          );
         } else {
           timeline
             .fromTo(
-              ".archive-heading",
-              { opacity: 0, y: 25 },
+              ".archive-explorer-panel",
+              { opacity: 0, x: -30 },
+              { opacity: 1, x: 0, duration: 0.85 },
+            )
+            .fromTo(
+              ".archive-list-item",
+              { opacity: 0, y: 14 },
               {
                 opacity: 1,
                 y: 0,
-                duration: 0.85,
+                duration: 0.6,
+                stagger: 0.09,
               },
-            )
-            .fromTo(
-              ".archive-summary",
-              { opacity: 0 },
-              {
-                opacity: 1,
-                duration: 0.7,
-              },
-              "-=0.4",
-            )
-            .fromTo(
-              ".artifact-card",
-              { opacity: 0, y: 35 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 0.75,
-                stagger: 0.13,
-                ease: "power3.out",
-              },
-              "-=0.3",
+              "-=0.35",
             );
         }
       }
-
 
       return () => timeline.kill();
     },
@@ -232,19 +217,34 @@ function App() {
   );
 
   const destinationName =
-    selectedDestination === "moon"
-      ? "THE MOON"
-      : "MARS";
+    selectedDestination === "moon" ? "THE MOON" : "MARS";
 
   return (
-    <div ref={rootRef} className={`experience-shell experience-${mode}`}>
-      <SpaceScene
-        mode={mode}
-        selectedDestination={selectedDestination}
-        reducedMotion={reducedMotion}
-        onDestinationSelect={handleDestinationSelect}
-        onArrival={handleArrival}
-      />
+    <div
+      ref={rootRef}
+      className={"experience-shell experience-" + mode}
+    >
+      <Suspense fallback={null}>
+        <SpaceScene
+          mode={mode}
+          selectedDestination={selectedDestination}
+          reducedMotion={reducedMotion}
+          onDestinationSelect={handleDestinationSelect}
+          onArrival={handleArrival}
+        />
+      </Suspense>
+
+      {mode === "archive" && selectedDestination && (
+        <Suspense fallback={null}>
+          <ArchivePlanetScene
+            destination={selectedDestination}
+            artifacts={destinationArtifacts}
+            selectedArtifactId={selectedArtifact?.id ?? null}
+            reducedMotion={reducedMotion}
+            onSelectArtifact={handleArtifactSelect}
+          />
+        </Suspense>
+      )}
 
       <div className="space-vignette" aria-hidden="true" />
 
@@ -286,22 +286,17 @@ function App() {
             </p>
 
             <h1 className="intro-title">
-              <span className="intro-title-line">
-                COSMIC
-              </span>
-
+              <span className="intro-title-line">COSMIC</span>
               <span className="intro-title-line title-outline">
                 FOOTPRINTS
               </span>
             </h1>
 
             <p className="intro-description">
-              The machines may be silent. Their discoveries
-              aren't.
-
+              The machines may be silent. Their discoveries aren't.
               <span>
-                Journey across the Solar System and discover
-                the explorers humanity left behind.
+                Journey across the Solar System and discover the
+                explorers humanity left behind.
               </span>
             </p>
 
@@ -346,12 +341,10 @@ function App() {
                 onClick={() => handleDestinationSelect("moon")}
               >
                 <span className="control-number">01</span>
-
                 <span className="control-details">
                   <strong>THE MOON</strong>
                   <small>LUNAR EXPLORATION</small>
                 </span>
-
                 <span className="control-status">AVAILABLE ↗</span>
               </button>
 
@@ -361,12 +354,10 @@ function App() {
                 onClick={() => handleDestinationSelect("mars")}
               >
                 <span className="control-number">02</span>
-
                 <span className="control-details">
                   <strong>MARS</strong>
                   <small>THE RED PLANET</small>
                 </span>
-
                 <span className="control-status">AVAILABLE ↗</span>
               </button>
 
@@ -377,15 +368,11 @@ function App() {
                 aria-label="Beyond: locked, coming soon"
               >
                 <span className="control-number">03</span>
-
                 <span className="control-details">
                   <strong>BEYOND</strong>
                   <small>DEEP SPACE EXPLORATION</small>
                 </span>
-
-                <span className="control-status">
-                  <span aria-hidden="true">▣</span> LOCKED
-                </span>
+                <span className="control-status">▣ LOCKED</span>
               </button>
             </div>
 
@@ -408,8 +395,7 @@ function App() {
             </h1>
 
             <p>
-              Preparing for arrival. The journey beyond Earth
-              begins here.
+              Preparing for arrival. The journey beyond Earth begins here.
             </p>
           </section>
         )}

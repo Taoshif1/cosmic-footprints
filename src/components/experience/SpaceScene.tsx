@@ -38,10 +38,6 @@ export function SpaceScene({
     const onSelectRef = useRef(onDestinationSelect);
     const onArrivalRef = useRef(onArrival);
 
-    modeRef.current = mode;
-    onSelectRef.current = onDestinationSelect;
-    onArrivalRef.current = onArrival;
-
     useEffect(() => {
         const mount = mountRef.current;
 
@@ -996,12 +992,36 @@ export function SpaceScene({
                 }, 2.5);
         };
 
+        let animationFrame = 0;
+        let disposed = false;
+        const clock = new THREE.Clock();
+        let animate: () => void = () => {};
+
         controllerRef.current = {
             setMode: (nextMode) => {
                 if (nextMode === "intro") showIntro();
 
                 if (nextMode === "destinations") {
                     showDestinations();
+                }
+
+                if (nextMode === "archive") {
+                    if (animationFrame) {
+                        window.cancelAnimationFrame(animationFrame);
+                        animationFrame = 0;
+                    }
+
+                    renderScene();
+                    return;
+                }
+
+                if (
+                    !reducedMotion &&
+                    !document.hidden &&
+                    !animationFrame
+                ) {
+                    clock.start();
+                    animate();
                 }
             },
 
@@ -1012,12 +1032,7 @@ export function SpaceScene({
         // RENDER LOOP
         // ========================================
 
-        let animationFrame = 0;
-        let disposed = false;
-
-        const clock = new THREE.Clock();
-
-        const animate = () => {
+        animate = () => {
             if (disposed) return;
 
             animationFrame = window.requestAnimationFrame(animate);
@@ -1068,7 +1083,11 @@ export function SpaceScene({
                 }
 
                 clock.stop();
-            } else if (!reducedMotion && !animationFrame) {
+            } else if (
+                !reducedMotion &&
+                !animationFrame &&
+                modeRef.current !== "archive"
+            ) {
                 clock.start();
                 animate();
             } else {
@@ -1157,11 +1176,14 @@ export function SpaceScene({
         };
     }, [reducedMotion]);
 
-    // Tell the persistent Three.js scene which experience
-    // state it should display.
+    // Keep event handlers in sync without writing refs during render.
     useEffect(() => {
+        modeRef.current = mode;
+        onSelectRef.current = onDestinationSelect;
+        onArrivalRef.current = onArrival;
+
         controllerRef.current?.setMode(mode);
-    }, [mode]);
+    }, [mode, onDestinationSelect, onArrival]);
 
     // Start a cinematic trip when React selects a destination.
     useEffect(() => {

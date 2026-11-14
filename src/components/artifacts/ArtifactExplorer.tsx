@@ -1,137 +1,138 @@
-
 import {
-    getArtifactsByDestination,
-    type Destination,
-    type Artifact,
+  getArtifactsByDestination,
+  type Artifact,
+  type Destination,
 } from "../../data/artifacts";
+import { getPlanetMarkers } from "../../data/planetMarkers";
 
 interface ArtifactExplorerProps {
-    destination: Destination;
-    onSelect: (artifact: Artifact) => void;
-    onChangeDestination: () => void;
+  destination: Destination;
+  onSelect: (artifact: Artifact) => void;
+  onChangeDestination: () => void;
 }
 
 const destinationCopy = {
-    moon: {
-        eyebrow: "LUNAR EXPLORATION ARCHIVE",
-        title: "THE MOON",
-        subtitle:
-            "Humanity's earliest footsteps left more than footprints. Discover the machines that prepared the way, explored the surface and continued science after the astronauts went home.",
-        accent: "LUNAR RECORDS",
-    },
-    mars: {
-        eyebrow: "MARTIAN EXPLORATION ARCHIVE",
-        title: "MARS",
-        subtitle:
-            "From tiny robotic explorers to machines that changed how we understand another planet, discover the stories behind humanity's Martian legacy.",
-        description:
-            "Explore the history of Mars exploration and the remarkable achievements of our robotic emissaries.",
-        accent: "MARTIAN RECORDS",
-    },
+  moon: {
+    eyebrow: "LUNAR SURFACE / ARCHIVE CONTROL",
+    title: "THE MOON",
+    subtitle:
+      "A world marked by landers, rovers and experiments that kept working long after the astronauts returned home.",
+    descriptor: "LUNAR FIELD RECORDS",
+  },
+  mars: {
+    eyebrow: "MARTIAN SURFACE / ARCHIVE CONTROL",
+    title: "MARS",
+    subtitle:
+      "Meet the robotic explorers that crossed the red terrain, listened to the planet and changed what we know about its past.",
+    descriptor: "MARTIAN FIELD RECORDS",
+  },
 };
 
 export function ArtifactExplorer({
-    destination,
-    onSelect,
-    onChangeDestination,
+  destination,
+  onSelect,
+  onChangeDestination,
 }: ArtifactExplorerProps) {
-    const items = getArtifactsByDestination(destination);
-    const copy = destinationCopy[destination];
+  const artifacts = getArtifactsByDestination(destination);
+  const markers = getPlanetMarkers(destination);
+  const copy = destinationCopy[destination];
 
-    return (
-        <section className="artifact-explorer">
-            <div className="archive-heading">
-                <div>
-                    <p className="archive-eyebrow">
-                        <span className="kicker-line" />
-                        {copy.eyebrow}
-                    </p>
+  return (
+    <section className="archive-explorer-layout">
+      <div className="archive-panel archive-explorer-panel">
+        <div className="archive-panel-topline">
+          <p className="archive-eyebrow">
+            <span className="kicker-line" />
+            {copy.eyebrow}
+          </p>
 
-                    <h1>{copy.title}</h1>
+          <button
+            type="button"
+            className="archive-back"
+            onClick={onChangeDestination}
+          >
+            CHANGE WORLD
+          </button>
+        </div>
 
-                    <p className="archive-description">
-                        {copy.subtitle}
-                    </p>
-                </div>
+        <h1 className="archive-world-title">{copy.title}</h1>
 
-                <button
-                    type="button"
-                    className="archive-back"
-                    onClick={onChangeDestination}
-                >
-                    ← CHANGE DESTINATION
-                </button>
-            </div>
+        <p className="archive-world-description">{copy.subtitle}</p>
 
-            <div className="archive-summary">
-                <div>
-                    <span>COLLECTION</span>
-                    <strong>{copy.accent}</strong>
-                </div>
+        <div className="archive-world-stats">
+          <div>
+            <span>ARTIFACT RECORDS</span>
+            <strong>{String(artifacts.length).padStart(2, "0")}</strong>
+          </div>
+          <div>
+            <span>SURFACE SIGNALS</span>
+            <strong>{String(markers.length).padStart(2, "0")}</strong>
+          </div>
+          <div>
+            <span>COLLECTION</span>
+            <strong>{copy.descriptor}</strong>
+          </div>
+        </div>
 
-                <div>
-                    <span>ARTIFACTS</span>
-                    <strong>{String(items.length).padStart(2, "0")}</strong>
-                </div>
+        <div className="archive-list-heading">
+          <span>EXPLORER REGISTER</span>
+          <span>SELECT A RECORD</span>
+        </div>
 
-                <div>
-                    <span>EXPLORE</span>
-                    <strong>MISSION STORIES</strong>
-                </div>
-            </div>
+        <div className="archive-signal-list">
+          {artifacts.map((artifact, index) => {
+            const artifactMarkers = markers.filter(
+              (marker) => marker.artifactId === artifact.id,
+            );
 
-            <div className="artifact-grid">
-                {items.map((artifact, index) => (
-                    <button
-                        type="button"
-                        key={artifact.id}
-                        className="artifact-card"
-                        onClick={() => onSelect(artifact)}
-                        aria-label={`Explore the story of ${artifact.name}`}
-                    >
-                        <div className="artifact-image">
-                            <img
-                                src={artifact.image}
-                                alt={artifact.imageAlt}
-                                loading={index < 3 ? "eager" : "lazy"}
-                            />
+            return (
+              <button
+                type="button"
+                key={artifact.id}
+                className="archive-list-item"
+                onClick={() => onSelect(artifact)}
+              >
+                <span className="archive-list-index">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
 
-                            <span className="artifact-index">
-                                {String(index + 1).padStart(2, "0")}
-                            </span>
+                <span className="archive-list-copy">
+                  <strong>{artifact.name}</strong>
+                  <small>{artifact.category} / {artifact.year}</small>
+                  <span className="archive-list-marker-labels">
+                    {artifactMarkers.map((marker) => marker.code).join("  ·  ")}
+                  </span>
+                </span>
 
-                            <span className="artifact-open">
-                                EXPLORE ↗
-                            </span>
-                        </div>
+                <span className="archive-list-count">
+                  {String(artifactMarkers.length).padStart(2, "0")}
+                  <small>SIGNALS</small>
+                </span>
 
-                        <div className="artifact-card-content">
-                            <div className="artifact-meta">
-                                <span>{artifact.year}</span>
-                                <span>{artifact.category}</span>
-                            </div>
+                <span className="archive-list-arrow">↗</span>
+              </button>
+            );
+          })}
+        </div>
 
-                            <h2>{artifact.name}</h2>
+        <div className="archive-map-note">
+          <span className="map-note-dot" />
+          <p>
+            Glowing markers identify mission records. Their positions on this
+            rotating globe are illustrative, not precise landing coordinates.
+          </p>
+        </div>
+      </div>
 
-                            <p>{artifact.tagline}</p>
+      <div className="archive-globe-instruction" aria-hidden="true">
+        <span className="globe-instruction-dot" />
+        SELECT A GLOWING SURFACE MARKER
+      </div>
 
-                            <div className="artifact-card-footer">
-                                <span className="artifact-status">
-                                    <span />
-                                    {artifact.status}
-                                </span>
-
-                                <span className="artifact-arrow">↗</span>
-                            </div>
-                        </div>
-                    </button>
-                ))}
-            </div>
-
-            <footer className="archive-footer">
-                <span>COSMIC FOOTPRINTS / HISTORICAL COLLECTION</span>
-                <span>NASA MISSIONS & SCIENTIFIC LEGACY</span>
-            </footer>
-        </section>
-    );
+      <div className="archive-globe-caption" aria-hidden="true">
+        <span>PLANETARY SURFACE / ROTATING VIEW</span>
+        <span>MISSION MARKERS ARE NOT TO SCALE</span>
+      </div>
+    </section>
+  );
 }
