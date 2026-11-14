@@ -8,6 +8,7 @@ interface ArchivePlanetSceneProps {
   destination: Destination;
   artifacts: Artifact[];
   selectedArtifactId: string | null;
+  visibleArtifactIds: string[];
   reducedMotion: boolean;
   onSelectArtifact: (artifactId: string) => void;
 }
@@ -89,17 +90,20 @@ export function ArchivePlanetScene({
   destination,
   artifacts,
   selectedArtifactId,
+  visibleArtifactIds,
   reducedMotion,
   onSelectArtifact,
 }: ArchivePlanetSceneProps) {
   const mountRef = useRef<HTMLDivElement>(null);
   const selectedArtifactRef = useRef(selectedArtifactId);
+  const visibleArtifactIdsRef = useRef(new Set(visibleArtifactIds));
   const onSelectRef = useRef(onSelectArtifact);
 
   useEffect(() => {
     selectedArtifactRef.current = selectedArtifactId;
+    visibleArtifactIdsRef.current = new Set(visibleArtifactIds);
     onSelectRef.current = onSelectArtifact;
-  }, [selectedArtifactId, onSelectArtifact]);
+  }, [selectedArtifactId, visibleArtifactIds, onSelectArtifact]);
 
   useEffect(() => {
     const mount = mountRef.current;
@@ -582,8 +586,11 @@ export function ArchivePlanetScene({
     const findMarkerAtPointer = () => {
       raycaster.setFromCamera(pointer, camera);
 
+      const activeHitAreas = markerEntries
+        .filter((entry) => visibleArtifactIdsRef.current.has(entry.artifactId))
+        .map((entry) => entry.hitArea);
       const intersections = raycaster.intersectObjects(
-        [planet, ...markerHitAreas],
+        [planet, ...activeHitAreas],
         false,
       );
 
@@ -722,6 +729,9 @@ export function ArchivePlanetScene({
       });
 
       markerEntries.forEach((entry) => {
+        const matchesFilter = visibleArtifactIdsRef.current.has(entry.artifactId);
+        entry.group.visible = matchesFilter;
+        if (!matchesFilter) return;
         const selected =
           selectedArtifactRef.current === entry.artifactId;
 
