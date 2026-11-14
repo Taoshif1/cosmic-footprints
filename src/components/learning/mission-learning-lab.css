@@ -277,3 +277,100 @@
 @media (prefers-reduced-motion: reduce) {
   .mission-lab-launch, .mission-lab-choice { transition: none; }
 }
+
+.mission-lab-data {
+  margin: -8px 0 23px;
+  padding: 15px;
+  border: 1px solid rgba(153, 191, 245, 0.22);
+  background: rgba(76, 111, 159, 0.09);
+}
+
+.mission-lab-data-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.mission-lab-data-heading > div > span {
+  color: #9fc7ff;
+  font: 0.54rem monospace;
+  letter-spacing: 0.12em;
+}
+
+.mission-lab-data-heading h3 {
+  margin: 7px 0 0;
+  color: #e9f2ff;
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.mission-lab-data-heading > strong {
+  flex: 0 0 auto;
+  color: #d9eaff;
+  font-size: 1.55rem;
+  letter-spacing: -0.05em;
+}
+
+.mission-lab-data-heading > strong small {
+  color: #9bb4d6;
+  font-size: 0.65rem;
+}
+
+.mission-lab-data > p {
+  margin: 9px 0 13px;
+  color: #a8b9d1;
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+
+.mission-lab-data-rows {
+  display: grid;
+  gap: 10px;
+}
+
+.mission-lab-data-row > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 5px;
+  color: #b9cbe2;
+  font-size: 0.67rem;
+}
+
+.mission-lab-data-row > div strong {
+  color: #e0edff;
+  font-variant-numeric: tabular-nums;
+}
+
+.mission-lab-data-track {
+  display: block;
+  height: 5px;
+  overflow: hidden;
+  background: rgba(173, 198, 235, 0.12);
+}
+
+.mission-lab-data-track i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #648ec9, #a8d1ff);
+}
+
+.mission-lab-data > a {
+  display: inline-block;
+  margin-top: 13px;
+  color: #b8d6ff;
+  font: 0.57rem monospace;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+
+.mission-lab-data > a:hover { text-decoration: underline; }
+
+.mission-lab-data > small {
+  display: block;
+  margin-top: 8px;
+  color: #8498b4;
+  font-size: 0.62rem;
+  line-height: 1.5;
+}
