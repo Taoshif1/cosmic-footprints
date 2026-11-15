@@ -247,7 +247,7 @@ async function fetchRoverFeed(
 
       payload = await proxyResponse.json();
     } catch (proxyError) {
-      if (signal.aborted) throw proxyError;
+      if (signal.aborted) throw new Error("NASA feed request was cancelled.", { cause: proxyError });
 
       // Vite's local development server has no Vercel function runtime.
       // Try NASA's public feed directly for local development or proxy outages.
@@ -377,7 +377,9 @@ export function MissionControl({ onBack }: MissionControlProps) {
   }, []);
 
   useEffect(() => {
-    void refreshFeeds();
+    const initialFetch = window.setTimeout(() => {
+      void refreshFeeds();
+    }, 0);
 
     const interval = window.setInterval(() => {
       if (document.visibilityState === "visible") {
@@ -386,6 +388,7 @@ export function MissionControl({ onBack }: MissionControlProps) {
     }, REFRESH_INTERVAL);
 
     return () => {
+      window.clearTimeout(initialFetch);
       window.clearInterval(interval);
       abortRef.current?.abort();
     };
