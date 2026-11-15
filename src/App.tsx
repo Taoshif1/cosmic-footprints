@@ -11,6 +11,7 @@ import { ArtifactExplorer } from "./components/artifacts/ArtifactExplorer";
 import { ArtifactStory } from "./components/artifacts/ArtifactStory";
 import { MissionLearningLab } from "./components/learning/MissionLearningLab";
 import { GuidedExplorer } from "./components/learning/GuidedExplorer";
+import { MissionControl } from "./components/mission/MissionControl";
 
 import {
   getArtifactById,
@@ -59,6 +60,7 @@ function App() {
   const [archiveSearchQuery, setArchiveSearchQuery] = useState("");
   const [archiveCategory, setArchiveCategory] = useState("ALL");
   const [guidedJourneyOpen, setGuidedJourneyOpen] = useState(false);
+  const [missionControlOpen, setMissionControlOpen] = useState(false);
 
   const destinationArtifacts = useMemo(
     () => (
@@ -89,6 +91,7 @@ function App() {
       setSelectedArtifact(null);
       setArchiveSearchQuery("");
       setArchiveCategory("ALL");
+      setMissionControlOpen(false);
       setMode("traveling");
     },
     [mode],
@@ -133,12 +136,14 @@ function App() {
     setArchiveSearchQuery("");
     setArchiveCategory("ALL");
     setSelectedDestination(null);
+    setMissionControlOpen(false);
     setMode("destinations");
   };
 
   const returnToEarth = () => {
     setSelectedArtifact(null);
     setSelectedDestination(null);
+    setMissionControlOpen(false);
     setMode("intro");
   };
 
@@ -454,6 +459,8 @@ function App() {
               />
               <MissionLearningLab key={selectedArtifact.id} artifact={selectedArtifact} />
             </>
+          ) : selectedDestination === "mars" && missionControlOpen ? (
+            <MissionControl onBack={() => setMissionControlOpen(false)} />
           ) : (
             <ArtifactExplorer
               destination={selectedDestination}
@@ -465,6 +472,7 @@ function App() {
               onActiveCategoryChange={setArchiveCategory}
               visibleArtifactIds={visibleArtifactIds}
               onStartGuidedJourney={() => setGuidedJourneyOpen(true)}
+              onOpenMissionControl={() => setMissionControlOpen(true)}
             />
           )
         )}

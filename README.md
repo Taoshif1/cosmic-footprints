@@ -84,7 +84,7 @@ The **Take the 3-Minute Journey** guided mode introduces Surveyor 3, Spirit & Op
 - GSAP and @gsap/react for cinematic transitions
 - Tailwind CSS v4 and DaisyUI v5 for styling
 
-There is no backend or account system. Mission content is curated and stored locally in typed TypeScript data so the experience does not depend on a live API.
+There is no account system or application database. The educational mission archive is curated and stored locally in typed TypeScript data. The optional Mars Mission Control uses a small Vercel serverless proxy to retrieve NASA's public rover image feeds, with a browser cache fallback; the rest of the archive does not depend on live services.
 
 ## Run locally
 
@@ -130,3 +130,23 @@ AI assistance was used during development for research organization, drafting an
 ## License and reuse
 
 NASA imagery and third-party planetary textures retain their respective source terms and credits. See the asset-credit files before reusing any image or texture. The project code is provided for educational and hackathon review; third-party assets are not relicensed by this repository.
+
+
+## Mars Mission Control — latest public NASA data
+
+The Mars archive includes a **Mission Control** dashboard for Perseverance and Curiosity. It requests the latest publicly released raw-image records from NASA's Mars mission image feeds and refreshes the browser view every 15 minutes while the page is visible.
+
+- Perseverance raw-image feed: `https://mars.nasa.gov/rss/api/?ver=1.2&feed=raw_images&feedtype=json&category=mars2020&num=12&page=0&order=sol%20desc`
+- Curiosity raw-image feed: `https://mars.nasa.gov/api/v1/raw_image_items/?order=sol%20desc,instrument_sort%20desc,sample_type_sort%20desc,date_taken%20desc&per_page=12&page=0&extended=thumbnail::sample_type::noteq`
+- Perseverance latest traverse map: https://science.nasa.gov/mission/mars-2020-perseverance/location-map/
+- Curiosity latest traverse map: https://science.nasa.gov/mission/msl-curiosity/location-map/
+
+The dashboard distinguishes the image capture time on Mars, the time the image was received on Earth (when supplied by NASA), and the time the visitor's browser last checked the feed. It stores the last successful response in browser storage and displays it as a cached copy if NASA's feed is unavailable. It never substitutes fabricated telemetry.
+
+**Location limitation:** NASA's public interactive location maps show the latest reported drive endpoints and traverse path. NASA describes these maps as showing the rover's latest location; they are updated as drive data is published. They are not continuous GPS trackers or a live video feed. Cosmic Footprints links to those official maps instead of inventing rover coordinates or animating a false live position.
+
+**API limitation:** NASA's legacy Mars Rover Photos API in the NASA Open APIs portal is marked archived. The dashboard therefore does not depend on that legacy endpoint. It uses the public raw-image feeds served by NASA's Mars mission websites; these website feeds are not presented as a guaranteed, versioned public API and may change. If the feed cannot be read, the dashboard shows the cached copy (if available) or a clear unavailable state with a link to NASA's official image gallery.
+
+Ingenuity is shown as a historical flight archive only. NASA states that its final flight was Jan. 18, 2024 and its mission ended Jan. 25, 2024 after 72 flights: https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/
+
+This Mission Control panel is an educational companion to NASA's official data resources. It is not affiliated with or endorsed by NASA.

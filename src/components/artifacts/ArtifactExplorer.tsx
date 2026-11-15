@@ -17,6 +17,7 @@ interface ArtifactExplorerProps {
   onActiveCategoryChange: (value: string) => void;
   visibleArtifactIds: string[];
   onStartGuidedJourney: () => void;
+  onOpenMissionControl: () => void;
 }
 
 const destinationCopy = {
@@ -54,6 +55,7 @@ export function ArtifactExplorer({
   onActiveCategoryChange,
   visibleArtifactIds,
   onStartGuidedJourney,
+  onOpenMissionControl,
 }: ArtifactExplorerProps) {
   const artifacts = useMemo(
     () => getArtifactsByDestination(destination),
@@ -133,6 +135,21 @@ export function ArtifactExplorer({
               <small>Mars Polar Lander &amp; Deep Space 2 · no confirmed surface coordinates</small>
             </span>
             <span aria-hidden="true">↗</span>
+          </button>
+        )}
+
+        {destination === "mars" && (
+          <button
+            type="button"
+            className="mission-control-launch"
+            onClick={onOpenMissionControl}
+          >
+            <span className="mission-control-launch-symbol" aria-hidden="true">⌁</span>
+            <span className="mission-control-launch-copy">
+              <strong>MARS MISSION CONTROL</strong>
+              <small>Latest NASA rover imagery &amp; official traverse maps</small>
+            </span>
+            <span className="mission-control-launch-status">NASA DATA ↗</span>
           </button>
         )}
 
