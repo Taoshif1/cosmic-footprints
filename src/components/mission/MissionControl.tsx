@@ -166,7 +166,7 @@ function normalizeImages(payload: unknown, rover: RoverId): RoverImage[] {
       const metadata = Array.isArray(record.data)
         ? asRecord(record.data[0]) ?? record
         : record;
-      const item = { ...metadata, links: record.links };
+      const item: Record<string, unknown> = { ...metadata, links: record.links };
       const id = asText(item.imageid ?? item.image_id ?? item.id ?? item.product_id ?? item.nasa_id);
       const imageUrl = findImageUrl(item);
 
