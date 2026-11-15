@@ -2619,7 +2619,8 @@ button.destination-control:not(:disabled):hover {
 }
 
 .experience-archive .archive-panel,
-.experience-archive .story-panel {
+.experience-archive .story-panel,
+.experience-archive .lunar-control-layout {
   pointer-events: auto;
 }
 
