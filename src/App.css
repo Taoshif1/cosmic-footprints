@@ -4294,37 +4294,37 @@ button.destination-control:not(:disabled):hover {
   background-size: 25px 25px;
 }
 
-.mission-map-preview svg {
+.mission-map-contour {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
+  display: block;
+  border: 1px solid rgba(210, 174, 145, 0.35);
+  border-radius: 50%;
+  transform: rotate(-18deg);
 }
 
-.mission-map-preview svg path {
-  fill: none;
-  stroke: rgba(210, 174, 145, 0.62);
-  stroke-width: 2;
-  stroke-dasharray: 5 6;
+.mission-map-contour.contour-one {
+  top: 24px;
+  left: 18%;
+  width: 66%;
+  height: 68px;
 }
 
-.mission-map-preview svg path.mission-map-route-glow {
-  stroke: rgba(175, 212, 255, 0.8);
-  stroke-width: 1;
-  stroke-dasharray: 2 8;
+.mission-map-contour.contour-two {
+  top: 40px;
+  left: 29%;
+  width: 48%;
+  height: 47px;
+  border-color: rgba(175, 212, 255, 0.3);
+  transform: rotate(22deg);
 }
 
-.mission-map-preview svg circle {
-  fill: #d4b08d;
-  stroke: #1a202c;
-  stroke-width: 2;
-}
-
-.mission-map-preview svg circle.mission-map-current {
-  fill: #b7d7ff;
-  stroke: #d8e9ff;
-  stroke-width: 1.5;
+.mission-map-contour.contour-three {
+  top: 16px;
+  left: 42%;
+  width: 25%;
+  height: 96px;
+  border-color: rgba(210, 174, 145, 0.2);
+  transform: rotate(56deg);
 }
 
 .mission-map-location,
