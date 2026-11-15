@@ -67,7 +67,7 @@
   font-weight: 420;
 }
 
-.lunar-control-hero-copy > p:not(.lunar-control-overline) {
+.lunar-control-hero-copy>p:not(.lunar-control-overline) {
   max-width: 600px;
   margin: 0;
   color: #a0b0c8;
@@ -247,14 +247,14 @@
   letter-spacing: -0.055em;
 }
 
-.lunar-section-heading > div > p:last-child {
+.lunar-section-heading>div>p:last-child {
   margin: 0;
   color: #8398b7;
   font-size: 0.64rem;
 }
 
-.lunar-section-heading > a,
-.lunar-artemis-copy > a {
+.lunar-section-heading>a,
+.lunar-artemis-copy>a {
   flex-shrink: 0;
   margin-top: 5px;
   color: #a9caff;
@@ -263,8 +263,8 @@
   text-decoration: none;
 }
 
-.lunar-section-heading > a:hover,
-.lunar-artemis-copy > a:hover {
+.lunar-section-heading>a:hover,
+.lunar-artemis-copy>a:hover {
   color: #fff;
 }
 
@@ -327,7 +327,7 @@
   cursor: wait;
 }
 
-.lunar-refresh-button > span {
+.lunar-refresh-button>span {
   font-size: 1rem;
 }
 
@@ -336,7 +336,9 @@
 }
 
 @keyframes lunar-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .lunar-archive-notice {
@@ -442,7 +444,7 @@
   padding: 14px 0;
 }
 
-.lunar-image-metadata > div {
+.lunar-image-metadata>div {
   display: flex;
   min-width: 0;
   flex-direction: column;
@@ -537,7 +539,7 @@
   margin-top: 20px;
 }
 
-.lunar-orbiter-heading > div {
+.lunar-orbiter-heading>div {
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -563,7 +565,7 @@
 }
 
 .lunar-orbiter-description,
-.lunar-maps-card > p:not(.lunar-section-index) {
+.lunar-maps-card>p:not(.lunar-section-index) {
   margin: 0;
   color: #8fa1bb;
   font-size: 0.61rem;
@@ -577,7 +579,7 @@
   margin: 15px 0;
 }
 
-.lunar-orbiter-facts > div {
+.lunar-orbiter-facts>div {
   padding: 10px;
   border: 1px solid rgba(164, 193, 238, 0.12);
   background: rgba(15, 29, 49, 0.55);
@@ -623,7 +625,7 @@
 }
 
 .lunar-map-link span,
-.lunar-map-resource > span:last-child {
+.lunar-map-resource>span:last-child {
   font-size: 1rem;
 }
 
@@ -631,7 +633,7 @@
   margin-bottom: 7px;
 }
 
-.lunar-maps-card > p:not(.lunar-section-index) {
+.lunar-maps-card>p:not(.lunar-section-index) {
   margin-bottom: 12px;
 }
 
@@ -656,7 +658,7 @@
   font-size: 0.7rem;
 }
 
-.lunar-map-resource > span:nth-child(2) {
+.lunar-map-resource>span:nth-child(2) {
   display: flex;
   min-width: 0;
   flex: 1;
@@ -676,7 +678,7 @@
   line-height: 1.4;
 }
 
-.lunar-map-resource > span:last-child {
+.lunar-map-resource>span:last-child {
   color: #9dbde9;
 }
 
@@ -708,7 +710,7 @@
   letter-spacing: -0.06em;
 }
 
-.lunar-history-heading > div:first-child > p:last-child {
+.lunar-history-heading>div:first-child>p:last-child {
   max-width: 620px;
   margin: 0;
   color: #8fa1bb;
@@ -721,7 +723,7 @@
   gap: 18px;
 }
 
-.lunar-history-stats > div {
+.lunar-history-stats>div {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -823,7 +825,7 @@
   line-height: 1.5;
 }
 
-.lunar-history-card > a {
+.lunar-history-card>a {
   display: flex;
   justify-content: space-between;
   gap: 8px;
@@ -833,11 +835,11 @@
   text-decoration: none;
 }
 
-.lunar-history-card > a:hover {
+.lunar-history-card>a:hover {
   color: #fff;
 }
 
-.lunar-history-card > a span {
+.lunar-history-card>a span {
   font-size: 0.85rem;
 }
 
@@ -859,7 +861,7 @@
   font-weight: 450;
 }
 
-.lunar-artemis-copy > p:not(.lunar-section-index) {
+.lunar-artemis-copy>p:not(.lunar-section-index) {
   max-width: 500px;
   margin: 12px 0 16px;
   color: #91a3bd;
@@ -867,7 +869,7 @@
   line-height: 1.7;
 }
 
-.lunar-artemis-copy > a {
+.lunar-artemis-copy>a {
   display: inline-block;
 }
 
@@ -912,14 +914,14 @@
   color: #9de0c0;
 }
 
-.lunar-artemis-step > div {
+.lunar-artemis-step>div {
   display: flex;
   flex-direction: column;
   gap: 4px;
   padding-bottom: 17px;
 }
 
-.lunar-artemis-step > div > span {
+.lunar-artemis-step>div>span {
   color: #8ca4c6;
   font-size: 0.45rem;
   letter-spacing: 0.1em;
@@ -1057,7 +1059,7 @@
     font-size: clamp(2.55rem, 12vw, 4rem);
   }
 
-  .lunar-control-hero-copy > p:not(.lunar-control-overline) {
+  .lunar-control-hero-copy>p:not(.lunar-control-overline) {
     max-width: 95%;
     font-size: 0.73rem;
   }
@@ -1111,7 +1113,7 @@
     gap: 9px;
   }
 
-  .lunar-image-metadata > div {
+  .lunar-image-metadata>div {
     padding-bottom: 8px;
     border-bottom: 1px solid rgba(164, 193, 238, 0.09);
   }
@@ -1136,7 +1138,7 @@
     gap: 10px;
   }
 
-  .lunar-history-stats > div {
+  .lunar-history-stats>div {
     padding-left: 9px;
   }
 
@@ -1171,6 +1173,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .lunar-feature-image img,
   .lunar-image-gallery img {
     transition: none;

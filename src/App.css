@@ -1776,20 +1776,16 @@ button.destination-control:not(:disabled):hover {
   z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(
-      90deg,
+    linear-gradient(90deg,
       rgba(2, 5, 13, 0.97) 0%,
       rgba(2, 5, 13, 0.88) 29%,
       rgba(2, 5, 13, 0.54) 49%,
       rgba(2, 5, 13, 0.12) 76%,
-      rgba(2, 5, 13, 0.16) 100%
-    ),
-    linear-gradient(
-      0deg,
+      rgba(2, 5, 13, 0.16) 100%),
+    linear-gradient(0deg,
       rgba(2, 5, 13, 0.58),
       transparent 45%,
-      rgba(2, 5, 13, 0.18)
-    );
+      rgba(2, 5, 13, 0.18));
 }
 
 .archive-planet-scene {
@@ -1799,11 +1795,9 @@ button.destination-control:not(:disabled):hover {
   pointer-events: auto;
   overflow: hidden;
   background:
-    radial-gradient(
-      ellipse at 75% 50%,
+    radial-gradient(ellipse at 75% 50%,
       rgba(23, 49, 87, 0.18),
-      transparent 52%
-    );
+      transparent 52%);
 }
 
 .archive-planet-scene canvas {
@@ -1815,22 +1809,18 @@ button.destination-control:not(:disabled):hover {
 
 .archive-planet-scene[data-webgl-unavailable="true"] {
   background:
-    radial-gradient(
-      circle at 72% 48%,
+    radial-gradient(circle at 72% 48%,
       rgba(80, 105, 150, 0.45),
       rgba(20, 35, 62, 0.2) 19%,
-      transparent 37%
-    );
+      transparent 37%);
 }
 
 .archive-planet-mars[data-webgl-unavailable="true"] {
   background:
-    radial-gradient(
-      circle at 72% 48%,
+    radial-gradient(circle at 72% 48%,
       rgba(190, 91, 57, 0.48),
       rgba(78, 40, 39, 0.22) 19%,
-      transparent 37%
-    );
+      transparent 37%);
 }
 
 /* ========================================
@@ -1856,11 +1846,9 @@ button.destination-control:not(:disabled):hover {
   border: 1px solid rgba(164, 193, 238, 0.19);
   border-left: 2px solid rgba(144, 187, 248, 0.78);
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       rgba(8, 17, 32, 0.94),
-      rgba(4, 10, 21, 0.82)
-    );
+      rgba(4, 10, 21, 0.82));
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(21px);
   scrollbar-width: thin;
@@ -1929,7 +1917,7 @@ button.destination-control:not(:disabled):hover {
   border-bottom: 1px solid rgba(169, 196, 239, 0.16);
 }
 
-.archive-world-stats > div {
+.archive-world-stats>div {
   display: flex;
   min-width: 0;
   flex-direction: column;
@@ -1949,8 +1937,8 @@ button.destination-control:not(:disabled):hover {
   line-height: 1.35;
 }
 
-.archive-world-stats > div:nth-child(1) strong,
-.archive-world-stats > div:nth-child(2) strong {
+.archive-world-stats>div:nth-child(1) strong,
+.archive-world-stats>div:nth-child(2) strong {
   font-family: monospace;
   font-size: 1.18rem;
   color: #a9caff;
@@ -2147,11 +2135,9 @@ button.destination-control:not(:disabled):hover {
   border: 1px solid rgba(164, 193, 238, 0.2);
   border-left: 2px solid rgba(144, 187, 248, 0.78);
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       rgba(5, 12, 24, 0.94),
-      rgba(4, 10, 21, 0.82)
-    );
+      rgba(4, 10, 21, 0.82));
   box-shadow: 0 24px 90px rgba(0, 0, 0, 0.34);
   backdrop-filter: blur(23px);
   scrollbar-width: thin;
@@ -2166,7 +2152,7 @@ button.destination-control:not(:disabled):hover {
   margin-bottom: 27px;
 }
 
-.story-panel-topbar > span {
+.story-panel-topbar>span {
   color: #71839f;
   font-family: monospace;
   font-size: 0.49rem;
@@ -2231,7 +2217,7 @@ button.destination-control:not(:disabled):hover {
   background: rgba(24, 43, 69, 0.43);
 }
 
-.story-panel-status > div {
+.story-panel-status>div {
   display: grid;
   grid-template-columns: 8px auto 1fr;
   align-items: center;
@@ -2246,7 +2232,7 @@ button.destination-control:not(:disabled):hover {
   box-shadow: 0 0 12px rgba(166, 200, 244, 0.75);
 }
 
-.story-panel-status > div > span:nth-child(2) {
+.story-panel-status>div>span:nth-child(2) {
   color: #87a7d3;
   font-size: 0.5rem;
   letter-spacing: 0.13em;
@@ -2259,7 +2245,7 @@ button.destination-control:not(:disabled):hover {
   text-align: right;
 }
 
-.story-panel-status > p {
+.story-panel-status>p {
   margin: 9px 0 0 17px;
   color: #93a4bd;
   font-size: 0.68rem;
@@ -2287,8 +2273,8 @@ button.destination-control:not(:disabled):hover {
   letter-spacing: -0.055em;
 }
 
-.story-panel-section > p:not(.story-section-index),
-.story-panel-sources > p:not(.story-section-index) {
+.story-panel-section>p:not(.story-section-index),
+.story-panel-sources>p:not(.story-section-index) {
   color: #acbbd1;
   font-size: 0.79rem;
   line-height: 1.85;
@@ -2311,7 +2297,7 @@ button.destination-control:not(:disabled):hover {
   line-height: 1.7;
 }
 
-.story-discovery-list li > span {
+.story-discovery-list li>span {
   flex-shrink: 0;
   color: #9ec5ff;
 }
@@ -2330,7 +2316,7 @@ button.destination-control:not(:disabled):hover {
   border-top: 1px solid rgba(180, 205, 245, 0.16);
 }
 
-.story-location-note > span {
+.story-location-note>span {
   color: #8fb6ec;
   font-size: 0.5rem;
   letter-spacing: 0.13em;
@@ -2368,14 +2354,12 @@ button.destination-control:not(:disabled):hover {
   top: 11px;
   bottom: -1px;
   width: 1px;
-  background: linear-gradient(
-    to bottom,
-    rgba(139, 181, 240, 0.65),
-    rgba(139, 181, 240, 0.08)
-  );
+  background: linear-gradient(to bottom,
+      rgba(139, 181, 240, 0.65),
+      rgba(139, 181, 240, 0.08));
 }
 
-.story-timeline-rail > span {
+.story-timeline-rail>span {
   position: relative;
   z-index: 1;
   width: 8px;
@@ -2437,7 +2421,7 @@ button.destination-control:not(:disabled):hover {
   background: rgba(31, 52, 81, 0.7);
 }
 
-.story-source-links a > span:last-child {
+.story-source-links a>span:last-child {
   color: #9fc4ff;
   font-size: 1rem;
 }
@@ -2504,13 +2488,11 @@ button.destination-control:not(:disabled):hover {
 
   .experience-archive .space-vignette {
     background:
-      linear-gradient(
-        0deg,
+      linear-gradient(0deg,
         rgba(2, 5, 13, 0.98) 0%,
         rgba(2, 5, 13, 0.92) 48%,
         rgba(2, 5, 13, 0.1) 82%,
-        rgba(2, 5, 13, 0.18) 100%
-      );
+        rgba(2, 5, 13, 0.18) 100%);
   }
 
   .archive-explorer-layout {
@@ -2593,7 +2575,7 @@ button.destination-control:not(:disabled):hover {
     padding: 20px 17px 26px;
   }
 
-  .story-panel-topbar > span {
+  .story-panel-topbar>span {
     display: none;
   }
 
@@ -2605,7 +2587,7 @@ button.destination-control:not(:disabled):hover {
     max-height: 180px;
   }
 
-  .story-panel-status > div {
+  .story-panel-status>div {
     grid-template-columns: 8px auto;
   }
 
@@ -2663,14 +2645,14 @@ button.destination-control:not(:disabled):hover {
   border-bottom: 1px solid rgba(180, 205, 245, 0.16);
 }
 
-.mission-data-total > span {
+.mission-data-total>span {
   color: #91a9c9;
   font-size: 0.53rem;
   letter-spacing: 0.13em;
   line-height: 1.6;
 }
 
-.mission-data-total > strong {
+.mission-data-total>strong {
   color: #edf5ff;
   font-family: monospace;
   font-size: 2.1rem;
@@ -2718,7 +2700,7 @@ button.destination-control:not(:disabled):hover {
   background: rgba(2, 9, 19, 0.76);
 }
 
-.mission-data-track > span {
+.mission-data-track>span {
   display: block;
   height: 100%;
   border-radius: inherit;
@@ -2744,7 +2726,7 @@ button.destination-control:not(:disabled):hover {
   text-decoration: none;
 }
 
-.mission-data-source > span:first-child {
+.mission-data-source>span:first-child {
   display: grid;
   gap: 5px;
   color: #8098ba;
@@ -2760,7 +2742,7 @@ button.destination-control:not(:disabled):hover {
   line-height: 1.5;
 }
 
-.mission-data-source > span:last-child {
+.mission-data-source>span:last-child {
   font-size: 1.15rem;
 }
 
@@ -2798,7 +2780,7 @@ button.destination-control:not(:disabled):hover {
   box-shadow: 0 0 0 3px rgba(105, 157, 232, 0.1);
 }
 
-.archive-search > span {
+.archive-search>span {
   font-size: 1.55rem;
   line-height: 1;
 }
@@ -2939,13 +2921,14 @@ button.destination-control:not(:disabled):hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .archive-search,
   .archive-filter-chip {
     transition: none;
   }
 }
 
- 
+
 /* Keep long archive content reachable on short mobile viewports.
    The shell is intentionally a fixed cinematic viewport, so the panels
    themselves must own the scroll area on phones and small tablets. */
@@ -2972,7 +2955,7 @@ button.destination-control:not(:disabled):hover {
   }
 }
 
- 
+
 /* Non-blocking feedback while the lazy-loaded 3D scenes initialize. */
 .scene-loading-fallback {
   position: fixed;
@@ -3000,7 +2983,9 @@ button.destination-control:not(:disabled):hover {
 }
 
 @keyframes scene-loading-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 700px) {
@@ -3147,7 +3132,7 @@ button.destination-control:not(:disabled):hover {
   background: #081323;
 }
 
-.mission-fate-cell > span {
+.mission-fate-cell>span {
   color: #8eadd7;
   font: 600 0.57rem monospace;
   letter-spacing: 0.12em;
@@ -3167,9 +3152,17 @@ button.destination-control:not(:disabled):hover {
   letter-spacing: 0.08em;
 }
 
-.mission-location-certainty.is-known { color: #8bd6b2; }
-.mission-location-certainty.is-partial { color: #e7c27e; }
-.mission-location-certainty.is-unknown { color: #f0a28f; }
+.mission-location-certainty.is-known {
+  color: #8bd6b2;
+}
+
+.mission-location-certainty.is-partial {
+  color: #e7c27e;
+}
+
+.mission-location-certainty.is-unknown {
+  color: #f0a28f;
+}
 
 .mission-fate-source {
   display: inline-flex;
@@ -3180,7 +3173,9 @@ button.destination-control:not(:disabled):hover {
   text-decoration: none;
 }
 
-.mission-fate-source:hover { text-decoration: underline; }
+.mission-fate-source:hover {
+  text-decoration: underline;
+}
 
 .mission-endurance {
   margin-top: 28px;
@@ -3194,7 +3189,7 @@ button.destination-control:not(:disabled):hover {
   font-size: 1.2rem;
 }
 
-.mission-endurance > p:not(.story-section-index) {
+.mission-endurance>p:not(.story-section-index) {
   color: #b8c8dc;
   font-size: 0.79rem;
   line-height: 1.7;
@@ -3213,13 +3208,13 @@ button.destination-control:not(:disabled):hover {
   align-items: center;
 }
 
-.mission-endurance-row > span {
+.mission-endurance-row>span {
   color: #91a8c7;
   font: 600 0.57rem monospace;
   letter-spacing: 0.1em;
 }
 
-.mission-endurance-row > strong {
+.mission-endurance-row>strong {
   color: #d5e5fa;
   font-size: 0.76rem;
 }
@@ -3242,9 +3237,17 @@ button.destination-control:not(:disabled):hover {
 }
 
 @media (max-width: 640px) {
-  .mission-fate-grid { grid-template-columns: 1fr; }
-  .mission-fate-cell { padding: 13px; }
-  .mission-endurance-row { grid-template-columns: 85px 1fr; }
+  .mission-fate-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mission-fate-cell {
+    padding: 13px;
+  }
+
+  .mission-endurance-row {
+    grid-template-columns: 85px 1fr;
+  }
 }
 
 .archive-lost-signal {
@@ -3280,7 +3283,7 @@ button.destination-control:not(:disabled):hover {
   font-size: 1.25rem;
 }
 
-.archive-lost-signal > span:nth-child(2) {
+.archive-lost-signal>span:nth-child(2) {
   min-width: 0;
   display: grid;
   gap: 5px;
@@ -3299,7 +3302,7 @@ button.destination-control:not(:disabled):hover {
   line-height: 1.45;
 }
 
-.archive-lost-signal > span:last-child {
+.archive-lost-signal>span:last-child {
   color: #e5aa91;
 }
 
@@ -3337,16 +3340,33 @@ button.destination-control:not(:disabled):hover {
   overflow: visible;
 }
 
-.ingenuity-ground { stroke: rgba(205, 177, 147, 0.5); stroke-width: 0.8; }
+.ingenuity-ground {
+  stroke: rgba(205, 177, 147, 0.5);
+  stroke-width: 0.8;
+}
+
 .ingenuity-flight-path {
   fill: none;
   stroke: #79b8e8;
   stroke-width: 1.25;
   stroke-dasharray: 2.5 2;
 }
-.ingenuity-flight-point { fill: #a8d8ff; }
-.ingenuity-flight-point.is-landing { fill: #a5e0bd; }
-.ingenuity-helicopter-marker { fill: #f5d18c; stroke: #f5d18c; stroke-width: 0.9; filter: drop-shadow(0 0 3px rgba(245, 209, 140, 0.8)); }
+
+.ingenuity-flight-point {
+  fill: #a8d8ff;
+}
+
+.ingenuity-flight-point.is-landing {
+  fill: #a5e0bd;
+}
+
+.ingenuity-helicopter-marker {
+  fill: #f5d18c;
+  stroke: #f5d18c;
+  stroke-width: 0.9;
+  filter: drop-shadow(0 0 3px rgba(245, 209, 140, 0.8));
+}
+
 .ingenuity-flight-labels,
 .ingenuity-flight-range {
   display: flex;
@@ -3355,47 +3375,75 @@ button.destination-control:not(:disabled):hover {
   font: 600 0.52rem monospace;
   letter-spacing: 0.1em;
 }
-.ingenuity-flight-visual > small {
+
+.ingenuity-flight-visual>small {
   display: block;
   margin-top: 9px;
   color: #7e91aa;
   font-size: 0.61rem;
 }
-.ingenuity-flight-selector { margin: 20px 0; }
+
+.ingenuity-flight-selector {
+  margin: 20px 0;
+}
+
 .ingenuity-flight-number {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.ingenuity-flight-number > span {
+
+.ingenuity-flight-number>span {
   color: #9bb4d4;
   font: 600 0.58rem monospace;
   letter-spacing: 0.12em;
 }
+
 .ingenuity-flight-number strong {
   color: #eff6ff;
   font-size: 1.4rem;
   font-variant-numeric: tabular-nums;
 }
-.ingenuity-flight-number small { color: #8ea5c2; font-size: 0.7rem; }
+
+.ingenuity-flight-number small {
+  color: #8ea5c2;
+  font-size: 0.7rem;
+}
+
 .ingenuity-flight-selector input {
   width: 100%;
   accent-color: #83b7ed;
   cursor: pointer;
 }
-.ingenuity-flight-range { margin-top: 5px; }
+
+.ingenuity-flight-range {
+  margin-top: 5px;
+}
+
 .ingenuity-flight-detail {
   padding: 15px;
   border-left: 2px solid #80b7e9;
   background: rgba(107, 151, 205, 0.09);
 }
-.ingenuity-flight-detail > span {
+
+.ingenuity-flight-detail>span {
   color: #9fc4ec;
   font: 600 0.58rem monospace;
 }
-.ingenuity-flight-detail h3 { margin: 7px 0; color: #eff6ff; font-size: 1rem; }
-.ingenuity-flight-detail p { margin: 0; color: #c3d1e3; font-size: 0.78rem; line-height: 1.7; }
+
+.ingenuity-flight-detail h3 {
+  margin: 7px 0;
+  color: #eff6ff;
+  font-size: 1rem;
+}
+
+.ingenuity-flight-detail p {
+  margin: 0;
+  color: #c3d1e3;
+  font-size: 0.78rem;
+  line-height: 1.7;
+}
 
 .guided-explorer-launch {
   width: 100%;
@@ -3411,24 +3459,29 @@ button.destination-control:not(:disabled):hover {
   cursor: pointer;
   transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
 }
+
 .guided-explorer-launch:hover {
   border-color: rgba(151, 194, 250, 0.8);
   transform: translateY(-1px);
 }
-.guided-explorer-launch > span:first-child {
+
+.guided-explorer-launch>span:first-child {
   color: #a8ccf7;
   font-size: 1.3rem;
 }
-.guided-explorer-launch > span:nth-child(2) {
+
+.guided-explorer-launch>span:nth-child(2) {
   flex: 1;
   display: grid;
   gap: 4px;
 }
+
 .guided-explorer-launch strong {
   color: #c8e0ff;
   font: 700 0.62rem monospace;
   letter-spacing: 0.12em;
 }
+
 .guided-explorer-launch small {
   color: #9eb2ce;
   font-size: 0.68rem;
@@ -3444,6 +3497,7 @@ button.destination-control:not(:disabled):hover {
   background: rgba(1, 5, 13, 0.82);
   backdrop-filter: blur(14px);
 }
+
 .guided-explorer {
   width: min(720px, 100%);
   max-height: min(820px, calc(100dvh - 36px));
@@ -3455,22 +3509,26 @@ button.destination-control:not(:disabled):hover {
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.5);
   color: #eaf2ff;
 }
+
 .guided-explorer-header,
 .guided-explorer-progress,
 .guided-explorer-footer {
   padding: 16px clamp(16px, 4vw, 28px);
 }
+
 .guided-explorer-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(144, 177, 220, 0.16);
 }
-.guided-explorer-header > span {
+
+.guided-explorer-header>span {
   color: #9ebde5;
   font: 600 0.57rem monospace;
   letter-spacing: 0.12em;
 }
+
 .guided-explorer-header button {
   width: 34px;
   height: 34px;
@@ -3480,33 +3538,42 @@ button.destination-control:not(:disabled):hover {
   font-size: 1.4rem;
   cursor: pointer;
 }
+
 .guided-explorer-progress {
   display: grid;
   gap: 10px;
 }
-.guided-explorer-progress > div {
+
+.guided-explorer-progress>div {
   display: flex;
   justify-content: space-between;
   color: #91acd0;
   font: 600 0.58rem monospace;
   letter-spacing: 0.1em;
 }
-.guided-explorer-progress strong { color: #dceaff; }
+
+.guided-explorer-progress strong {
+  color: #dceaff;
+}
+
 .guided-explorer-progress-track {
   display: block;
   height: 4px;
   background: rgba(143, 176, 222, 0.16);
 }
+
 .guided-explorer-progress-track i {
   display: block;
   height: 100%;
   background: linear-gradient(90deg, #6c9ddd, #a6d8dc);
   transition: width 220ms ease;
 }
+
 .guided-explorer-content {
   min-height: 310px;
   padding: clamp(24px, 6vw, 48px) clamp(18px, 5vw, 40px);
 }
+
 .guided-explorer-content h2 {
   margin: 12px 0 18px;
   color: #f1f6ff;
@@ -3514,12 +3581,14 @@ button.destination-control:not(:disabled):hover {
   line-height: 1.06;
   letter-spacing: -0.05em;
 }
+
 .guided-explorer-body,
 .guided-explorer-detail {
   color: #c5d4e8;
   font-size: 0.91rem;
   line-height: 1.8;
 }
+
 .guided-explorer-detail {
   margin-top: 18px;
   padding: 14px 16px;
@@ -3528,11 +3597,13 @@ button.destination-control:not(:disabled):hover {
   color: #aebfd6;
   font-size: 0.78rem;
 }
+
 .guided-explorer-choices {
   display: grid;
   gap: 9px;
   margin-top: 22px;
 }
+
 .guided-explorer-choices button {
   display: flex;
   align-items: center;
@@ -3545,13 +3616,27 @@ button.destination-control:not(:disabled):hover {
   font-size: 0.8rem;
   cursor: pointer;
 }
-.guided-explorer-choices button:disabled { cursor: default; opacity: 0.85; }
-.guided-explorer-choices button.is-correct { border-color: #6fc7a2; background: rgba(55, 119, 92, 0.18); }
-.guided-explorer-choices button.is-wrong { border-color: #d58b7c; background: rgba(132, 62, 53, 0.2); }
-.guided-explorer-choices button > span {
+
+.guided-explorer-choices button:disabled {
+  cursor: default;
+  opacity: 0.85;
+}
+
+.guided-explorer-choices button.is-correct {
+  border-color: #6fc7a2;
+  background: rgba(55, 119, 92, 0.18);
+}
+
+.guided-explorer-choices button.is-wrong {
+  border-color: #d58b7c;
+  background: rgba(132, 62, 53, 0.2);
+}
+
+.guided-explorer-choices button>span {
   color: #9dbfe9;
   font: 700 0.68rem monospace;
 }
+
 .guided-explorer-feedback {
   padding: 12px 14px;
   color: #c6d8eb;
@@ -3559,11 +3644,13 @@ button.destination-control:not(:disabled):hover {
   font-size: 0.76rem;
   line-height: 1.65;
 }
+
 .guided-explorer-legacy-mark {
   margin-top: 24px;
   color: #9dc7f4;
   font-size: 3rem;
 }
+
 .guided-explorer-footer {
   display: flex;
   justify-content: space-between;
@@ -3571,11 +3658,13 @@ button.destination-control:not(:disabled):hover {
   gap: 12px;
   border-top: 1px solid rgba(144, 177, 220, 0.16);
 }
-.guided-explorer-footer > div {
+
+.guided-explorer-footer>div {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
+
 .guided-explorer-footer button {
   padding: 10px 12px;
   border: 1px solid rgba(143, 178, 224, 0.26);
@@ -3585,23 +3674,48 @@ button.destination-control:not(:disabled):hover {
   letter-spacing: 0.08em;
   cursor: pointer;
 }
-.guided-explorer-footer button:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.guided-explorer-footer button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 .guided-explorer-footer .guided-explorer-next {
   border-color: #91b8e8;
   background: #9ec4f1;
   color: #071222;
 }
-.guided-explorer-footer .guided-explorer-exit { color: #92a6c2; }
+
+.guided-explorer-footer .guided-explorer-exit {
+  color: #92a6c2;
+}
 
 @media (max-width: 560px) {
-  .guided-explorer-footer { align-items: stretch; flex-direction: column-reverse; }
-  .guided-explorer-footer > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .guided-explorer-footer .guided-explorer-next { grid-column: 1 / -1; }
-  .guided-explorer-content { min-height: 280px; }
+  .guided-explorer-footer {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .guided-explorer-footer>div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .guided-explorer-footer .guided-explorer-next {
+    grid-column: 1 / -1;
+  }
+
+  .guided-explorer-content {
+    min-height: 280px;
+  }
 }
+
 @media (prefers-reduced-motion: reduce) {
+
   .guided-explorer-progress-track i,
-  .guided-explorer-launch { transition: none; }
+  .guided-explorer-launch {
+    transition: none;
+  }
 }
 
 /* ========================================
@@ -3756,7 +3870,7 @@ button.destination-control:not(:disabled):hover {
   color: #9dc5ff;
 }
 
-.mission-control-hero-copy > p:not(.mission-control-overline) {
+.mission-control-hero-copy>p:not(.mission-control-overline) {
   max-width: 580px;
   margin: 0;
   color: #a8b7cd;
@@ -3935,7 +4049,7 @@ button.destination-control:not(:disabled):hover {
   font-size: 0.75rem;
 }
 
-.mission-rover-tabs button > span:last-child {
+.mission-rover-tabs button>span:last-child {
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -4011,7 +4125,7 @@ button.destination-control:not(:disabled):hover {
   cursor: wait;
 }
 
-.mission-refresh-button > span {
+.mission-refresh-button>span {
   font-size: 1rem;
 }
 
@@ -4020,7 +4134,9 @@ button.destination-control:not(:disabled):hover {
 }
 
 @keyframes mission-spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .mission-control-grid {
@@ -4057,14 +4173,14 @@ button.destination-control:not(:disabled):hover {
   letter-spacing: -0.055em;
 }
 
-.mission-section-heading > div > p:last-child {
+.mission-section-heading>div>p:last-child {
   margin: 0;
   color: #8398b7;
   font-size: 0.64rem;
 }
 
-.mission-section-heading > a,
-.mission-ingenuity-card > a {
+.mission-section-heading>a,
+.mission-ingenuity-card>a {
   flex-shrink: 0;
   color: #a9caff;
   font-size: 0.52rem;
@@ -4072,8 +4188,8 @@ button.destination-control:not(:disabled):hover {
   text-decoration: none;
 }
 
-.mission-section-heading > a:hover,
-.mission-ingenuity-card > a:hover {
+.mission-section-heading>a:hover,
+.mission-ingenuity-card>a:hover {
   color: white;
 }
 
@@ -4126,7 +4242,7 @@ button.destination-control:not(:disabled):hover {
   border-bottom: 1px solid rgba(164, 193, 238, 0.13);
 }
 
-.mission-image-caption > div {
+.mission-image-caption>div {
   min-width: 0;
 }
 
@@ -4171,7 +4287,7 @@ button.destination-control:not(:disabled):hover {
   padding: 14px 0;
 }
 
-.mission-image-metadata > div {
+.mission-image-metadata>div {
   display: flex;
   min-width: 0;
   flex-direction: column;
@@ -4349,7 +4465,7 @@ button.destination-control:not(:disabled):hover {
   font-size: 0.4rem;
 }
 
-.mission-position-card > p:not(.mission-section-index) {
+.mission-position-card>p:not(.mission-section-index) {
   margin: 13px 0;
   color: #8fa1bb;
   font-size: 0.61rem;
@@ -4388,7 +4504,7 @@ button.destination-control:not(:disabled):hover {
   margin: 16px 0 14px;
 }
 
-.mission-summary-metrics > div {
+.mission-summary-metrics>div {
   padding: 12px;
   border: 1px solid rgba(164, 193, 238, 0.12);
   background: rgba(15, 29, 49, 0.55);
@@ -4469,7 +4585,7 @@ button.destination-control:not(:disabled):hover {
   line-height: 1.6;
 }
 
-.mission-unavailable-state > span {
+.mission-unavailable-state>span {
   color: #a8caff;
   font-size: 2rem;
 }
@@ -4501,7 +4617,7 @@ button.destination-control:not(:disabled):hover {
   font-size: 1.25rem;
 }
 
-.mission-ingenuity-card > div:nth-child(2) {
+.mission-ingenuity-card>div:nth-child(2) {
   min-width: 0;
   flex: 1;
 }
@@ -4583,7 +4699,7 @@ button.destination-control:not(:disabled):hover {
     font-size: clamp(2.55rem, 12vw, 4rem);
   }
 
-  .mission-control-hero-copy > p:not(.mission-control-overline) {
+  .mission-control-hero-copy>p:not(.mission-control-overline) {
     max-width: 95%;
     font-size: 0.76rem;
   }
@@ -4665,7 +4781,7 @@ button.destination-control:not(:disabled):hover {
     gap: 10px;
   }
 
-  .mission-image-metadata > div {
+  .mission-image-metadata>div {
     padding-bottom: 8px;
     border-bottom: 1px solid rgba(164, 193, 238, 0.09);
   }
@@ -4684,7 +4800,7 @@ button.destination-control:not(:disabled):hover {
     padding: 15px;
   }
 
-  .mission-ingenuity-card > a {
+  .mission-ingenuity-card>a {
     margin-left: 60px;
   }
 
@@ -4714,6 +4830,7 @@ button.destination-control:not(:disabled):hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .mission-control-launch,
   .mission-feature-image img,
   .mission-image-gallery img {
@@ -4764,4 +4881,3 @@ button.destination-control:not(:disabled):hover {
 .mission-control-launch-moon .mission-control-launch-symbol {
   color: #d2def1;
 }
-

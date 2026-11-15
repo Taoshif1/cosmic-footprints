@@ -18,16 +18,16 @@ The travel sequence is a visual metaphor, not a scale model of interplanetary di
 
 ## Stories in this release
 
-| Destination | Object | What the story explores |
-| --- | --- | --- |
-| Moon | Surveyor 3 | Robotic lunar landing, soil investigation, and the Apollo 12 visit |
-| Moon | Lunar Roving Vehicle | Human-operated electric mobility and the three Apollo rover traverses |
-| Moon | ALSEP | Long-running lunar science experiments and their 1977 shutdown |
-| Mars | Mars Pathfinder & Sojourner | The first wheeled rover on another planet and the lander that delivered it |
-| Mars | Spirit & Opportunity | Twin rover discoveries and their different mission endings |
-| Mars | InSight | Marsquakes and the planet's interior |
-| Mars | Ingenuity | The first powered, controlled flight on another planet |
-| Mars | Mars Polar Lander / Deep Space 2 | A lost polar landing attempt and its unknown final resting place |
+| Destination | Object                           | What the story explores                                                    |
+| ----------- | -------------------------------- | -------------------------------------------------------------------------- |
+| Moon        | Surveyor 3                       | Robotic lunar landing, soil investigation, and the Apollo 12 visit         |
+| Moon        | Lunar Roving Vehicle             | Human-operated electric mobility and the three Apollo rover traverses      |
+| Moon        | ALSEP                            | Long-running lunar science experiments and their 1977 shutdown             |
+| Mars        | Mars Pathfinder & Sojourner      | The first wheeled rover on another planet and the lander that delivered it |
+| Mars        | Spirit & Opportunity             | Twin rover discoveries and their different mission endings                 |
+| Mars        | InSight                          | Marsquakes and the planet's interior                                       |
+| Mars        | Ingenuity                        | The first powered, controlled flight on another planet                     |
+| Mars        | Mars Polar Lander / Deep Space 2 | A lost polar landing attempt and its unknown final resting place           |
 
 ## NASA data used in the experience
 
@@ -37,12 +37,12 @@ Cosmic Footprints meaningfully incorporates mission-level traverse-distance data
 
 The Lunar Roving Vehicle story turns the values reported by that NASA record into an in-app comparison:
 
-| Mission | Total distance driven |
-| --- | ---: |
-| Apollo 15 | 27.8 km |
-| Apollo 16 | 26.7 km |
-| Apollo 17 | 35.9 km |
-| **Combined total** | **90.4 km** |
+| Mission            | Total distance driven |
+| ------------------ | --------------------: |
+| Apollo 15          |               27.8 km |
+| Apollo 16          |               26.7 km |
+| Apollo 17          |               35.9 km |
+| **Combined total** |           **90.4 km** |
 
 The combined total is calculated by adding the three mission totals. The application displays the figures as a comparative data visualization and links directly to the NASA source. These are historical mission totals, not generated estimates or live telemetry.
 
@@ -58,7 +58,6 @@ Other NASA mission pages and historical references support the narrative content
 
 This project is an independent educational experience and is not affiliated with or endorsed by NASA.
 
-
 ## Mission endings and educational experiences
 
 Every mission story includes a **The Last Signal** chapter that separates the last known communication or operational event from the date NASA ended recovery attempts or formally retired a mission. The interface describes the reason for the ending and the certainty of the known resting place, with a direct mission-owner source link. For crew-operated Lunar Roving Vehicles, the interface labels the final operational use rather than implying that the rover sent an independent radio signal.
@@ -68,6 +67,7 @@ Mars Polar Lander / Deep Space 2 has no surface marker because NASA did not conf
 The archive's search and category filters are shared between the mission register and the 3D globe. Matching markers remain visible; unrelated markers are hidden. Clearing the filters restores the complete marker set.
 
 Selected mission stories include planned-versus-achieved endurance comparisons:
+
 - Sojourner: 7 planned sols versus 83 operating sols.
 - Ingenuity: up to 5 planned demonstration flights versus 72 completed flights.
 
@@ -131,7 +131,6 @@ AI assistance was used during development for research organization, drafting an
 
 NASA imagery and third-party planetary textures retain their respective source terms and credits. See the asset-credit files before reusing any image or texture. The project code is provided for educational and hackathon review; third-party assets are not relicensed by this repository.
 
-
 ## Mars Mission Control — latest public NASA data
 
 The Mars archive includes a **Mission Control** dashboard for Perseverance and Curiosity. It requests the latest publicly released raw-image records from NASA's Mars mission image feeds and refreshes the browser view every 15 minutes while the page is visible.
@@ -151,7 +150,6 @@ Ingenuity is shown as a historical flight archive only. NASA states that its fin
 
 This Mission Control panel is an educational companion to NASA's official data resources. It is not affiliated with or endorsed by NASA.
 
-
 ## Lunar Mission Control — NASA imagery and mission heritage
 
 The Moon archive now includes a **Lunar Mission Control** dashboard. It is reachable from the Moon archive and brings together NASA lunar imagery, the Lunar Reconnaissance Orbiter (LRO), official lunar mapping tools, historical mission tracking and the Artemis roadmap.
@@ -169,6 +167,7 @@ The Moon archive now includes a **Lunar Mission Control** dashboard. It is reach
 NASA lists the Lunar Reconnaissance Orbiter as an active mission. LRO has studied the Moon from close orbit since 2009 and maps the surface while measuring temperature, composition and radiation.
 
 The dashboard links to:
+
 - NASA LRO mission page: https://science.nasa.gov/mission/lro/
 - NASA Moon Trek: https://trek.nasa.gov/moon/
 - LROC QuickMap: https://quickmap.lroc.asu.edu/

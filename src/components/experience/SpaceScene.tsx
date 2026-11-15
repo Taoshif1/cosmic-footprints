@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { gsap } from "gsap";
@@ -1542,7 +1541,7 @@ export function SpaceScene({
         let animationFrame = 0;
         let disposed = false;
         const clock = new THREE.Clock();
-        let animate: () => void = () => {};
+        let animate: () => void = () => { };
 
         controllerRef.current = {
             setMode: (nextMode) => {

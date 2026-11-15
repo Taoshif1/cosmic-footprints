@@ -10,7 +10,7 @@ All eight images are sourced from NASA mission archives.
 | sojourner.jpg          | Sojourner rover on Mars                      | NASA/JPL-Caltech             | https://science.nasa.gov/resource/sojourner-rover/                                                                    |
 | spirit-opportunity.jpg | Opportunity's final Mars panorama            | NASA/JPL-Caltech/Cornell/ASU | https://science.nasa.gov/resource/opportunity-rovers-final-mars-images/                                               |
 | insight.jpg            | Artist's concept of InSight on Mars          | NASA/JPL-Caltech             | https://science.nasa.gov/resource/artists-concept-of-insight-lander-on-mars-2/                                        |
-| mars-polar-lander.jpg  | Artist's concept of Mars Polar Lander       | NASA/JPL-Caltech             | https://science.nasa.gov/mission/mars-polar-lander-deep-space-2/                                                      |
+| mars-polar-lander.jpg  | Artist's concept of Mars Polar Lander        | NASA/JPL-Caltech             | https://science.nasa.gov/mission/mars-polar-lander-deep-space-2/                                                      |
 | ingenuity.jpg          | Ingenuity deployed on Mars                   | NASA/JPL-Caltech             | https://science.nasa.gov/resource/ingenuity-deployed-on-mars/                                                         |
 
 Images are used for educational and historical storytelling.

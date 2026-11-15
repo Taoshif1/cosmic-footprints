@@ -292,105 +292,105 @@ export const artifacts: Artifact[] = [
     // ========================================
 
     {
-    id: "sojourner",
-    destination: "mars",
-    name: "Mars Pathfinder & Sojourner",
-    mission: "Mars Pathfinder Mission",
-    year: "1996–1997",
-    category: "Lander & Microrover",
-    tagline: "One mission. One daring landing. A new way to explore Mars.",
-    description:
-        "NASA's Mars Pathfinder mission delivered a robotic lander and the Sojourner rover to Ares Vallis in 1997. Its innovative airbag landing system and first-of-its-kind rover operations changed how engineers approached robotic exploration of the Red Planet.",
-    image: "/artifacts/sojourner.jpg",
-    imageAlt:
-        "NASA Mars Pathfinder mission showing the Sojourner rover on the Martian surface.",
-    imageCaption:
-        "Sojourner explored the Martian surface after rolling down a ramp from the Pathfinder lander.",
-    imageCredit: "NASA/JPL-Caltech",
-    imageType: "photograph",
-    status: "Silent on Mars",
-    statusDetail:
-        "The Pathfinder lander and Sojourner rover remain at the Ares Vallis landing site.",
-    purpose:
-    "NASA wanted to test a lower-cost way to reach Mars, demonstrate a new airbag-assisted landing system, and investigate Martian rocks and soil using a small mobile rover. Pathfinder carried Sojourner, allowing scientists to explore beyond the lander's immediate surroundings.",
-    story:
-    "On December 4, 1996, NASA launched Mars Pathfinder toward the Red Planet. On July 4, 1997, the spacecraft landed at Ares Vallis using an innovative system of parachutes, retrorockets and airbags. It bounced across the Martian surface before coming to rest.\n\nPathfinder carried a stationary lander and a small rover named Sojourner. The lander studied the surrounding environment and served as a communication link with Earth. Sojourner rolled down a ramp and became the first wheeled vehicle to operate on another planet. Designed for seven Martian days, it continued exploring for 83 sols.\n\nThe mission demonstrated new landing technology and proved that small robotic rovers could explore another planet. The final Pathfinder transmission reached Earth on September 27, 1997. After unsuccessful recovery attempts, NASA officially ended the mission in March 1998. Both spacecraft remain on Mars.",
-    discoveries: [
-        "Investigated Martian rocks and soil using the Sojourner rover.",
-        "Returned images of the Martian surface and surrounding terrain.",
-        "Used scientific instruments to study the atmosphere and local geology.",
-        "Demonstrated airbag-assisted landing technology on Mars.",
-        "Proved that a small robotic rover could conduct mobile surface exploration.",
-        "Provided engineering experience that informed later Mars rover missions.",
-    ],
-    finalChapter:
-        "The final Pathfinder data transmission was received on September 27, 1997. NASA made repeated attempts to re-establish contact before formally ending the mission in March 1998. The lander and rover remain at the Ares Vallis landing site.",
-    currentLocation:
-        "Ares Vallis, Mars. The Pathfinder lander site was later named Carl Sagan Memorial Station. Sojourner remains nearby.",
-    highlights: [
-        "Launched: December 4, 1996",
-        "Landed: July 4, 1997",
-        "First wheeled rover on another planet",
-        "Sojourner operated for 83 sols",
-        "Final transmission: September 27, 1997",
-    ],
-    timeline: [
-        {
-            date: "December 4, 1996",
-            title: "Journey begins",
-            description:
-                "Mars Pathfinder launches from Earth carrying the lander and Sojourner rover.",
-        },
-        {
-            date: "July 4, 1997",
-            title: "Landing on Mars",
-            description:
-                "Pathfinder lands at Ares Vallis using parachutes, retrorockets and airbags.",
-        },
-        {
-            date: "July 1997",
-            title: "Sojourner begins exploring",
-            description:
-                "The rover rolls down a ramp and starts examining rocks and nearby terrain.",
-        },
-        {
-            date: "July–September 1997",
-            title: "Science and exploration",
-            description:
-                "Sojourner operates for 83 sols, while Pathfinder returns images and scientific data.",
-        },
-        {
-            date: "September 27, 1997",
-            title: "Last transmission",
-            description:
-                "Earth receives the final data transmission from the Pathfinder lander.",
-        },
-        {
-            date: "March 1998",
-            title: "Mission officially ends",
-            description:
-                "NASA terminates the mission after unsuccessful attempts to restore communication.",
-        },
-    ],
-    sources: [
-        {
-            label: "NASA — Mars Pathfinder Mission",
-            url: "https://science.nasa.gov/mission/mars-pathfinder/",
-        },
-        {
-            label: "NASA — Sojourner Rover",
-            url: "https://science.nasa.gov/resource/sojourner-rover/",
-        },
-        {
-            label: "NASA — Sojourner's First Images",
-            url: "https://science.nasa.gov/resource/sojourners-first-images-from-mars/",
-        },
-        {
-            label: "NASA — Pathfinder Airbags on Martian Terrain",
-            url: "https://science.nasa.gov/resource/lander-airbags-martian-terrain/",
-        },
-    ],
-},
+        id: "sojourner",
+        destination: "mars",
+        name: "Mars Pathfinder & Sojourner",
+        mission: "Mars Pathfinder Mission",
+        year: "1996–1997",
+        category: "Lander & Microrover",
+        tagline: "One mission. One daring landing. A new way to explore Mars.",
+        description:
+            "NASA's Mars Pathfinder mission delivered a robotic lander and the Sojourner rover to Ares Vallis in 1997. Its innovative airbag landing system and first-of-its-kind rover operations changed how engineers approached robotic exploration of the Red Planet.",
+        image: "/artifacts/sojourner.jpg",
+        imageAlt:
+            "NASA Mars Pathfinder mission showing the Sojourner rover on the Martian surface.",
+        imageCaption:
+            "Sojourner explored the Martian surface after rolling down a ramp from the Pathfinder lander.",
+        imageCredit: "NASA/JPL-Caltech",
+        imageType: "photograph",
+        status: "Silent on Mars",
+        statusDetail:
+            "The Pathfinder lander and Sojourner rover remain at the Ares Vallis landing site.",
+        purpose:
+            "NASA wanted to test a lower-cost way to reach Mars, demonstrate a new airbag-assisted landing system, and investigate Martian rocks and soil using a small mobile rover. Pathfinder carried Sojourner, allowing scientists to explore beyond the lander's immediate surroundings.",
+        story:
+            "On December 4, 1996, NASA launched Mars Pathfinder toward the Red Planet. On July 4, 1997, the spacecraft landed at Ares Vallis using an innovative system of parachutes, retrorockets and airbags. It bounced across the Martian surface before coming to rest.\n\nPathfinder carried a stationary lander and a small rover named Sojourner. The lander studied the surrounding environment and served as a communication link with Earth. Sojourner rolled down a ramp and became the first wheeled vehicle to operate on another planet. Designed for seven Martian days, it continued exploring for 83 sols.\n\nThe mission demonstrated new landing technology and proved that small robotic rovers could explore another planet. The final Pathfinder transmission reached Earth on September 27, 1997. After unsuccessful recovery attempts, NASA officially ended the mission in March 1998. Both spacecraft remain on Mars.",
+        discoveries: [
+            "Investigated Martian rocks and soil using the Sojourner rover.",
+            "Returned images of the Martian surface and surrounding terrain.",
+            "Used scientific instruments to study the atmosphere and local geology.",
+            "Demonstrated airbag-assisted landing technology on Mars.",
+            "Proved that a small robotic rover could conduct mobile surface exploration.",
+            "Provided engineering experience that informed later Mars rover missions.",
+        ],
+        finalChapter:
+            "The final Pathfinder data transmission was received on September 27, 1997. NASA made repeated attempts to re-establish contact before formally ending the mission in March 1998. The lander and rover remain at the Ares Vallis landing site.",
+        currentLocation:
+            "Ares Vallis, Mars. The Pathfinder lander site was later named Carl Sagan Memorial Station. Sojourner remains nearby.",
+        highlights: [
+            "Launched: December 4, 1996",
+            "Landed: July 4, 1997",
+            "First wheeled rover on another planet",
+            "Sojourner operated for 83 sols",
+            "Final transmission: September 27, 1997",
+        ],
+        timeline: [
+            {
+                date: "December 4, 1996",
+                title: "Journey begins",
+                description:
+                    "Mars Pathfinder launches from Earth carrying the lander and Sojourner rover.",
+            },
+            {
+                date: "July 4, 1997",
+                title: "Landing on Mars",
+                description:
+                    "Pathfinder lands at Ares Vallis using parachutes, retrorockets and airbags.",
+            },
+            {
+                date: "July 1997",
+                title: "Sojourner begins exploring",
+                description:
+                    "The rover rolls down a ramp and starts examining rocks and nearby terrain.",
+            },
+            {
+                date: "July–September 1997",
+                title: "Science and exploration",
+                description:
+                    "Sojourner operates for 83 sols, while Pathfinder returns images and scientific data.",
+            },
+            {
+                date: "September 27, 1997",
+                title: "Last transmission",
+                description:
+                    "Earth receives the final data transmission from the Pathfinder lander.",
+            },
+            {
+                date: "March 1998",
+                title: "Mission officially ends",
+                description:
+                    "NASA terminates the mission after unsuccessful attempts to restore communication.",
+            },
+        ],
+        sources: [
+            {
+                label: "NASA — Mars Pathfinder Mission",
+                url: "https://science.nasa.gov/mission/mars-pathfinder/",
+            },
+            {
+                label: "NASA — Sojourner Rover",
+                url: "https://science.nasa.gov/resource/sojourner-rover/",
+            },
+            {
+                label: "NASA — Sojourner's First Images",
+                url: "https://science.nasa.gov/resource/sojourners-first-images-from-mars/",
+            },
+            {
+                label: "NASA — Pathfinder Airbags on Martian Terrain",
+                url: "https://science.nasa.gov/resource/lander-airbags-martian-terrain/",
+            },
+        ],
+    },
 
     {
         id: "spirit-opportunity",
@@ -556,87 +556,87 @@ export const artifacts: Artifact[] = [
         ],
     },
     {
-    id: "mars-polar-lander",
-    destination: "mars",
-    name: "Mars Polar Lander / Deep Space 2",
-    mission: "Mars Surveyor '98 Program",
-    year: "1999",
-    category: "Lander & Microprobes",
-    tagline: "Three spacecraft. One journey. No signal home.",
-    description:
-        "NASA's Mars Polar Lander carried two experimental Deep Space 2 probes on a mission to investigate the planet's southern polar region. All three spacecraft were lost during their arrival at Mars in December 1999.",
-    image: "/artifacts/mars-polar-lander.jpg",
-    imageAlt:
-        "Artist's concept of the Mars Polar Lander spacecraft on the Martian surface.",
-    imageCaption:
-        "Artist's concept of Mars Polar Lander on the surface of Mars.",
-    imageCredit: "NASA/JPL-Caltech",
-    imageType: "artist-concept",
-    status: "Lost on arrival",
-    statusDetail:
-        "No successful communication was received from the lander or either Deep Space 2 probe.",
-    purpose:
-        "NASA planned to land Mars Polar Lander near the edge of the south polar cap. Its robotic arm would dig into the soil to investigate water ice and the Martian environment. Two smaller Deep Space 2 probes were designed to penetrate the surface and test new technologies.",
-    story:
-        "NASA launched Mars Polar Lander on January 3, 1999, carrying an ambitious mission to the southern region of Mars. The lander was designed to touch down near the edge of the south polar cap, where its robotic arm would dig into the ground and investigate the presence of water ice.\n\nTwo experimental probes, named Deep Space 2, travelled alongside it. Unlike the lander, these small probes were designed to strike the Martian surface and penetrate the soil, testing new ways to explore beneath the surface.\n\nOn December 3, 1999, all three spacecraft were lost during their arrival at Mars. An investigation identified a likely software and touchdown-sensor problem that may have shut down the lander's engines too early. NASA never received a signal from the spacecraft, and their final resting places remain unconfirmed.",
-    discoveries: [
-        "The mission was designed to investigate near-surface water ice in the Martian polar region.",
-        "The lander's robotic arm would have collected and examined soil samples.",
-        "Deep Space 2 tested technologies for penetrating the Martian surface.",
-        "The investigation exposed a critical vulnerability in the lander's touchdown-sensing software.",
-    ],
-    finalChapter:
-        "NASA searched for the missing lander using Mars Global Surveyor on December 16, 1999, but found no sign of it. On January 17, 2000, NASA ended attempts to establish contact. The lander's exact resting place and the final fate of the two Deep Space 2 probes remain unknown.",
-    currentLocation:
-        "Unknown. The lander was likely destroyed during its attempted descent or impact near the Martian south polar region. The locations and condition of the Deep Space 2 probes have not been confirmed.",
-    highlights: [
-        "Launched: January 3, 1999",
-        "Target: Martian south polar region",
-        "One lander and two microprobes",
-        "Lost: December 3, 1999",
-        "Contact attempts ended: January 17, 2000",
-    ],
-    timeline: [
-        {
-            date: "January 3, 1999",
-            title: "Journey begins",
-            description:
-                "Mars Polar Lander and its two Deep Space 2 probes launch aboard a Delta II rocket.",
-        },
-        {
-            date: "December 3, 1999",
-            title: "Lost during arrival",
-            description:
-                "The lander and both probes are lost during their planned arrival at Mars.",
-        },
-        {
-            date: "December 16, 1999",
-            title: "Search for the lander",
-            description:
-                "NASA uses Mars Global Surveyor to search for the missing spacecraft but finds no confirmed signal.",
-        },
-        {
-            date: "January 17, 2000",
-            title: "Contact attempts end",
-            description:
-                "NASA terminates attempts to communicate with the lost lander.",
-        },
-    ],
-    sources: [
-        {
-            label: "NASA — Mars Polar Lander / Deep Space 2",
-            url: "https://science.nasa.gov/mission/mars-polar-lander-deep-space-2/",
-        },
-        {
-            label: "NASA — JPL Special Review Board Report",
-            url: "https://ntrs.nasa.gov/api/citations/20000061966/downloads/20000061966.pdf",
-        },
-        {
-            label: "NASA — Mars Polar Lander Mission Timeline",
-            url: "https://nssdc.gsfc.nasa.gov/planetary/mars/polar_lander/mpl_timetable.html",
-        },
-    ],
-},
+        id: "mars-polar-lander",
+        destination: "mars",
+        name: "Mars Polar Lander / Deep Space 2",
+        mission: "Mars Surveyor '98 Program",
+        year: "1999",
+        category: "Lander & Microprobes",
+        tagline: "Three spacecraft. One journey. No signal home.",
+        description:
+            "NASA's Mars Polar Lander carried two experimental Deep Space 2 probes on a mission to investigate the planet's southern polar region. All three spacecraft were lost during their arrival at Mars in December 1999.",
+        image: "/artifacts/mars-polar-lander.jpg",
+        imageAlt:
+            "Artist's concept of the Mars Polar Lander spacecraft on the Martian surface.",
+        imageCaption:
+            "Artist's concept of Mars Polar Lander on the surface of Mars.",
+        imageCredit: "NASA/JPL-Caltech",
+        imageType: "artist-concept",
+        status: "Lost on arrival",
+        statusDetail:
+            "No successful communication was received from the lander or either Deep Space 2 probe.",
+        purpose:
+            "NASA planned to land Mars Polar Lander near the edge of the south polar cap. Its robotic arm would dig into the soil to investigate water ice and the Martian environment. Two smaller Deep Space 2 probes were designed to penetrate the surface and test new technologies.",
+        story:
+            "NASA launched Mars Polar Lander on January 3, 1999, carrying an ambitious mission to the southern region of Mars. The lander was designed to touch down near the edge of the south polar cap, where its robotic arm would dig into the ground and investigate the presence of water ice.\n\nTwo experimental probes, named Deep Space 2, travelled alongside it. Unlike the lander, these small probes were designed to strike the Martian surface and penetrate the soil, testing new ways to explore beneath the surface.\n\nOn December 3, 1999, all three spacecraft were lost during their arrival at Mars. An investigation identified a likely software and touchdown-sensor problem that may have shut down the lander's engines too early. NASA never received a signal from the spacecraft, and their final resting places remain unconfirmed.",
+        discoveries: [
+            "The mission was designed to investigate near-surface water ice in the Martian polar region.",
+            "The lander's robotic arm would have collected and examined soil samples.",
+            "Deep Space 2 tested technologies for penetrating the Martian surface.",
+            "The investigation exposed a critical vulnerability in the lander's touchdown-sensing software.",
+        ],
+        finalChapter:
+            "NASA searched for the missing lander using Mars Global Surveyor on December 16, 1999, but found no sign of it. On January 17, 2000, NASA ended attempts to establish contact. The lander's exact resting place and the final fate of the two Deep Space 2 probes remain unknown.",
+        currentLocation:
+            "Unknown. The lander was likely destroyed during its attempted descent or impact near the Martian south polar region. The locations and condition of the Deep Space 2 probes have not been confirmed.",
+        highlights: [
+            "Launched: January 3, 1999",
+            "Target: Martian south polar region",
+            "One lander and two microprobes",
+            "Lost: December 3, 1999",
+            "Contact attempts ended: January 17, 2000",
+        ],
+        timeline: [
+            {
+                date: "January 3, 1999",
+                title: "Journey begins",
+                description:
+                    "Mars Polar Lander and its two Deep Space 2 probes launch aboard a Delta II rocket.",
+            },
+            {
+                date: "December 3, 1999",
+                title: "Lost during arrival",
+                description:
+                    "The lander and both probes are lost during their planned arrival at Mars.",
+            },
+            {
+                date: "December 16, 1999",
+                title: "Search for the lander",
+                description:
+                    "NASA uses Mars Global Surveyor to search for the missing spacecraft but finds no confirmed signal.",
+            },
+            {
+                date: "January 17, 2000",
+                title: "Contact attempts end",
+                description:
+                    "NASA terminates attempts to communicate with the lost lander.",
+            },
+        ],
+        sources: [
+            {
+                label: "NASA — Mars Polar Lander / Deep Space 2",
+                url: "https://science.nasa.gov/mission/mars-polar-lander-deep-space-2/",
+            },
+            {
+                label: "NASA — JPL Special Review Board Report",
+                url: "https://ntrs.nasa.gov/api/citations/20000061966/downloads/20000061966.pdf",
+            },
+            {
+                label: "NASA — Mars Polar Lander Mission Timeline",
+                url: "https://nssdc.gsfc.nasa.gov/planetary/mars/polar_lander/mpl_timetable.html",
+            },
+        ],
+    },
 
     {
         id: "ingenuity",

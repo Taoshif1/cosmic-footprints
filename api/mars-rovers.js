@@ -37,7 +37,10 @@ export default async function handler(req, res) {
 
     const payload = await upstream.json();
 
-    res.setHeader("Cache-Control", "public, s-maxage=600, stale-while-revalidate=900");
+    res.setHeader(
+      "Cache-Control",
+      "public, s-maxage=600, stale-while-revalidate=900",
+    );
     res.setHeader("X-Data-Source", "NASA Mars raw-image archive");
     res.setHeader("X-Rover-Feed", rover);
 
@@ -45,7 +48,8 @@ export default async function handler(req, res) {
   } catch (error) {
     return res.status(502).json({
       error: "Unable to retrieve the NASA rover feed.",
-      detail: error instanceof Error ? error.message : "Unknown upstream error.",
+      detail:
+        error instanceof Error ? error.message : "Unknown upstream error.",
     });
   }
 }

@@ -310,14 +310,14 @@ export function ArchivePlanetScene({
       points: [number, number][];
     }[]> = {
       moon: [
-        { name: "Apollo 15 LRV", color: 0x7fd7ff, points: [[25,-8],[27,-5],[28,-1],[26,3],[24,6]] },
-        { name: "Apollo 16 LRV", color: 0xf4c879, points: [[-16,17],[-14,19],[-12,22],[-14,25],[-17,27]] },
-        { name: "Apollo 17 LRV", color: 0x9fe0b2, points: [[18,45],[20,47],[22,49],[20,52],[17,54]] },
+        { name: "Apollo 15 LRV", color: 0x7fd7ff, points: [[25, -8], [27, -5], [28, -1], [26, 3], [24, 6]] },
+        { name: "Apollo 16 LRV", color: 0xf4c879, points: [[-16, 17], [-14, 19], [-12, 22], [-14, 25], [-17, 27]] },
+        { name: "Apollo 17 LRV", color: 0x9fe0b2, points: [[18, 45], [20, 47], [22, 49], [20, 52], [17, 54]] },
       ],
       mars: [
-        { name: "Sojourner", color: 0x7fd7ff, points: [[19,-34],[20,-33],[20.5,-31.8],[19.8,-30.7],[20.4,-29.9]] },
-        { name: "Spirit", color: 0xf4c879, points: [[-16,-23],[-15,-22],[-14,-20.5],[-13,-19],[-12,-17.5]] },
-        { name: "Opportunity", color: 0x9fe0b2, points: [[-5,13],[-4,14.5],[-3,16],[-1.5,17.5],[0,19]] },
+        { name: "Sojourner", color: 0x7fd7ff, points: [[19, -34], [20, -33], [20.5, -31.8], [19.8, -30.7], [20.4, -29.9]] },
+        { name: "Spirit", color: 0xf4c879, points: [[-16, -23], [-15, -22], [-14, -20.5], [-13, -19], [-12, -17.5]] },
+        { name: "Opportunity", color: 0x9fe0b2, points: [[-5, 13], [-4, 14.5], [-3, 16], [-1.5, 17.5], [0, 19]] },
       ],
     };
 
@@ -895,15 +895,15 @@ export function ArchivePlanetScene({
         <span className="archive-route-legend-title">SURFACE TRAVERSE SKETCHES</span>
         {(destination === "mars"
           ? [
-              ["#7fd7ff", "SOJOURNER"],
-              ["#f4c879", "SPIRIT"],
-              ["#9fe0b2", "OPPORTUNITY"],
-            ]
+            ["#7fd7ff", "SOJOURNER"],
+            ["#f4c879", "SPIRIT"],
+            ["#9fe0b2", "OPPORTUNITY"],
+          ]
           : [
-              ["#7fd7ff", "APOLLO 15 LRV"],
-              ["#f4c879", "APOLLO 16 LRV"],
-              ["#9fe0b2", "APOLLO 17 LRV"],
-            ]
+            ["#7fd7ff", "APOLLO 15 LRV"],
+            ["#f4c879", "APOLLO 16 LRV"],
+            ["#9fe0b2", "APOLLO 17 LRV"],
+          ]
         ).map(([color, label]) => (
           <span className="archive-route-legend-item" key={label}>
             <i style={{ background: color }} />

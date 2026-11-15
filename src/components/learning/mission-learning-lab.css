@@ -41,7 +41,7 @@
   font-size: 17px;
 }
 
-.mission-lab-launch > span:nth-child(2) {
+.mission-lab-launch>span:nth-child(2) {
   display: grid;
   gap: 3px;
   flex: 1;
@@ -57,7 +57,9 @@
   font-size: 0.64rem;
 }
 
-.mission-lab-launch-arrow { color: #a9ceff; }
+.mission-lab-launch-arrow {
+  color: #a9ceff;
+}
 
 .mission-lab-backdrop {
   position: fixed;
@@ -134,8 +136,13 @@
   background: rgba(155, 185, 226, 0.19);
 }
 
-.mission-lab-progress span.is-current { background: #729bd2; }
-.mission-lab-progress span.is-complete { background: #a9d8c2; }
+.mission-lab-progress span.is-current {
+  background: #729bd2;
+}
+
+.mission-lab-progress span.is-complete {
+  background: #a9d8c2;
+}
 
 .mission-lab-question-meta {
   display: flex;
@@ -177,7 +184,7 @@
   background: rgba(83, 125, 184, 0.12);
 }
 
-.mission-lab-choice > span {
+.mission-lab-choice>span {
   display: grid;
   width: 27px;
   height: 27px;
@@ -195,11 +202,28 @@
   line-height: 1.5;
 }
 
-.mission-lab-choice em { font-style: normal; font-size: 1rem; }
-.mission-lab-choice.is-correct { border-color: rgba(122, 196, 159, 0.65); background: rgba(53, 124, 88, 0.13); }
-.mission-lab-choice.is-correct > span { color: #a9e2c4; }
-.mission-lab-choice.is-incorrect { border-color: rgba(228, 132, 132, 0.65); background: rgba(145, 56, 56, 0.13); }
-.mission-lab-choice:disabled { cursor: default; }
+.mission-lab-choice em {
+  font-style: normal;
+  font-size: 1rem;
+}
+
+.mission-lab-choice.is-correct {
+  border-color: rgba(122, 196, 159, 0.65);
+  background: rgba(53, 124, 88, 0.13);
+}
+
+.mission-lab-choice.is-correct>span {
+  color: #a9e2c4;
+}
+
+.mission-lab-choice.is-incorrect {
+  border-color: rgba(228, 132, 132, 0.65);
+  background: rgba(145, 56, 56, 0.13);
+}
+
+.mission-lab-choice:disabled {
+  cursor: default;
+}
 
 .mission-lab-feedback {
   margin-top: 17px;
@@ -208,8 +232,17 @@
   background: rgba(93, 131, 183, 0.1);
 }
 
-.mission-lab-feedback > strong { color: #c5dcff; font-size: 0.83rem; }
-.mission-lab-feedback p { margin: 8px 0 14px; color: #b4c3d8; font-size: 0.78rem; line-height: 1.7; }
+.mission-lab-feedback>strong {
+  color: #c5dcff;
+  font-size: 0.83rem;
+}
+
+.mission-lab-feedback p {
+  margin: 8px 0 14px;
+  color: #b4c3d8;
+  font-size: 0.78rem;
+  line-height: 1.7;
+}
 
 .mission-lab-primary {
   display: inline-flex;
@@ -230,7 +263,7 @@
   text-align: center;
 }
 
-.mission-lab-result > strong {
+.mission-lab-result>strong {
   display: block;
   margin: 10px 0;
   color: #dceaff;
@@ -238,9 +271,23 @@
   letter-spacing: -0.07em;
 }
 
-.mission-lab-result > strong small { color: #8ea7c8; font-size: 1.3rem; }
-.mission-lab-result h3 { margin: 0 0 8px; font-size: 1.2rem; }
-.mission-lab-result p { max-width: 380px; margin: 0 auto 20px; color: #a7b7ce; font-size: 0.8rem; line-height: 1.7; }
+.mission-lab-result>strong small {
+  color: #8ea7c8;
+  font-size: 1.3rem;
+}
+
+.mission-lab-result h3 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+}
+
+.mission-lab-result p {
+  max-width: 380px;
+  margin: 0 auto 20px;
+  color: #a7b7ce;
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
 
 .mission-lab-evidence {
   display: grid;
@@ -265,17 +312,45 @@
 }
 
 @media (max-width: 700px) {
-  .mission-lab { right: 12px; bottom: 12px; }
-  .mission-lab-launch { min-width: 0; padding: 10px 12px; gap: 9px; }
-  .mission-lab-launch-icon { width: 30px; height: 30px; }
-  .mission-lab-launch strong { font-size: 0.58rem; }
-  .mission-lab-launch small { font-size: 0.57rem; }
-  .mission-lab-dialog { padding: 21px 17px; }
-  .mission-lab-question-meta { font-size: 0.5rem; }
+  .mission-lab {
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .mission-lab-launch {
+    min-width: 0;
+    padding: 10px 12px;
+    gap: 9px;
+  }
+
+  .mission-lab-launch-icon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .mission-lab-launch strong {
+    font-size: 0.58rem;
+  }
+
+  .mission-lab-launch small {
+    font-size: 0.57rem;
+  }
+
+  .mission-lab-dialog {
+    padding: 21px 17px;
+  }
+
+  .mission-lab-question-meta {
+    font-size: 0.5rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mission-lab-launch, .mission-lab-choice { transition: none; }
+
+  .mission-lab-launch,
+  .mission-lab-choice {
+    transition: none;
+  }
 }
 
 .mission-lab-data {
@@ -292,7 +367,7 @@
   gap: 12px;
 }
 
-.mission-lab-data-heading > div > span {
+.mission-lab-data-heading>div>span {
   color: #9fc7ff;
   font: 0.54rem monospace;
   letter-spacing: 0.12em;
@@ -305,19 +380,19 @@
   line-height: 1.35;
 }
 
-.mission-lab-data-heading > strong {
+.mission-lab-data-heading>strong {
   flex: 0 0 auto;
   color: #d9eaff;
   font-size: 1.55rem;
   letter-spacing: -0.05em;
 }
 
-.mission-lab-data-heading > strong small {
+.mission-lab-data-heading>strong small {
   color: #9bb4d6;
   font-size: 0.65rem;
 }
 
-.mission-lab-data > p {
+.mission-lab-data>p {
   margin: 9px 0 13px;
   color: #a8b9d1;
   font-size: 0.72rem;
@@ -329,7 +404,7 @@
   gap: 10px;
 }
 
-.mission-lab-data-row > div {
+.mission-lab-data-row>div {
   display: flex;
   justify-content: space-between;
   gap: 12px;
@@ -338,7 +413,7 @@
   font-size: 0.67rem;
 }
 
-.mission-lab-data-row > div strong {
+.mission-lab-data-row>div strong {
   color: #e0edff;
   font-variant-numeric: tabular-nums;
 }
@@ -356,7 +431,7 @@
   background: linear-gradient(90deg, #648ec9, #a8d1ff);
 }
 
-.mission-lab-data > a {
+.mission-lab-data>a {
   display: inline-block;
   margin-top: 13px;
   color: #b8d6ff;
@@ -365,9 +440,11 @@
   text-decoration: none;
 }
 
-.mission-lab-data > a:hover { text-decoration: underline; }
+.mission-lab-data>a:hover {
+  text-decoration: underline;
+}
 
-.mission-lab-data > small {
+.mission-lab-data>small {
   display: block;
   margin-top: 8px;
   color: #8498b4;
@@ -382,13 +459,13 @@
   background: rgba(110, 151, 207, 0.1);
 }
 
-.mission-lab-simple > span {
+.mission-lab-simple>span {
   color: #a9cbf8;
   font: 0.55rem monospace;
   letter-spacing: 0.13em;
 }
 
-.mission-lab-simple > p {
+.mission-lab-simple>p {
   margin: 8px 0 0;
   color: #d3e1f5;
   font-size: 0.82rem;

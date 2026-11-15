@@ -15,9 +15,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed." });
   }
 
-  const collection = typeof req.query?.collection === "string"
-    ? req.query.collection
-    : "";
+  const collection =
+    typeof req.query?.collection === "string" ? req.query.collection : "";
   const config = COLLECTIONS[collection];
 
   if (!config) {
@@ -55,27 +54,35 @@ export default async function handler(req, res) {
       ? payload.collection.items
       : [];
 
-    const items = records.map((record) => {
-      const metadata = Array.isArray(record?.data) ? record.data[0] : null;
-      const links = Array.isArray(record?.links) ? record.links : [];
-      const preview = links.find((link) => link?.rel === "preview" && link?.href)
-        || links.find((link) => link?.href);
-      const nasaId = typeof metadata?.nasa_id === "string" ? metadata.nasa_id : "";
+    const items = records
+      .map((record) => {
+        const metadata = Array.isArray(record?.data) ? record.data[0] : null;
+        const links = Array.isArray(record?.links) ? record.links : [];
+        const preview =
+          links.find((link) => link?.rel === "preview" && link?.href) ||
+          links.find((link) => link?.href);
+        const nasaId =
+          typeof metadata?.nasa_id === "string" ? metadata.nasa_id : "";
 
-      if (!metadata || !preview?.href || !nasaId) return null;
+        if (!metadata || !preview?.href || !nasaId) return null;
 
-      return {
-        id: nasaId,
-        title: metadata.title || "NASA image archive record",
-        description: metadata.description || "",
-        dateCreated: metadata.date_created || "",
-        center: metadata.center || "NASA",
-        imageUrl: preview.href,
-        nasaUrl: "https://images.nasa.gov/details/" + encodeURIComponent(nasaId),
-      };
-    }).filter(Boolean);
+        return {
+          id: nasaId,
+          title: metadata.title || "NASA image archive record",
+          description: metadata.description || "",
+          dateCreated: metadata.date_created || "",
+          center: metadata.center || "NASA",
+          imageUrl: preview.href,
+          nasaUrl:
+            "https://images.nasa.gov/details/" + encodeURIComponent(nasaId),
+        };
+      })
+      .filter(Boolean);
 
-    res.setHeader("Cache-Control", "public, s-maxage=1800, stale-while-revalidate=3600");
+    res.setHeader(
+      "Cache-Control",
+      "public, s-maxage=1800, stale-while-revalidate=3600",
+    );
     res.setHeader("X-Data-Source", "NASA Image and Video Library");
 
     return res.status(200).json({
@@ -87,7 +94,8 @@ export default async function handler(req, res) {
   } catch (error) {
     return res.status(502).json({
       error: "Unable to retrieve NASA's public image archive.",
-      detail: error instanceof Error ? error.message : "Unknown upstream error.",
+      detail:
+        error instanceof Error ? error.message : "Unknown upstream error.",
     });
   }
 }
