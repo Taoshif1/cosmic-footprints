@@ -186,7 +186,8 @@ function readImageRecords(payload: unknown): LunarImage[] {
         imageUrl: String(item.imageUrl ?? ""),
         nasaUrl: String(item.nasaUrl ?? "https://images.nasa.gov/"),
       };
-    }).filter((item): item is LunarImage => Boolean(item && item.id && item.imageUrl));
+    }).filter((item): item is LunarImage => Boolean(item && item.id && item.imageUrl))
+      .sort((a, b) => Date.parse(b.dateCreated) - Date.parse(a.dateCreated));
   }
 
   const collection = asRecord(root.collection);
@@ -210,7 +211,8 @@ function readImageRecords(payload: unknown): LunarImage[] {
       imageUrl: preview.href,
       nasaUrl: "https://images.nasa.gov/details/" + encodeURIComponent(id),
     };
-  }).filter((item): item is LunarImage => Boolean(item));
+  }).filter((item): item is LunarImage => Boolean(item))
+    .sort((a, b) => Date.parse(b.dateCreated) - Date.parse(a.dateCreated));
 }
 
 function readCachedImages(): LunarImage[] {
