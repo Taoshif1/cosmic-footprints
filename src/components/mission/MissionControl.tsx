@@ -259,7 +259,7 @@ async function fetchRoverFeed(
       });
 
       if (!directResponse.ok) {
-        throw new Error(`NASA feed returned HTTP ${directResponse.status}`);
+        throw new Error(`NASA feed returned HTTP ${directResponse.status}`, { cause: proxyError });
       }
 
       payload = await directResponse.json();
