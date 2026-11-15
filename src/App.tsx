@@ -12,6 +12,7 @@ import { ArtifactStory } from "./components/artifacts/ArtifactStory";
 import { MissionLearningLab } from "./components/learning/MissionLearningLab";
 import { GuidedExplorer } from "./components/learning/GuidedExplorer";
 import { MissionControl } from "./components/mission/MissionControl";
+import { LunarMissionControl } from "./components/mission/LunarMissionControl";
 
 import {
   getArtifactById,
@@ -459,8 +460,10 @@ function App() {
               />
               <MissionLearningLab key={selectedArtifact.id} artifact={selectedArtifact} />
             </>
-          ) : selectedDestination === "mars" && missionControlOpen ? (
-            <MissionControl onBack={() => setMissionControlOpen(false)} />
+          ) : missionControlOpen ? (
+            selectedDestination === "mars"
+              ? <MissionControl onBack={() => setMissionControlOpen(false)} />
+              : <LunarMissionControl onBack={() => setMissionControlOpen(false)} />
           ) : (
             <ArtifactExplorer
               destination={selectedDestination}
