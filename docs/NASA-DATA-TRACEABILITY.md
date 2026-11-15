@@ -99,6 +99,8 @@ The Mars Mission Control dashboard is backed by NASA's public raw-image feeds fo
 
 NASA describes the Perseverance and Curiosity maps as showing the rovers' latest locations and traverse paths, with each point marking the end of a drive and its Martian sol. The maps are updated when new drive data is published; they are not continuous GPS feeds. The application therefore links to NASA's maps and does not invent coordinates or present a simulated moving marker as a live rover position.
 
+A same-origin Vercel serverless function at `api/mars-rovers.js` retrieves these NASA feeds and applies a 10-minute CDN cache with stale-while-revalidate. This avoids relying on browser cross-origin access to the raw mission endpoints. In local Vite development, the component falls back to direct NASA requests.
+
 The dashboard separately labels:
 - image capture time on Mars;
 - image receipt time on Earth, when the NASA record supplies it;
