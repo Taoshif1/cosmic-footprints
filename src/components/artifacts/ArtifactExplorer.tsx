@@ -148,7 +148,7 @@ export function ArtifactExplorer({
             <strong>{destination === "moon" ? "LUNAR MISSION CONTROL" : "MARS MISSION CONTROL"}</strong>
             <small>
               {destination === "moon"
-                ? "NASA lunar imagery, LRO mapping &amp; historical missions"
+                ? "NASA lunar imagery, LRO mapping & historical missions"
                 : "Latest NASA rover imagery &amp; official traverse maps"}
             </small>
           </span>
