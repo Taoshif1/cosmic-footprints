@@ -764,22 +764,21 @@ export function ArchivePlanetScene({
 
       const delta = Math.min(clock.getDelta(), 0.05);
 
-      if (!reducedMotion) {
-        // Accelerated but period-aware: Mars spins near Earth-day speed;
-        // the Moon's sidereal rotation is much slower (~27.3 Earth days).
-        const spinRate = destination === "mars" ? 0.0438 : 0.00165;
-        planetGroup.rotation.y += delta * spinRate + rotationVelocityY;
-        planetGroup.rotation.x = THREE.MathUtils.clamp(
-          planetGroup.rotation.x + rotationVelocityX,
-          -0.78,
-          0.78,
-        );
-        rotationVelocityY *= 0.92;
-        rotationVelocityX *= 0.92;
-        if (Math.abs(rotationVelocityY) < 0.00002) rotationVelocityY = 0;
-        if (Math.abs(rotationVelocityX) < 0.00002) rotationVelocityX = 0;
-        stars.rotation.y += delta * 0.00045;
-      }
+      // Keep the surface globe rotating continuously. In reduced-motion mode,
+      // use a slower axial spin rather than freezing the Moon/Mars completely.
+      const motionScale = reducedMotion ? 0.35 : 1;
+      const spinRate = destination === "mars" ? 0.09 : 0.055;
+      planetGroup.rotation.y += delta * spinRate * motionScale + rotationVelocityY;
+      planetGroup.rotation.x = THREE.MathUtils.clamp(
+        planetGroup.rotation.x + rotationVelocityX,
+        -0.78,
+        0.78,
+      );
+      rotationVelocityY *= 0.92;
+      rotationVelocityX *= 0.92;
+      if (Math.abs(rotationVelocityY) < 0.00002) rotationVelocityY = 0;
+      if (Math.abs(rotationVelocityX) < 0.00002) rotationVelocityX = 0;
+      stars.rotation.y += delta * 0.00045 * motionScale;
 
       renderScene();
     };
@@ -814,11 +813,11 @@ export function ArchivePlanetScene({
 
     resize();
 
-    if (reducedMotion) {
-      renderScene();
-    } else if (!document.hidden) {
+    if (!document.hidden) {
       clock.start();
       animate();
+    } else {
+      renderScene();
     }
 
     const handleVisibilityChange = () => {
@@ -832,7 +831,7 @@ export function ArchivePlanetScene({
         return;
       }
 
-      if (!reducedMotion && !animationFrame) {
+      if (!animationFrame) {
         clock.start();
         animate();
       } else {
