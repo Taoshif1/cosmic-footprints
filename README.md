@@ -84,7 +84,7 @@ The **Take the 3-Minute Journey** guided mode introduces Surveyor 3, Spirit & Op
 - GSAP and @gsap/react for cinematic transitions
 - Tailwind CSS v4 and DaisyUI v5 for styling
 
-There is no account system or application database. The educational mission archive is curated and stored locally in typed TypeScript data. The optional Mars Mission Control uses a small Vercel serverless proxy to retrieve NASA's public rover image feeds, with a browser cache fallback; the rest of the archive does not depend on live services.
+There is no account system or application database. The educational mission archive is curated and stored locally in typed TypeScript data. Mars Mission Control uses Vercel serverless proxies for NASA rover feeds and the NASA Image and Video Library, with cache and curated Photojournal fallbacks for Curiosity. Lunar Mission Control uses the NASA Image and Video Library plus source-linked Photojournal fallbacks. The rest of the archive does not depend on live services.
 
 ## Run locally
 
@@ -150,3 +150,47 @@ The dashboard distinguishes the image capture time on Mars, the time the image w
 Ingenuity is shown as a historical flight archive only. NASA states that its final flight was Jan. 18, 2024 and its mission ended Jan. 25, 2024 after 72 flights: https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/
 
 This Mission Control panel is an educational companion to NASA's official data resources. It is not affiliated with or endorsed by NASA.
+
+
+## Lunar Mission Control — NASA imagery and mission heritage
+
+The Moon archive now includes a **Lunar Mission Control** dashboard. It is reachable from the Moon archive and brings together NASA lunar imagery, the Lunar Reconnaissance Orbiter (LRO), official lunar mapping tools, historical mission tracking and the Artemis roadmap.
+
+### Lunar imagery
+
+- The dashboard searches NASA's public Image and Video Library for Lunar Reconnaissance Orbiter surface imagery.
+- The browser refreshes the library search every 15 minutes while the page is visible.
+- A same-origin Vercel function at \`api/nasa-images.js\` proxies NASA's public \`images-api.nasa.gov/search\` endpoint. No API key is required.
+- The interface labels these as NASA image-library archive records, not live camera images or current orbiter telemetry.
+- If the library cannot be reached, the dashboard uses source-linked NASA Photojournal fallback images and clearly labels the fallback.
+
+### LRO and lunar maps
+
+NASA lists the Lunar Reconnaissance Orbiter as an active mission. LRO has studied the Moon from close orbit since 2009 and maps the surface while measuring temperature, composition and radiation.
+
+The dashboard links to:
+- NASA LRO mission page: https://science.nasa.gov/mission/lro/
+- NASA Moon Trek: https://trek.nasa.gov/moon/
+- LROC QuickMap: https://quickmap.lroc.asu.edu/
+- NASA Eyes: https://eyes.nasa.gov/apps/solar-system/#/moon
+
+The mapping tools use spacecraft observations and provide interactive lunar-surface exploration. Cosmic Footprints links to these official tools; it does not invent a live LRO orbital position or present a simulated marker as telemetry.
+
+### Historical mission register
+
+The register includes Apollo 11, 12, 14, 15, 16 and 17; Surveyor 3; the Lunar Roving Vehicle; ALSEP; and Artemis II. It also includes a NASA roadmap panel for Artemis III and Artemis IV.
+
+The NASA NSSDCA record supplies the three Lunar Roving Vehicle distance values used in the existing Moon artifact story: Apollo 15 (27.8 km), Apollo 16 (26.7 km) and Apollo 17 (35.9 km), for a calculated combined total of 90.4 km.
+
+NASA's Artemis program page currently describes Artemis II as a completed crewed lunar flyby (April 1–10, 2026), Artemis III as a planned low-Earth-orbit systems demonstration in 2027, and Artemis IV as the target for the first Artemis lunar landing in early 2028. Future dates are planning targets and may change; the application does not show a launch countdown.
+
+### Curated fallback image credits
+
+- Curiosity PIA26700 — NASA/JPL-Caltech. A composite of Navcam panoramas from Sol 5,000 and Sol 5,003; the blue/yellow treatment is an artistic interpretation. https://science.nasa.gov/photojournal/curiosity-postcard-celebrates-rovers-5000th-day-on-mars/
+- Curiosity PIA16238 — NASA/JPL-Caltech/Malin Space Science Systems. https://photojournal.jpl.nasa.gov/catalog/PIA16238
+- Lunar PIA12903 — NASA/GSFC/Arizona State University. https://science.nasa.gov/photojournal/first-look-apollo-12-and-surveyor-3/
+- Lunar PIA14426 — NASA/GSFC/Arizona State University. https://science.nasa.gov/resource/action-shot/
+
+These images are clearly identified as archive material. They are not substituted for a live downlink or represented as newly captured images.
+
+This dashboard is an independent educational companion to NASA's public resources and is not affiliated with or endorsed by NASA.

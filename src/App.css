@@ -4725,3 +4725,43 @@ button.destination-control:not(:disabled):hover {
     animation: none;
   }
 }
+
+
+/* Curiosity archive fallback: keep the unavailable live feed informative, not empty. */
+.mission-feed-status.status-archive i {
+  background: #e9bd79;
+}
+
+.mission-archive-notice {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px solid rgba(226, 185, 125, 0.25);
+  background: rgba(71, 49, 25, 0.19);
+}
+
+.mission-archive-notice strong {
+  color: #e6c38f;
+  font-size: 0.49rem;
+  letter-spacing: 0.1em;
+}
+
+.mission-archive-notice span {
+  color: #b8a88f;
+  font-size: 0.57rem;
+  line-height: 1.55;
+}
+
+.mission-control-launch-moon {
+  border-left-color: rgba(190, 207, 235, 0.85);
+  background:
+    linear-gradient(110deg, rgba(34, 49, 72, 0.82), rgba(10, 20, 36, 0.88));
+}
+
+.mission-control-launch-moon .mission-control-launch-symbol {
+  color: #d2def1;
+}
+

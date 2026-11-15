@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type RoverId = "perseverance" | "curiosity";
-type FeedStatus = "loading" | "connected" | "cached" | "unavailable";
+type FeedStatus = "loading" | "connected" | "cached" | "archive" | "unavailable";
 
 interface RoverImage {
   id: string;
@@ -107,6 +107,7 @@ function findImageUrl(item: Record<string, unknown>): string | null {
       ? Object.values(fileRecord)
       : [];
 
+  const linkValues = Array.isArray(item.links) ? item.links : [];
   const candidates: unknown[] = [
     item.thumbnail,
     item.thumbnail_url,
@@ -118,6 +119,7 @@ function findImageUrl(item: Record<string, unknown>): string | null {
     item.medium,
     item.large,
     ...fileValues,
+    ...linkValues,
   ];
 
   for (const candidate of candidates) {
@@ -142,6 +144,7 @@ function getImageRecords(payload: unknown): Record<string, unknown>[] {
     root.results,
     asRecord(root.data)?.images,
     asRecord(root.data)?.items,
+    asRecord(root.collection)?.items,
   ];
 
   for (const candidate of candidates) {
@@ -159,8 +162,12 @@ function normalizeImages(payload: unknown, rover: RoverId): RoverImage[] {
   const records = getImageRecords(payload);
 
   return records
-    .map((item, index): RoverImage | null => {
-      const id = asText(item.imageid ?? item.image_id ?? item.id ?? item.product_id);
+    .map((record, index): RoverImage | null => {
+      const metadata = Array.isArray(record.data)
+        ? asRecord(record.data[0]) ?? record
+        : record;
+      const item: Record<string, unknown> = { ...metadata, links: record.links };
+      const id = asText(item.imageid ?? item.image_id ?? item.id ?? item.product_id ?? item.nasa_id);
       const imageUrl = findImageUrl(item);
 
       if (!imageUrl) return null;
@@ -172,7 +179,7 @@ function normalizeImages(payload: unknown, rover: RoverId): RoverImage[] {
         item.instrument ??
         item.camera_name ??
         item.camera,
-      ) ?? "NASA rover camera";
+      ) ?? (item.nasa_id ? "NASA Image and Video Library" : "NASA rover camera");
 
       const solValue = Number(item.sol ?? item.mission_sol);
       const sol = Number.isFinite(solValue) ? solValue : null;
@@ -189,7 +196,9 @@ function normalizeImages(payload: unknown, rover: RoverId): RoverImage[] {
       const caption = asText(item.caption ?? item.description) ?? title;
       const rawNasaUrl = asText(item.link ?? item.web_url);
       const nasaUrl = (rawNasaUrl ? toNasaUrl(rawNasaUrl) : null) ??
-        `${ROVERS[rover].imageGallery}${id ? `?id=${encodeURIComponent(id)}` : ""}`;
+        (item.nasa_id && id
+          ? `https://images.nasa.gov/details/${encodeURIComponent(id)}`
+          : `${ROVERS[rover].imageGallery}${id ? `?id=${encodeURIComponent(id)}` : ""}`);
 
       return {
         id: id ?? `${rover}-${sol ?? "unknown"}-${index}`,
@@ -212,6 +221,75 @@ function normalizeImages(payload: unknown, rover: RoverId): RoverImage[] {
       const bDate = Date.parse(b.dateReceived ?? b.dateTaken ?? "");
       return (Number.isFinite(bDate) ? bDate : 0) - (Number.isFinite(aDate) ? aDate : 0);
     });
+}
+
+const CURIOSITY_ARCHIVE_FALLBACK: RoverImage[] = [
+  {
+    id: "PIA26700",
+    title: "Curiosity Postcard Celebrates Rover's 5,000th Day on Mars",
+    caption: "A NASA/JPL-Caltech composite of Curiosity Navcam panoramas captured on Sol 5,000 and Sol 5,003. Blue and yellow tones distinguish the morning and afternoon views; this is an archive image, not a live downlink.",
+    sol: 5003,
+    camera: "Navigation Cameras (Navcams) / NASA Photojournal",
+    dateTaken: "2026-09-02",
+    dateReceived: null,
+    imageUrl: "https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia26/pia26700/PIA26700.jpg",
+    nasaUrl: "https://science.nasa.gov/photojournal/curiosity-postcard-celebrates-rovers-5000th-day-on-mars/",
+  },
+  {
+    id: "PIA16238",
+    title: "Preliminary Self-Portrait of Curiosity",
+    caption: "Curiosity used its Mars Hand Lens Imager to assemble this self-portrait at Rocknest in Gale Crater on Sol 84.",
+    sol: 84,
+    camera: "Mars Hand Lens Imager (MAHLI)",
+    dateTaken: "2012-10-31",
+    dateReceived: null,
+    imageUrl: "https://assets.science.nasa.gov/content/dam/science/psd/photojournal/pia/pia16/pia16238/PIA16238.jpg",
+    nasaUrl: "https://photojournal.jpl.nasa.gov/catalog/PIA16238",
+  },
+];
+
+async function fetchCuriosityArchive(signal: AbortSignal): Promise<FeedSnapshot> {
+  let payload: unknown;
+
+  try {
+    const proxyResponse = await fetch("/api/nasa-images?collection=curiosity", {
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+      signal,
+    });
+    if (!proxyResponse.ok) {
+      throw new Error("NASA image archive proxy returned HTTP " + proxyResponse.status);
+    }
+    payload = await proxyResponse.json();
+  } catch (proxyError) {
+    if (signal.aborted) throw proxyError;
+    const url = new URL("https://images-api.nasa.gov/search");
+    url.searchParams.set("q", "Curiosity Mars rover");
+    url.searchParams.set("media_type", "image");
+    url.searchParams.set("page_size", "12");
+    url.searchParams.set("year_start", "2012");
+    url.searchParams.set("year_end", String(new Date().getUTCFullYear()));
+    const directResponse = await fetch(url.toString(), {
+      headers: { Accept: "application/json" },
+      cache: "no-store",
+      signal,
+    });
+    if (!directResponse.ok) {
+      throw new Error("NASA Image Library returned HTTP " + directResponse.status, { cause: proxyError });
+    }
+    payload = await directResponse.json();
+  }
+
+  const images = normalizeImages(payload, "curiosity");
+  if (images.length === 0) {
+    throw new Error("NASA Image Library returned no displayable Curiosity records.");
+  }
+
+  return {
+    images,
+    fetchedAt: new Date().toISOString(),
+    totalResults: images.length,
+  };
 }
 
 function readCachedFeed(rover: RoverId): FeedSnapshot | null {
@@ -302,6 +380,30 @@ async function fetchRoverFeed(
       };
     }
 
+    if (rover === "curiosity") {
+      try {
+        const archive = await fetchCuriosityArchive(signal);
+        return {
+          ...archive,
+          status: "archive",
+          error: "The raw rover feed is unavailable. Showing source-linked NASA Image Library records instead.",
+        };
+      } catch (archiveError) {
+        if (signal.aborted) {
+          return { ...EMPTY_FEED, status: "unavailable", error: "Request cancelled." };
+        }
+        return {
+          images: CURIOSITY_ARCHIVE_FALLBACK,
+          fetchedAt: new Date().toISOString(),
+          totalResults: CURIOSITY_ARCHIVE_FALLBACK.length,
+          status: "archive",
+          error: archiveError instanceof Error
+            ? archiveError.message + " Showing a small, curated NASA Photojournal fallback."
+            : "NASA Image Library unavailable. Showing a curated NASA Photojournal fallback.",
+        };
+      }
+    }
+
     return {
       ...EMPTY_FEED,
       status: "unavailable",
@@ -341,6 +443,7 @@ function formatLocal(value: string): string {
 function statusLabel(status: FeedStatus): string {
   if (status === "connected") return "NASA FEED CONNECTED";
   if (status === "cached") return "CACHED COPY";
+  if (status === "archive") return "NASA IMAGE ARCHIVE";
   if (status === "loading") return "CONTACTING NASA";
   return "FEED UNAVAILABLE";
 }
@@ -508,6 +611,13 @@ export function MissionControl({ onBack }: MissionControlProps) {
             </a>
           </div>
 
+          {feed.status === "archive" && (
+            <div className="mission-archive-notice" role="status">
+              <strong>LIVE DOWNLINK UNAVAILABLE</strong>
+              <span>Showing verified, source-linked NASA archive images. These are historical records, not a live rover feed.</span>
+            </div>
+          )}
+
           {feed.status === "loading" && feed.images.length === 0 ? (
             <div className="mission-loading-state" role="status">
               <span className="mission-loading-orbit" />
@@ -527,10 +637,20 @@ export function MissionControl({ onBack }: MissionControlProps) {
                   alt={latestImage.title}
                   loading="eager"
                   onError={(event) => {
+                    if (activeRover === "curiosity" && event.currentTarget.src !== CURIOSITY_ARCHIVE_FALLBACK[0].imageUrl) {
+                      event.currentTarget.src = CURIOSITY_ARCHIVE_FALLBACK[0].imageUrl;
+                      return;
+                    }
                     event.currentTarget.style.opacity = "0";
                   }}
                 />
-                <span className="mission-image-tag">LATEST AVAILABLE IMAGE</span>
+                <span className="mission-image-tag">
+                  {feed.status === "archive"
+                    ? "NASA ARCHIVE IMAGE / NOT A LIVE DOWNLINK"
+                    : feed.status === "cached"
+                      ? "LAST SUCCESSFUL LIVE IMAGE"
+                      : "LATEST AVAILABLE IMAGE"}
+                </span>
                 <span className="mission-image-open">VIEW NASA RECORD ↗</span>
               </a>
 
@@ -584,9 +704,9 @@ export function MissionControl({ onBack }: MissionControlProps) {
 
           <div className="mission-image-source">
             <span>DATA SOURCE</span>
-            <strong>NASA / JPL RAW IMAGE ARCHIVE</strong>
+            <strong>{feed.status === "archive" ? "NASA IMAGE AND VIDEO LIBRARY / PHOTOJOURNAL" : "NASA / JPL RAW IMAGE ARCHIVE"}</strong>
             <span>
-              {feed.status === "cached" ? "CACHED COPY" : feed.status === "connected" ? "DIRECT NASA RESPONSE" : statusLabel(feed.status)}
+              {feed.status === "archive" ? "CURATED ARCHIVE FALLBACK" : feed.status === "cached" ? "CACHED COPY" : feed.status === "connected" ? "DIRECT NASA RESPONSE" : statusLabel(feed.status)}
               {feed.fetchedAt ? ` · FETCHED ${formatLocal(feed.fetchedAt)} LOCAL` : ""}
             </span>
           </div>

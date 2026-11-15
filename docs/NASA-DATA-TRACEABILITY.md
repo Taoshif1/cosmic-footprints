@@ -113,3 +113,44 @@ NASA references:
 - https://science.nasa.gov/mission/mars-2020-perseverance/location-map/
 - https://science.nasa.gov/mission/msl-curiosity/location-map/
 - https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/
+
+
+## Curiosity archive fallback policy
+
+Curiosity's primary image panel first requests the public raw-image feed. If that request fails or returns no displayable records, the component checks the last successful live-feed cache. If no live cache exists, it searches NASA's Image and Video Library through \`api/nasa-images.js\`. If the library is also unavailable, it displays two fixed, source-linked NASA Photojournal records:
+
+- PIA26700 — Curiosity's Sol 5,000 / Sol 5,003 Navcam postcard, published September 2026. This is a composite with an artistic blue/yellow interpretation, not a raw live downlink.
+- PIA16238 — Curiosity's Sol 84 self-portrait at Rocknest.
+
+The dashboard changes its status and image tag to **NASA IMAGE ARCHIVE / NOT A LIVE DOWNLINK** when using this fallback. It does not describe archive images as current rover telemetry. The NASA Image and Video Library search is documented at https://images.nasa.gov/docs/images.nasa.gov_api_docs.pdf.
+
+## Lunar Mission Control data traceability
+
+Lunar Mission Control is reachable from the Moon archive. It uses the NASA Image and Video Library for searchable lunar imagery, identifies the Lunar Reconnaissance Orbiter as an active NASA mission, links to official mapping tools, and provides a source-linked historical register.
+
+| Feature | Official source | What the application presents |
+| --- | --- | --- |
+| Lunar image search | https://images-api.nasa.gov/search | Public NASA Image and Video Library records returned for Lunar Reconnaissance Orbiter lunar-surface imagery; archive material, not a live feed |
+| LRO mission status | https://science.nasa.gov/mission/lro/ | Active-mission label, launch date (June 18, 2009), target and mission objectives |
+| 3D lunar surface map | https://trek.nasa.gov/moon/ | Official interactive lunar globe, imagery, elevation, slope and lighting tools |
+| LROC QuickMap | https://quickmap.lroc.asu.edu/ | Official high-resolution lunar mapping resource |
+| NASA Eyes | https://eyes.nasa.gov/apps/solar-system/#/moon | 3D solar-system and lunar mission exploration resource |
+| Apollo mission history | https://science.nasa.gov/moon/moonwalkers/ | Apollo 11, 12, 14, 15, 16 and 17 historical mission records |
+| Surveyor 3 | https://science.nasa.gov/mission/surveyor-3/ | Robotic lunar landing, final contact and Apollo 12 visit |
+| Lunar Roving Vehicle | https://nssdc.gsfc.nasa.gov/planetary/lunar/apollo_lrv.html | Apollo 15, 16 and 17 historical traverse totals |
+| ALSEP | https://ntrs.nasa.gov/api/citations/19790014808/downloads/19790014808.pdf | Five Apollo experiment stations and the September 30, 1977 shutdown |
+| Artemis II | https://www.nasa.gov/mission/artemis-ii/ | Completed crewed lunar flyby, April 1–10, 2026; no lunar landing |
+| Artemis III / IV planning | https://www.nasa.gov/artemis-ii-news-and-updates/ | NASA's published planning targets: Artemis III low-Earth-orbit demonstration in 2027; Artemis IV early-2028 lunar-landing target |
+
+The image search refreshes every 15 minutes while the page is visible. The serverless proxy caches responses and does not require an API key. If NASA's image library cannot be reached, the component uses cached results or source-linked NASA Photojournal fallback images. It labels all of these as archive imagery.
+
+The dashboard does not claim a live LRO position, live surface camera, live landing-site telemetry, or real-time mission-control access. NASA Moon Trek and LROC QuickMap open as external interactive resources; they are not embedded as a fabricated coordinate feed.
+
+### Lunar imagery credits
+
+- PIA12903 — NASA/GSFC/Arizona State University: https://science.nasa.gov/photojournal/first-look-apollo-12-and-surveyor-3/
+- PIA14426 — NASA/GSFC/Arizona State University: https://science.nasa.gov/resource/action-shot/
+
+### Artemis schedule qualification
+
+Artemis II's April 2026 flight is presented as completed. The Artemis III 2027 and Artemis IV early-2028 dates are described as NASA planning targets as published in October 2026, not guaranteed launch dates. The interface directs visitors to NASA's program update page for current changes.

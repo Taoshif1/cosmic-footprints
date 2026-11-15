@@ -138,20 +138,22 @@ export function ArtifactExplorer({
           </button>
         )}
 
-        {destination === "mars" && (
-          <button
-            type="button"
-            className="mission-control-launch"
-            onClick={onOpenMissionControl}
-          >
-            <span className="mission-control-launch-symbol" aria-hidden="true">⌁</span>
-            <span className="mission-control-launch-copy">
-              <strong>MARS MISSION CONTROL</strong>
-              <small>Latest NASA rover imagery &amp; official traverse maps</small>
-            </span>
-            <span className="mission-control-launch-status">NASA DATA ↗</span>
-          </button>
-        )}
+        <button
+          type="button"
+          className={"mission-control-launch" + (destination === "moon" ? " mission-control-launch-moon" : "")}
+          onClick={onOpenMissionControl}
+        >
+          <span className="mission-control-launch-symbol" aria-hidden="true">⌁</span>
+          <span className="mission-control-launch-copy">
+            <strong>{destination === "moon" ? "LUNAR MISSION CONTROL" : "MARS MISSION CONTROL"}</strong>
+            <small>
+              {destination === "moon"
+                ? "NASA lunar imagery, LRO mapping & historical missions"
+                : "Latest NASA rover imagery &amp; official traverse maps"}
+            </small>
+          </span>
+          <span className="mission-control-launch-status">NASA DATA ↗</span>
+        </button>
 
         <button type="button" className="guided-explorer-launch" onClick={onStartGuidedJourney}>
           <span aria-hidden="true">✦</span>
