@@ -383,11 +383,6 @@ async function fetchRoverFeed(
     if (rover === "curiosity") {
       try {
         const archive = await fetchCuriosityArchive(signal);
-        try {
-          localStorage.setItem(CACHE_PREFIX + rover, JSON.stringify(archive));
-        } catch {
-          // The archive remains visible when browser storage is unavailable.
-        }
         return {
           ...archive,
           status: "archive",
