@@ -40,7 +40,7 @@ const ROVERS: Record<RoverId, {
   locationMap: string;
   imageGallery: string;
   apiUrl: string;
-  accent: string;
+  directApiUrl: string;
 }> = {
   perseverance: {
     name: "Perseverance",
@@ -48,8 +48,8 @@ const ROVERS: Record<RoverId, {
     location: "Jezero Crater",
     locationMap: "https://science.nasa.gov/mission/mars-2020-perseverance/location-map/",
     imageGallery: "https://mars.nasa.gov/mars2020/multimedia/raw-images/",
-    apiUrl: "https://mars.nasa.gov/rss/api/?ver=1.2&feed=raw_images&feedtype=json&category=mars2020&num=12&page=0&order=sol%20desc",
-    accent: "blue",
+    apiUrl: "/api/mars-rovers?rover=perseverance",
+    directApiUrl: "https://mars.nasa.gov/rss/api/?ver=1.2&feed=raw_images&feedtype=json&category=mars2020&num=12&page=0&order=sol%20desc",
   },
   curiosity: {
     name: "Curiosity",
@@ -57,8 +57,8 @@ const ROVERS: Record<RoverId, {
     location: "Gale Crater",
     locationMap: "https://science.nasa.gov/mission/msl-curiosity/location-map/",
     imageGallery: "https://mars.nasa.gov/msl/multimedia/raw-images/",
-    apiUrl: "https://mars.nasa.gov/api/v1/raw_image_items/?order=sol%20desc,instrument_sort%20desc,sample_type_sort%20desc,date_taken%20desc&per_page=12&page=0&extended=thumbnail::sample_type::noteq",
-    accent: "amber",
+    apiUrl: "/api/mars-rovers?rover=curiosity",
+    directApiUrl: "https://mars.nasa.gov/api/v1/raw_image_items/?order=sol%20desc,instrument_sort%20desc,sample_type_sort%20desc,date_taken%20desc&per_page=12&page=0&extended=thumbnail::sample_type::noteq",
   },
 };
 
@@ -220,18 +220,40 @@ async function fetchRoverFeed(
   signal: AbortSignal,
 ): Promise<RoverFeedState> {
   try {
-    const response = await fetch(ROVERS[rover].apiUrl, {
-      method: "GET",
-      headers: { Accept: "application/json" },
-      cache: "no-store",
-      signal,
-    });
+    let payload: unknown;
 
-    if (!response.ok) {
-      throw new Error(`NASA feed returned HTTP ${response.status}`);
+    try {
+      const proxyResponse = await fetch(ROVERS[rover].apiUrl, {
+        method: "GET",
+        headers: { Accept: "application/json" },
+        cache: "no-store",
+        signal,
+      });
+
+      if (!proxyResponse.ok) {
+        throw new Error(`NASA proxy returned HTTP ${proxyResponse.status}`);
+      }
+
+      payload = await proxyResponse.json();
+    } catch (proxyError) {
+      if (signal.aborted) throw proxyError;
+
+      // Vite's local development server has no Vercel function runtime.
+      // Try NASA's public feed directly for local development or proxy outages.
+      const directResponse = await fetch(ROVERS[rover].directApiUrl, {
+        method: "GET",
+        headers: { Accept: "application/json" },
+        cache: "no-store",
+        signal,
+      });
+
+      if (!directResponse.ok) {
+        throw new Error(`NASA feed returned HTTP ${directResponse.status}`);
+      }
+
+      payload = await directResponse.json();
     }
 
-    const payload: unknown = await response.json();
     const images = normalizeImages(payload, rover);
 
     if (images.length === 0) {
