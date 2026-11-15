@@ -1563,7 +1563,6 @@ export function SpaceScene({
                 }
 
                 if (
-                    !reducedMotion &&
                     !document.hidden &&
                     !animationFrame
                 ) {
@@ -1587,28 +1586,28 @@ export function SpaceScene({
             const delta = Math.min(clock.getDelta(), 0.05);
             const elapsed = clock.elapsedTime;
 
-            if (!reducedMotion) {
-                // Deliberately accelerated display spins make every world's surface motion
-                // visible during a short visit; these are illustrative, not real-time rates.
-                earthGroup.rotation.y += delta * 0.14;
-                clouds.rotation.y += delta * 0.18;
-                moon.rotation.y += delta * 0.035;
-                mars.rotation.y += delta * 0.135;
+            // Keep celestial bodies gently alive even when the OS requests reduced motion.
+            // Reduced-motion mode slows the rotation instead of freezing the entire scene.
+            const motionScale = reducedMotion ? 0.35 : 1;
 
-                lockedPlanets.forEach((planet) => {
-                    planet.spinGroup.rotation.y += delta * planet.spinSpeed;
-                    planet.spinGroup.position.y =
-                        Math.sin(elapsed * planet.floatSpeed + planet.phase) *
-                        planet.floatAmplitude;
-                });
+            earthGroup.rotation.y += delta * 0.14 * motionScale;
+            clouds.rotation.y += delta * 0.18 * motionScale;
+            moon.rotation.y += delta * 0.12 * motionScale;
+            mars.rotation.y += delta * 0.135 * motionScale;
 
-                starField.rotation.y += delta * 0.0008;
-            }
+            lockedPlanets.forEach((planet) => {
+                planet.spinGroup.rotation.y += delta * planet.spinSpeed * motionScale;
+                planet.spinGroup.position.y =
+                    Math.sin(elapsed * planet.floatSpeed * motionScale + planet.phase) *
+                    planet.floatAmplitude * motionScale;
+            });
+
+            starField.rotation.y += delta * 0.0008 * motionScale;
 
             renderScene();
         };
 
-        if (!reducedMotion && !document.hidden) {
+        if (!document.hidden) {
             clock.start();
             animate();
         } else {
@@ -1638,7 +1637,6 @@ export function SpaceScene({
 
                 clock.stop();
             } else if (
-                !reducedMotion &&
                 !animationFrame &&
                 modeRef.current !== "archive"
             ) {
