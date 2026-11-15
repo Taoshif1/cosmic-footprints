@@ -112,6 +112,8 @@ function findImageUrl(item: Record<string, unknown>): string | null {
     item.thumbnail_url,
     item.img_src,
     item.image_url,
+    item.image,
+    item.image_files,
     item.full_res,
     item.medium,
     item.large,
@@ -597,15 +599,11 @@ export function MissionControl({ onBack }: MissionControlProps) {
             <h2>Where is <span>{rover.name}?</span></h2>
             <div className="mission-map-preview" aria-hidden="true">
               <span className="mission-map-grid" />
-              <svg viewBox="0 0 360 150" role="presentation">
-                <path d="M-12 112 C 35 82, 43 127, 91 93 S 158 46, 192 76 S 250 118, 287 71 S 332 40, 376 50" />
-                <path d="M-12 112 C 35 82, 43 127, 91 93 S 158 46, 192 76 S 250 118, 287 71 S 332 40, 376 50" className="mission-map-route-glow" />
-                <circle cx="91" cy="93" r="4" />
-                <circle cx="192" cy="76" r="4" />
-                <circle cx="287" cy="71" r="5" className="mission-map-current" />
-              </svg>
+              <span className="mission-map-contour contour-one" />
+              <span className="mission-map-contour contour-two" />
+              <span className="mission-map-contour contour-three" />
               <span className="mission-map-location">{rover.location.toUpperCase()}</span>
-              <span className="mission-map-disclaimer">SCHEMATIC / NOT A LIVE POSITION PLOT</span>
+              <span className="mission-map-disclaimer">NASA MAP LINK BELOW / NO LIVE COORDINATE PLOT</span>
             </div>
             <p>
               NASA's interactive map shows the rover's latest reported drive
