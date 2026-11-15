@@ -91,6 +91,13 @@ function asText(value: unknown): string | null {
   return null;
 }
 
+function toNasaUrl(value: string): string | null {
+  if (/^https?:\\/\\//i.test(value)) return value;
+  if (value.startsWith("//")) return `https:${value}`;
+  if (value.startsWith("/")) return `https://mars.nasa.gov${value}`;
+  return null;
+}
+
 function findImageUrl(item: Record<string, unknown>): string | null {
   const files = item.image_files;
   const fileRecord = asRecord(files);
@@ -113,7 +120,10 @@ function findImageUrl(item: Record<string, unknown>): string | null {
 
   for (const candidate of candidates) {
     const value = asText(candidate);
-    if (value && /^https?:\/\//i.test(value)) return value;
+    if (value) {
+      const absoluteUrl = toNasaUrl(value);
+      if (absoluteUrl) return absoluteUrl;
+    }
   }
 
   return null;
@@ -175,7 +185,8 @@ function normalizeImages(payload: unknown, rover: RoverId): RoverImage[] {
         item.date_received_utc,
       );
       const caption = asText(item.caption ?? item.description) ?? title;
-      const nasaUrl = asText(item.link ?? item.web_url) ??
+      const rawNasaUrl = asText(item.link ?? item.web_url);
+      const nasaUrl = (rawNasaUrl ? toNasaUrl(rawNasaUrl) : null) ??
         `${ROVERS[rover].imageGallery}${id ? `?id=${encodeURIComponent(id)}` : ""}`;
 
       return {
