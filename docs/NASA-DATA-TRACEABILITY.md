@@ -83,3 +83,31 @@ The Ingenuity flight selector uses verified total flight count and verified firs
 Mars Polar Lander / Deep Space 2 is intentionally excluded from `src/data/planetMarkers.ts`: NASA never confirmed the spacecrafts' final resting places. A separate lost-signal record in the Mars archive provides access to its story without implying an invented coordinate.
 
 The archive search/category state is lifted to `src/App.tsx` and passed to both `ArtifactExplorer` and `ArchivePlanetScene`. The globe hides markers outside the active filtered result set; the non-canvas mission register remains available for every record.
+
+
+## Mars Mission Control: live-feed and location policy
+
+The Mars Mission Control dashboard is backed by NASA's public raw-image feeds for Perseverance and Curiosity. It refreshes the browser feed every 15 minutes while visible and keeps the last successful response in browser storage as a clearly labelled cache fallback.
+
+| Resource | Official source | What the application uses |
+| --- | --- | --- |
+| Perseverance raw images | https://mars.nasa.gov/rss/api/?ver=1.2&feed=raw_images&feedtype=json&category=mars2020&num=12&page=0&order=sol%20desc | Latest publicly released image records, sol, camera, capture/receipt timestamps when provided |
+| Curiosity raw images | https://mars.nasa.gov/api/v1/raw_image_items/?order=sol%20desc,instrument_sort%20desc,sample_type_sort%20desc,date_taken%20desc&per_page=12&page=0&extended=thumbnail::sample_type::noteq | Latest publicly released image records and metadata when provided |
+| Perseverance location | https://science.nasa.gov/mission/mars-2020-perseverance/location-map/ | Official latest traverse map opened from the dashboard |
+| Curiosity location | https://science.nasa.gov/mission/msl-curiosity/location-map/ | Official latest traverse map opened from the dashboard |
+| Ingenuity mission history | https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/ | Historical flight record only; no live flight telemetry is claimed |
+
+NASA describes the Perseverance and Curiosity maps as showing the rovers' latest locations and traverse paths, with each point marking the end of a drive and its Martian sol. The maps are updated when new drive data is published; they are not continuous GPS feeds. The application therefore links to NASA's maps and does not invent coordinates or present a simulated moving marker as a live rover position.
+
+The dashboard separately labels:
+- image capture time on Mars;
+- image receipt time on Earth, when the NASA record supplies it;
+- browser fetch time (the time this visitor checked the feed).
+
+NASA's legacy Mars Rover Photos API is marked archived in the NASA Open APIs portal. The application does not use that archived endpoint. The raw-image feeds are served by NASA's Mars mission websites but are not advertised as a guaranteed, versioned public API. A failed request results in a clearly labelled cached copy or unavailable state with a link to the official NASA image gallery.
+
+NASA references:
+- https://api.nasa.gov/
+- https://science.nasa.gov/mission/mars-2020-perseverance/location-map/
+- https://science.nasa.gov/mission/msl-curiosity/location-map/
+- https://science.nasa.gov/mission/mars-2020-perseverance/ingenuity-mars-helicopter/
