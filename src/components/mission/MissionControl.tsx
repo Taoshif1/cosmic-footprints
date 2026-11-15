@@ -92,7 +92,7 @@ function asText(value: unknown): string | null {
 }
 
 function toNasaUrl(value: string): string | null {
-  if (/^https?:\\/\\//i.test(value)) return value;
+  if (/^https?:\/\//i.test(value)) return value;
   if (value.startsWith("//")) return `https:${value}`;
   if (value.startsWith("/")) return `https://mars.nasa.gov${value}`;
   return null;
