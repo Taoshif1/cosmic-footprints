@@ -84,7 +84,7 @@ The **Take the 3-Minute Journey** guided mode introduces Surveyor 3, Spirit & Op
 - GSAP and @gsap/react for cinematic transitions
 - Tailwind CSS v4 and DaisyUI v5 for styling
 
-There is no backend or account system. Mission content is curated and stored locally in typed TypeScript data so the experience does not depend on a live API.
+There is no account system or application database. The educational mission archive is curated and stored locally in typed TypeScript data. The optional Mars Mission Control uses a small Vercel serverless proxy to retrieve NASA's public rover image feeds, with a browser cache fallback; the rest of the archive does not depend on live services.
 
 ## Run locally
 
