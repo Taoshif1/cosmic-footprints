@@ -275,7 +275,7 @@ async function fetchCuriosityArchive(signal: AbortSignal): Promise<FeedSnapshot>
       signal,
     });
     if (!directResponse.ok) {
-      throw new Error("NASA Image Library returned HTTP " + directResponse.status);
+      throw new Error("NASA Image Library returned HTTP " + directResponse.status, { cause: proxyError });
     }
     payload = await directResponse.json();
   }
