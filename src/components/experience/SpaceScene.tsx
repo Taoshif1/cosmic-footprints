@@ -877,6 +877,7 @@ export function SpaceScene({
         const draggablePlanets = [earth, moon, mars];
 
         let hoveredPlanet: THREE.Mesh | null = null;
+        let hoveredPlanetBaseScale: THREE.Vector3 | null = null;
         let activeDragTarget: THREE.Object3D | null = null;
         let activePointerId: number | null = null;
         let pointerStartX = 0;
@@ -961,17 +962,25 @@ export function SpaceScene({
         };
 
         const clearHover = () => {
-            if (!hoveredPlanet) return;
+            if (!hoveredPlanet) {
+                renderer.domElement.style.cursor = "default";
+                return;
+            }
 
             const previous = hoveredPlanet;
 
-            const baseScale = previous.userData.baseScale as number;
-
             gsap.killTweensOf(previous.scale);
-            previous.scale.setScalar(baseScale);
+
+            // Restore the exact scale that was active before hover. The
+            // responsive Moon/Mars sizes differ between desktop and mobile.
+            if (hoveredPlanetBaseScale) {
+                previous.scale.copy(hoveredPlanetBaseScale);
+            }
 
             hoveredPlanet = null;
+            hoveredPlanetBaseScale = null;
             renderer.domElement.style.cursor = "default";
+            renderScene();
         };
 
         const handlePointerMove = (event: PointerEvent) => {
@@ -1016,9 +1025,9 @@ export function SpaceScene({
             if (!nextPlanet) return;
 
             hoveredPlanet = nextPlanet;
+            hoveredPlanetBaseScale = nextPlanet.scale.clone();
 
-            const baseScale = nextPlanet.userData.baseScale as number;
-            const targetScale = baseScale * 1.13;
+            const targetScale = hoveredPlanetBaseScale.x * 1.13;
 
             renderer.domElement.style.cursor = "pointer";
 
@@ -1028,6 +1037,8 @@ export function SpaceScene({
                 z: targetScale,
                 duration: 0.4,
                 ease: "back.out(1.7)",
+                onUpdate: renderScene,
+                onComplete: renderScene,
             });
         };
 
